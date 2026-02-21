@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{2AEF3985-5F1D-71D4-1372-7AB5702BDBC6}</ProjectGuid>
+	<ProjectGuid>{33C3DCDC-76CB-1FCD-751B-4E7E18D0E2DF}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -18,7 +18,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_3_5_5;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_WEBPLAYER;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;ENABLE_SUBSTANCE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_3_5_5;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_OSX;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;ENABLE_SUBSTANCE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -37,62 +37,56 @@
     <Reference Include="System.XML" />
 	<Reference Include="System.Core" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files (x86)/Unity 3/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files (x86)/Unity 3/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Whirlds\Unity Island\Editor\LightmapExport.cs" />
      <Compile Include="Assets\Whirlds\Unity Island\Editor\ObjExporter.cs" />
-     <None Include="Assets\Pro Standard Assets\Glass Refraction\Glass-Stained-BumpDistort.shader" />
-     <None Include="Assets\Pro Standard Assets\Image Based\NoiseEffectShaderRGB.shader" />
-     <None Include="Assets\Whirlds\Classics\Lava\Lava.shader" />
-     <None Include="Assets\Standard Assets\Blob-Shadow\ShadowProjection.shader" />
-     <None Include="Assets\Whirlds\Unity Island\seaFoamCoast\foamShaderGlow.shader" />
-     <None Include="Assets\Pro Standard Assets\Image Based\MotionBlur.shader" />
-     <None Include="Assets\Pro Standard Assets\Image Based\Contrast Stretch\MinMaxReduction.shader" />
-     <None Include="Assets\Pro Standard Assets\Image Based\Contrast Stretch\Apply.shader" />
-     <None Include="Assets\Pro Standard Assets\Glass Refraction\Glass-Stained-BumpSpecDistort.shader" />
-     <None Include="Assets\Martian Assets\Vehicles\Materials\MiniMapMarker.shader" />
-     <None Include="Assets\Whirlds\Classics\Lava\FX-Lava Flowing Simple .shader" />
-     <None Include="Assets\Pro Standard Assets\Image Based\SSAOShader.shader" />
-     <None Include="Assets\Pro Standard Assets\Image Based\NoiseEffectShaderYUV.shader" />
-     <None Include="Assets\Pro Standard Assets\Image Based\GlowEffectDownsample.shader" />
-     <None Include="Assets\Standard Assets\Water\Sources\FX-Water Simple.shader" />
-     <None Include="Assets\Whirlds\Unity Island\seaFoamCoast\ReflFix.shader" />
-     <None Include="Assets\Pro Standard Assets\Image Based\Contrast Stretch\Luminance.shader" />
      <None Include="Assets\Pro Standard Assets\Water\Sources\FX-Water.shader" />
-     <None Include="Assets\Whirld\ResourceSources\Sea\FX-IslandWaterFull.shader" />
-     <None Include="Assets\Whirlds\Unity Island\seaFoamCoast\foamShader.shader" />
-     <None Include="Assets\Pro Standard Assets\Image Based\ColorCorrectionEffect.shader" />
-     <None Include="Assets\Pro Standard Assets\Image Based\GrayscaleEffect.shader" />
-     <None Include="Assets\Pro Standard Assets\Image Based\SepiaToneEffect.shader" />
-     <None Include="Assets\Pro Standard Assets\Image Based\TwirlEffect.shader" />
-     <None Include="Assets\Pro Standard Assets\Image Based\VortexEffect.shader" />
-     <None Include="Assets\Pro Standard Assets\Image Based\Contrast Stretch\Adaptation.shader" />
-     <None Include="Assets\Whirlds\Unity Island\Standard Assets\Water\Sources\FX-Water NonReflect.shader" />
-     <None Include="Assets\Martian Assets\Vehicles\Materials\GlassGlowing.shader" />
-     <None Include="Assets\Martian Assets\Vehicles\Materials\ForceField.shader" />
+     <None Include="Assets\Pro Standard Assets\Image Based\NoiseEffectShaderYUV.shader" />
      <None Include="Assets\Whirld\ResourceSources\Sea\FX-IslandWaterSimple.shader" />
+     <None Include="Assets\Pro Standard Assets\Image Based\Contrast Stretch\Luminance.shader" />
+     <None Include="Assets\Whirld\ResourceSources\Sea\FX-IslandWaterFull.shader" />
+     <None Include="Assets\Pro Standard Assets\Image Based\GlowEffectDownsample.shader" />
+     <None Include="Assets\Martian Assets\Vehicles\Materials\MiniMapMarker.shader" />
+     <None Include="Assets\Martian Assets\Vehicles\Materials\ForceField.shader" />
+     <None Include="Assets\Pro Standard Assets\Image Based\TwirlEffect.shader" />
+     <None Include="Assets\Standard Assets\Blob-Shadow\ShadowProjection.shader" />
+     <None Include="Assets\Whirlds\Classics\Lava\Lava.shader" />
+     <None Include="Assets\Whirlds\Classics\Lava\FX-Lava Flowing Simple .shader" />
+     <None Include="Assets\Pro Standard Assets\Image Based\MotionBlur.shader" />
+     <None Include="Assets\Whirlds\Unity Island\seaFoamCoast\ReflFix.shader" />
+     <None Include="Assets\Pro Standard Assets\Glass Refraction\Glass-Stained-BumpDistort.shader" />
+     <None Include="Assets\Whirlds\Unity Island\Standard Assets\Water\Sources\FX-Water NonReflect.shader" />
+     <None Include="Assets\Whirlds\Unity Island\seaFoamCoast\foamShader.shader" />
+     <None Include="Assets\Standard Assets\Water\Sources\FX-Water Simple.shader" />
+     <None Include="Assets\Pro Standard Assets\Image Based\VortexEffect.shader" />
+     <None Include="Assets\Whirlds\Unity Island\seaFoamCoast\foamShaderGlow.shader" />
+     <None Include="Assets\Martian Assets\Vehicles\Materials\GlassGlowing.shader" />
      <None Include="Assets\Pro Standard Assets\Image Based\EdgeDetectX.shader" />
- <Reference Include="Ionic.Zlib">
- <HintPath>Assets\Whirld\Lib\Compression\Ionic.Zlib.dll</HintPath>
- </Reference>
- <Reference Include="TerrainControllerData">
- <HintPath>Assets\Whirld\ResourceSources\Terrain\TerrainControllerData.dll</HintPath>
- </Reference>
+     <None Include="Assets\Pro Standard Assets\Image Based\Contrast Stretch\MinMaxReduction.shader" />
+     <None Include="Assets\Pro Standard Assets\Glass Refraction\Glass-Stained-BumpSpecDistort.shader" />
+     <None Include="Assets\Pro Standard Assets\Image Based\Contrast Stretch\Adaptation.shader" />
+     <None Include="Assets\Pro Standard Assets\Image Based\Contrast Stretch\Apply.shader" />
+     <None Include="Assets\Pro Standard Assets\Image Based\ColorCorrectionEffect.shader" />
+     <None Include="Assets\Pro Standard Assets\Image Based\SSAOShader.shader" />
+     <None Include="Assets\Pro Standard Assets\Image Based\SepiaToneEffect.shader" />
+     <None Include="Assets\Pro Standard Assets\Image Based\GrayscaleEffect.shader" />
+     <None Include="Assets\Pro Standard Assets\Image Based\NoiseEffectShaderRGB.shader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{0014E90A-152C-88C8-1F0B-5B30CD285C2F}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{518622B2-9050-A153-E465-3E4BD155181A}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-UnityScript-firstpass.unityproj">
-      <Project>{3A0493BA-8F01-022B-AE79-2A76295A45D9}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
+      <Project>{DDBF2BCB-11D1-BF7F-7A25-71D1DF05CBE4}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{BFD4B543-85BD-718B-9097-3785B6BDA7B3}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+      <Project>{C3DA89E1-70C6-7D6C-993E-C8F831D35880}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-UnityScript.unityproj">
-      <Project>{A1D73C68-594A-2A10-25D9-274C1C3BFEF8}</Project>      <Name>Assembly-UnityScript</Name>    </ProjectReference>
+      <Project>{29AAFBFD-D74B-E405-AA5A-A2BCA0FB7951}</Project>      <Name>Assembly-UnityScript</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

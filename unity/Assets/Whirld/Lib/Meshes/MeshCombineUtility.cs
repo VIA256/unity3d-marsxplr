@@ -10,12 +10,12 @@ public class MeshCombineUtility {
 		public Matrix4x4 transform;
 	}
 	
-	public static Mesh Combine (MeshInstance[] combines, bool generateStrips)
+	public static Mesh Combine (MeshCombineUtility.MeshInstance[] combines, bool generateStrips)
 	{
 		int vertexCount = 0;
 		int triangleCount = 0;
 		int stripCount = 0;
-		foreach( MeshInstance combine in combines )
+		foreach( MeshCombineUtility.MeshInstance combine in combines )
 		{
 			if (combine.mesh)
 			{
@@ -47,7 +47,7 @@ public class MeshCombineUtility {
 		// Precomputed how many triangles we need instead
 		if (!generateStrips)
 		{
-			foreach( MeshInstance combine in combines )
+			foreach( MeshCombineUtility.MeshInstance combine in combines )
 			{
 				if (combine.mesh)
 				{
@@ -69,14 +69,14 @@ public class MeshCombineUtility {
 		int offset;
 		
 		offset=0;
-		foreach( MeshInstance combine in combines )
+		foreach( MeshCombineUtility.MeshInstance combine in combines )
 		{
 			if (combine.mesh)
 				Copy(combine.mesh.vertexCount, combine.mesh.vertices, vertices, ref offset, combine.transform);
 		}
 
 		offset=0;
-		foreach( MeshInstance combine in combines )
+		foreach( MeshCombineUtility.MeshInstance combine in combines )
 		{
 			if (combine.mesh)
 			{
@@ -87,7 +87,7 @@ public class MeshCombineUtility {
 				
 		}
 		offset=0;
-		foreach( MeshInstance combine in combines )
+		foreach( MeshCombineUtility.MeshInstance combine in combines )
 		{
 			if (combine.mesh)
 			{
@@ -98,21 +98,21 @@ public class MeshCombineUtility {
 				
 		}
 		offset=0;
-		foreach( MeshInstance combine in combines )
+		foreach( MeshCombineUtility.MeshInstance combine in combines )
 		{
 			if (combine.mesh)
 				Copy(combine.mesh.vertexCount, combine.mesh.uv, uv, ref offset);
 		}
 		
 		offset=0;
-		foreach( MeshInstance combine in combines )
+		foreach( MeshCombineUtility.MeshInstance combine in combines )
 		{
 			if (combine.mesh)
 				Copy(combine.mesh.vertexCount, combine.mesh.uv1, uv1, ref offset);
 		}
 		
 		offset=0;
-		foreach( MeshInstance combine in combines )
+		foreach( MeshCombineUtility.MeshInstance combine in combines )
 		{
 			if (combine.mesh)
 				CopyColors(combine.mesh.vertexCount, combine.mesh.colors, colors, ref offset);
@@ -121,7 +121,7 @@ public class MeshCombineUtility {
 		int triangleOffset=0;
 		int stripOffset=0;
 		int vertexOffset=0;
-		foreach( MeshInstance combine in combines )
+		foreach( MeshCombineUtility.MeshInstance combine in combines )
 		{
 			if (combine.mesh)
 			{

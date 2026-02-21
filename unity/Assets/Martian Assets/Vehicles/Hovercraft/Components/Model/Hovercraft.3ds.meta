@@ -1,69 +1,7 @@
 fileFormatVersion: 2
-guid: df61e2ad7a1be433ea09280ef7ad9333
+guid: c433b97c8c1574359af10da11a0d1b21
 ModelImporter:
-  serializedVersion: 16
   fileIDToRecycleName:
-    100000: Bottom
-    100002: Cockpit
-    100004: //RootNode
-    100006: Intakes
-    100008: Layer0
-    100010: Mesh01
-    100012: Mesh02
-    100014: Mesh03
-    100016: Mesh04
-    100018: Mesh05
-    100020: Mesh06
-    100022: Mesh07
-    100024: Mesh08
-    100026: Spoilers
-    100028: Thruster
-    400000: Bottom
-    400002: Cockpit
-    400004: //RootNode
-    400006: Intakes
-    400008: Layer0
-    400010: Mesh01
-    400012: Mesh02
-    400014: Mesh03
-    400016: Mesh04
-    400018: Mesh05
-    400020: Mesh06
-    400022: Mesh07
-    400024: Mesh08
-    400026: Spoilers
-    400028: Thruster
-    2300000: Bottom
-    2300002: Cockpit
-    2300004: //RootNode
-    2300006: Intakes
-    2300008: Layer0
-    2300010: Mesh01
-    2300012: Mesh02
-    2300014: Mesh03
-    2300016: Mesh04
-    2300018: Mesh05
-    2300020: Mesh06
-    2300022: Mesh07
-    2300024: Mesh08
-    2300026: Spoilers
-    2300028: Thruster
-    2800000: __AssetImporterPreview
-    3300000: Bottom
-    3300002: Cockpit
-    3300004: //RootNode
-    3300006: Intakes
-    3300008: Layer0
-    3300010: Mesh01
-    3300012: Mesh02
-    3300014: Mesh03
-    3300016: Mesh04
-    3300018: Mesh05
-    3300020: Mesh06
-    3300022: Mesh07
-    3300024: Mesh08
-    3300026: Spoilers
-    3300028: Thruster
     4300000: Model
     4300002: Bottom
     4300004: Cockpit
@@ -79,58 +17,235 @@ ModelImporter:
     4300024: Mesh07
     4300026: Mesh08
     4300028: Thruster
-    11100000: //RootNode
+  serializedVersion: 10
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:
-    legacyGenerateAnimations: 4
+    generateAnimations: 3
     bakeSimulation: 0
-    optimizeGameObjects: 0
-    motionNodeName: 
-    animationCompression: 0
+    splitAnimations: 1
+    animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5
     animationScaleError: .5
     animationWrapMode: 0
-    extraExposedTransformPaths: []
     clipAnimations: []
-    isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1.89999998
-    meshCompression: 3
+    globalScale: .100000001
+    meshCompression: 0
     addColliders: 0
-    importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
-    weldVertices: 1
+    optimizeMesh: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 0
-    normalImportMode: 1
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
     tangentImportMode: 1
-  importAnimation: 1
-  copyAvatar: 0
-  humanDescription:
-    human: []
-    skeleton: []
-    armTwist: .5
-    foreArmTwist: .5
-    upperLegTwist: .5
-    legTwist: .5
-    armStretch: .0500000007
-    legStretch: .0500000007
-    feetSpacing: 0
-    rootMotionBoneName: 
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 1
-  additionalBone: 0
-  userData: 
+  textMetaNamesToFileIDs:
+    //RootNode:
+      data:
+        first: 1
+        second: ba860100
+      data:
+        first: 4
+        second: 9a1a0600
+      data:
+        first: 23
+        second: 7a182300
+      data:
+        first: 33
+        second: ba5a3200
+      data:
+        first: 111
+        second: 605fa900
+    Bottom:
+      data:
+        first: 1
+        second: b8860100
+      data:
+        first: 4
+        second: 981a0600
+      data:
+        first: 23
+        second: 78182300
+      data:
+        first: 33
+        second: b85a3200
+    Cockpit:
+      data:
+        first: 1
+        second: b6860100
+      data:
+        first: 4
+        second: 961a0600
+      data:
+        first: 23
+        second: 76182300
+      data:
+        first: 33
+        second: b65a3200
+    Intakes:
+      data:
+        first: 1
+        second: b4860100
+      data:
+        first: 4
+        second: 941a0600
+      data:
+        first: 23
+        second: 74182300
+      data:
+        first: 33
+        second: b45a3200
+    Layer0:
+      data:
+        first: 1
+        second: a6860100
+      data:
+        first: 4
+        second: 861a0600
+      data:
+        first: 23
+        second: 66182300
+      data:
+        first: 33
+        second: a65a3200
+    Mesh01:
+      data:
+        first: 1
+        second: b2860100
+      data:
+        first: 4
+        second: 921a0600
+      data:
+        first: 23
+        second: 72182300
+      data:
+        first: 33
+        second: b25a3200
+    Mesh02:
+      data:
+        first: 1
+        second: b0860100
+      data:
+        first: 4
+        second: 901a0600
+      data:
+        first: 23
+        second: 70182300
+      data:
+        first: 33
+        second: b05a3200
+    Mesh03:
+      data:
+        first: 1
+        second: ae860100
+      data:
+        first: 4
+        second: 8e1a0600
+      data:
+        first: 23
+        second: 6e182300
+      data:
+        first: 33
+        second: ae5a3200
+    Mesh04:
+      data:
+        first: 1
+        second: ac860100
+      data:
+        first: 4
+        second: 8c1a0600
+      data:
+        first: 23
+        second: 6c182300
+      data:
+        first: 33
+        second: ac5a3200
+    Mesh05:
+      data:
+        first: 1
+        second: aa860100
+      data:
+        first: 4
+        second: 8a1a0600
+      data:
+        first: 23
+        second: 6a182300
+      data:
+        first: 33
+        second: aa5a3200
+    Mesh06:
+      data:
+        first: 1
+        second: a8860100
+      data:
+        first: 4
+        second: 881a0600
+      data:
+        first: 23
+        second: 68182300
+      data:
+        first: 33
+        second: a85a3200
+    Mesh07:
+      data:
+        first: 1
+        second: a2860100
+      data:
+        first: 4
+        second: 821a0600
+      data:
+        first: 23
+        second: 62182300
+      data:
+        first: 33
+        second: a25a3200
+    Mesh08:
+      data:
+        first: 1
+        second: a0860100
+      data:
+        first: 4
+        second: 801a0600
+      data:
+        first: 23
+        second: 60182300
+      data:
+        first: 33
+        second: a05a3200
+    Spoilers:
+      data:
+        first: 1
+        second: a4860100
+      data:
+        first: 4
+        second: 841a0600
+      data:
+        first: 23
+        second: 64182300
+      data:
+        first: 33
+        second: a45a3200
+    Thruster:
+      data:
+        first: 1
+        second: bc860100
+      data:
+        first: 4
+        second: 9c1a0600
+      data:
+        first: 23
+        second: 7c182300
+      data:
+        first: 33
+        second: bc5a3200

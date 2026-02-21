@@ -24,7 +24,7 @@ public class CombineChildren : MonoBehaviour {
 		for (int i=0;i<filters.Length;i++) {
 			MeshFilter filter = (MeshFilter)filters[i];
 			Renderer curRenderer  = filters[i].renderer;
-			MeshCombineUtility.MeshInstance instance = new MeshCombineUtility.MeshInstance ();
+			MeshCombineUtility.MeshInstance instance = new MeshCombineUtility.MeshInstance();
 			instance.mesh = filter.sharedMesh;
 			if (curRenderer != null && curRenderer.enabled && instance.mesh != null) {
 				instance.transform = myTransform * filter.transform.localToWorldMatrix;

@@ -1,9 +1,7 @@
 fileFormatVersion: 2
-guid: 0d1352984e3c6465088f6cc7c4ce6e22
+guid: be7a9d343a13c46daacf808669658d03
 MonoImporter:
   serializedVersion: 2
-  defaultReferences:
-  - downsampleShader: {fileID: 4800000, guid: b14b79b8936134d3f8238f0c2d40d634, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
-  userData: 
