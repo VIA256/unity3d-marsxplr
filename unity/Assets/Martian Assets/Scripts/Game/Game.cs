@@ -132,6 +132,10 @@ public class Game : MonoBehaviour
 	[HideInInspector]
 	public void Start()
     {
+		//if i started in the game scene in the editor, the master server stuff must be set or it defaults to some unknown thing
+		MasterServer.ipAddress = "73.189.4.24";
+		MasterServer.port = 25000;
+		
 		//Network.minimumAllocatableViewIDs = 3;
 		if (Network.peerType == NetworkPeerType.Disconnected)
         {
@@ -1153,8 +1157,8 @@ public class Game : MonoBehaviour
 	public IEnumerator OnPlayerDisconnected(NetworkPlayer player)
     {
         // /*UNUSED*/ String pName = "";
-
-        foreach (DictionaryEntry plrE in Players)
+		
+		foreach (DictionaryEntry plrE in Players)
         {
             if (((Vehicle)plrE.Value).networkView.owner == player)
             {

@@ -44,6 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Editor\ClearPrefs.cs" />
      <Compile Include="Assets\Whirlds\Unity Island\Editor\LightmapExport.cs" />
      <Compile Include="Assets\Whirlds\Unity Island\Editor\ObjExporter.cs" />
      <None Include="Assets\Pro Standard Assets\Water\Sources\FX-Water.shader" />

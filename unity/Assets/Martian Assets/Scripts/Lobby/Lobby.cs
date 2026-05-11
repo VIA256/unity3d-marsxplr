@@ -720,7 +720,7 @@ public class Lobby : MonoBehaviour
 						}
 						PlayerPrefs.SetInt("userRegistered", 0);
 
-						userName += "–";
+						//userName += "–";
 
 						lastHostListRefresh = -1f;
 						lastHostListRequest = Time.time;
