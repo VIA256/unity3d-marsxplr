@@ -140,7 +140,7 @@ public class Game : MonoBehaviour
 		if (Network.peerType == NetworkPeerType.Disconnected)
         {
 			//We are running in the editor, and have started the game in world load mode
-			Network.InitializeServer(9, 2500, Game.useNAT); //DRAGONHERE idk if useNAT should always be true
+			Network.InitializeServer(9, 2500, !Network.HavePublicAddress());
 		}
 		if (Network.isServer)
         {
@@ -1897,7 +1897,7 @@ public class Game : MonoBehaviour
 	[RPC]
 	public void pD(string pName)
     {
-		if (!(bool)Players[pName]) return;
+		if (Players[pName] == null) return;
         foreach (DictionaryEntry plrE in Players)
         {
             ((Vehicle)plrE.Value).setColor();   //Make sure everyone is colored correctly

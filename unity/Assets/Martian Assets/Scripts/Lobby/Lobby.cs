@@ -113,7 +113,7 @@ public class Lobby : MonoBehaviour
         else
         {                               //They are a guest, just let them use whatever username they have.
             userNameTemp = PlayerPrefs.GetString("userName", "");
-            userName = userNameTemp + (userNameTemp != "" ? "–" : "");
+            userName = userNameTemp;// + (userNameTemp != "" ? "–" : "");
         }
 
         List<String> msgs = new List<String>();
@@ -606,10 +606,10 @@ public class Lobby : MonoBehaviour
 				GUILayout.EndHorizontal();
 			}
 
-			GUILayout.BeginHorizontal();
+			/*GUILayout.BeginHorizontal();
 			GUILayout.Label("", GUILayout.Width(100f));
 			userIsRegistered = GUILayout.Toggle(userIsRegistered, "I am registered");
-			GUILayout.EndHorizontal();
+			GUILayout.EndHorizontal();*/
 
 			GUILayout.BeginHorizontal();
 			GUILayout.Label("", GUILayout.Width(100f));
@@ -720,7 +720,7 @@ public class Lobby : MonoBehaviour
 						}
 						PlayerPrefs.SetInt("userRegistered", 0);
 
-						//userName += "–";
+						//userName += "-";
 
 						lastHostListRefresh = -1f;
 						lastHostListRequest = Time.time;
@@ -763,7 +763,7 @@ public class Lobby : MonoBehaviour
                         "(Make sure the credentials you enter match your MarsXPLR.com login)");
 				}
 			}
-			else
+			/*else
 			{
 				GUILayout.BeginHorizontal();
 				GUILayout.Space(contentWidth / 3);
@@ -773,7 +773,7 @@ public class Lobby : MonoBehaviour
 				}
 				GUILayout.Space(contentWidth / 3);
 				GUILayout.EndHorizontal();
-			}
+			}*/
 
 			GUILayout.FlexibleSpace();
 
