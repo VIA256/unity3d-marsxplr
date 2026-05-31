@@ -1392,7 +1392,7 @@ public class WhirldIn : System.Object
                     }
                     else 
                     {
-                        if ((bool)whirldObject)
+                        if (whirldObject != null)
                         {
                             
                             //Object Reference
