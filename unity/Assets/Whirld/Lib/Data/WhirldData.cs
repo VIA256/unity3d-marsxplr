@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public class WhirldData
+public class WhirldData : MonoBehaviour
 {
 	public string n;
 	public string v;

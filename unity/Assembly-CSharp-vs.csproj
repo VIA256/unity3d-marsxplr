@@ -18,7 +18,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_3_5_5;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_OSX;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;ENABLE_SUBSTANCE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_3_5_5;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;ENABLE_SUBSTANCE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -44,12 +44,14 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Martian Assets\GUI\Cursors\CustomCursor.cs" />
      <Compile Include="Assets\Martian Assets\Scripts\Game\CameraVehicle.cs" />
      <Compile Include="Assets\Martian Assets\Scripts\Game\Game.cs" />
      <Compile Include="Assets\Martian Assets\Scripts\Game\GameData.cs" />
      <Compile Include="Assets\Martian Assets\Scripts\Game\GameWorldDesc.cs" />
      <Compile Include="Assets\Martian Assets\Scripts\Game\Messaging.cs" />
      <Compile Include="Assets\Martian Assets\Scripts\Game\MiniMap.cs" />
+     <Compile Include="Assets\Martian Assets\Scripts\Game\PrefabHere.cs" />
      <Compile Include="Assets\Martian Assets\Scripts\Game\SemVer.cs" />
      <Compile Include="Assets\Martian Assets\Scripts\Game\Settings.cs" />
      <Compile Include="Assets\Martian Assets\Scripts\Game\SoundEffect.cs" />
@@ -66,6 +68,8 @@
      <Compile Include="Assets\Martian Assets\Vehicles\Jet\Components\JetThruster.cs" />
      <Compile Include="Assets\Martian Assets\Vehicles\Lasers\Components\Rocket.cs" />
      <Compile Include="Assets\Martian Assets\Vehicles\Materials\ThrustCone.cs" />
+     <Compile Include="Assets\Martian Assets\Vehicles\ParticleSystems\EntryPoint.cs" />
+     <Compile Include="Assets\Martian Assets\Vehicles\Scripts\ColliderAtach.cs" />
      <Compile Include="Assets\Martian Assets\Vehicles\Scripts\RamoSphere.cs" />
      <Compile Include="Assets\Martian Assets\Vehicles\Scripts\Vehicle.cs" />
      <Compile Include="Assets\Martian Assets\Vehicles\Scripts\VehicleBot.cs" />
@@ -77,11 +81,10 @@
      <Compile Include="Assets\Martian Assets\Vehicles\Tank\Components\Scripts\Tank.cs" />
      <Compile Include="Assets\Martian Assets\Vehicles\Tank\Components\Scripts\TankMe.cs" />
      <Compile Include="Assets\Martian Assets\Vehicles\Tank\Components\Scripts\TankTrack.cs" />
+     <Compile Include="Assets\Martian Assets\Vehicles\Tank\Components\Scripts\TankTrackSimple.cs" />
      <Compile Include="Assets\Whirld\Core\WhirldIn.cs" />
      <Compile Include="Assets\Whirld\Core\World.cs" />
      <Compile Include="Assets\Whirld\Lib\Data\WhirldData.cs" />
-     <Compile Include="Assets\Whirld\Lib\Meshes\CombineChildren.cs" />
-     <Compile Include="Assets\Whirld\Lib\Meshes\MeshCombineUtility.cs" />
      <Compile Include="Assets\Whirld\Lib\Meshes\Triangulator.cs" />
      <Compile Include="Assets\Whirld\Lib\Yielding\MonoBehaviourScript.cs" />
      <Compile Include="Assets\Whirld\ResourceSources\Floor\FloorController.cs" />

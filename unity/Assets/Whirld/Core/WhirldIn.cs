@@ -19,7 +19,8 @@ public enum WhirldInStatus
     Working,
     Success,
     WWWError,
-    SyntaxError
+    SyntaxError,
+	FeatureError
 }
 
 [Serializable]
@@ -40,7 +41,7 @@ public class WhirldIn : System.Object
 	public int threadAssetBundles = 0;
 	public int threadTextures = 0;
 	public int maxThreads = 5;
-	public List<AssetBundle> loadedAssetBundles = new List<AssetBundle>();
+	//UNSUPPORTED public List<AssetBundle> loadedAssetBundles = new List<AssetBundle>();
 	public Hashtable objects = new Hashtable();
 	public Hashtable textures = new Hashtable();
 	public Hashtable meshMaterials = new Hashtable();
@@ -66,15 +67,15 @@ public class WhirldIn : System.Object
 			GameObject.Destroy(whirldBuffer);
 		}
 
-        //Unload AssetBundles
-		if (loadedAssetBundles.Count > 0)
+        //Unload AssetBundles (UNSUPPORTED)
+		/*if (loadedAssetBundles.Count > 0)
 		{
             foreach (AssetBundle ab in loadedAssetBundles)
             {
                 ab.Unload(true);
             }
             loadedAssetBundles.Clear();
-		}
+		}*/
 	}
 
 	public IEnumerator Generate()
@@ -174,11 +175,21 @@ public class WhirldIn : System.Object
                 }
 
                 //AssetBundle
-                if (n == "ab") monoBehaviour.StartCoroutine_Auto(LoadAssetBundle(v));
+                if (n == "ab")// monoBehaviour.StartCoroutine_Auto(LoadAssetBundle(v));
+				{
+					info = "AssetBundles in Whirlds are unsupported\n";
+					status = WhirldInStatus.FeatureError;
+					yield break;
+				}
 
                 //StreamedScene
-                if (n == "ss") monoBehaviour.StartCoroutine_Auto(LoadStreamedScene(v));
-
+                if (n == "ss")// monoBehaviour.StartCoroutine_Auto(LoadStreamedScene(v));
+				{
+					info = "StreamedScenes in Whirlds are unsupported\n";
+					status = WhirldInStatus.FeatureError;
+					yield break;
+				}
+					
                 //Skybox
                 else if (n == "rndSkybox") monoBehaviour.StartCoroutine_Auto(LoadSkybox(v));
 
@@ -277,7 +288,7 @@ public class WhirldIn : System.Object
         }
 	}
 
-    public IEnumerator LoadAssetBundle(string p)
+    /*public IEnumerator LoadAssetBundle(string p)// UNSUPPORTED
     {
         threadAssetBundles++;
 
@@ -321,9 +332,9 @@ public class WhirldIn : System.Object
         threads.Remove(thread);
         threadAssetBundles--;
 
-    }
+    }*/
 
-	public IEnumerator LoadStreamedScene(string p)
+	/*public IEnumerator LoadStreamedScene(string p) // UNSUPPORTED
 	{
         while (threads.Count >= maxThreads) yield return null;  //Don't overwhelm the computer by doing too many things @ once
 
@@ -386,7 +397,7 @@ public class WhirldIn : System.Object
         loadedAssetBundles.Add(www.assetBundle);
         threads.Remove(thread);
 
-	}
+	}*/
 
 	public IEnumerator LoadTexture(string p)    //[txt:name,url,wrapMode,anisoLevel]
 	{
@@ -1181,8 +1192,8 @@ public class WhirldIn : System.Object
             }
         }
 
-        //AssetBundle Material Skybox
-        else
+        //AssetBundle Material Skybox (UNSUPPORTED)
+        /*else
         {
             //Wait for everything else to load
             while (threads.Count > 0) yield return null;
@@ -1198,11 +1209,11 @@ public class WhirldIn : System.Object
                     v +
                     "\n";
             }
-        }
+        }*/
 
 	}
 
-	public UnityEngine.Object GetAsset(string str)
+	/*public UnityEngine.Object GetAsset(string str)//UNSUPPORTED
 	{
         if (loadedAssetBundles.Count > 0)
         {
@@ -1212,9 +1223,9 @@ public class WhirldIn : System.Object
             }
         }
         return null;
-	}
+	}*/
 
-	public void ReadObject(Transform parent)
+	public void ReadObject(Transform parent)//TODO replace the recursion with a big nested loop and lifo buffer(s) because stack overflows are scary
 	{
 		// /*UNUSED*/ string c = null;          //Character
 		int i = 0;                              //Index of param
@@ -1395,12 +1406,13 @@ public class WhirldIn : System.Object
                         if (whirldObject != null)
                         {
                             
-                            //Object Reference
+                            //Object Reference (UNSUPPORTED)
                             if (v.Substring(0, 1) == "#")
                             {
-                                whirldObject.parameters.Add(
+                                /*whirldObject.parameters.Add(
                                     n,
-                                    GetAsset(v.Substring(1)));
+                                    GetAsset(v.Substring(1)));*/
+								info += "Object References are unsupported\n";
                             }
 
                             //Text

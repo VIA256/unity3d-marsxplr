@@ -1,10 +1,10 @@
 using System;
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
 [Serializable]
-public class WhirldObject : MonoBehaviour
-{
+public class WhirldObject : MonoBehaviour {
+
 	public WhirldData[] data;
 	public Hashtable parameters;
 

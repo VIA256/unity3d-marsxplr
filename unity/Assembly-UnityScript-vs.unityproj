@@ -18,7 +18,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_3_5_5;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_OSX;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;ENABLE_SUBSTANCE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_3_5_5;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;ENABLE_SUBSTANCE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -44,12 +44,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Martian Assets\GUI\Cursors\CustomCursor.js" />
-     <Compile Include="Assets\Martian Assets\Scripts\Game\PrefabHere.js" />
-     <Compile Include="Assets\Martian Assets\Vehicles\Buggy\Components\Scripts\BuggyWheel.js" />
-     <Compile Include="Assets\Martian Assets\Vehicles\ParticleSystems\EntryPoint.js" />
-     <Compile Include="Assets\Martian Assets\Vehicles\Scripts\ColliderAtach.js" />
-     <Compile Include="Assets\Martian Assets\Vehicles\Tank\Components\Scripts\TankTrackSimple.js" />
      <Compile Include="Assets\Whirld\Lib\Data\WhirldLibrary.js" />
      <Compile Include="Assets\Whirld\Lib\Meshes\MeshSerializer.js" />
      <Compile Include="Assets\Whirld\ResourceSources\Base\BaseSimple.js" />

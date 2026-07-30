@@ -11,6 +11,8 @@ using UnityEngine;
 [Serializable]
 public class Lobby : MonoBehaviour
 {
+	public static bool scenePlayed = false;
+	
 	[NonSerialized]
 	public int port = 2500;
 
@@ -118,7 +120,7 @@ public class Lobby : MonoBehaviour
 
         List<String> msgs = new List<String>();
         List<GameWorldDesc> wlds = new List<GameWorldDesc>();
-        WWW www = new WWW("http://gitea.moe/VIA256/new-marsxplr-web-elements/raw/branch/main/upd3");
+        WWW www = new WWW("http://gitea.moe/VIA256/new-marsxplr-web-elements/raw/branch/main/upd4");
         yield return www;
         if (www.error == null)
         {
@@ -1290,6 +1292,7 @@ public class Lobby : MonoBehaviour
     { 
         GuiAnimate = 1;
         yield return new WaitForSeconds(0.75f);
+		scenePlayed = true;
         Application.LoadLevel(2);
     }
 
