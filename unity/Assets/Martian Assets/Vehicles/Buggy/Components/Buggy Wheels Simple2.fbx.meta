@@ -20,7 +20,7 @@ ModelImporter:
     clipAnimations: []
   meshes:
     lODScreenPercentages: []
-    globalScale: .25
+    globalScale: .159999996
     meshCompression: 0
     addColliders: 0
     swapUVChannels: 0
