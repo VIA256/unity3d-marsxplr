@@ -175,15 +175,15 @@ public class Vehicle : MonoBehaviour
 
 		if (isBot || !networkView.isMine)
 		{
-			if (isIt != 0 && (bool)markerQuarry && !markerQuarry.active)
+			if (isIt != 0 && (bool)markerQuarry && !markerQuarry.activeInHierarchy)
 			{
-				markerQuarry.SetActiveRecursively(true);
-				marker.SetActiveRecursively(false);
+				markerQuarry.SetActive(true);
+				marker.SetActive(false);
 			}
-			else if (isIt == 0 && (bool)markerQuarry && markerQuarry.active)
+			else if (isIt == 0 && (bool)markerQuarry && markerQuarry.activeInHierarchy)
 			{
-				markerQuarry.SetActiveRecursively(false);
-				marker.SetActiveRecursively(true);
+				markerQuarry.SetActive(false);
+				marker.SetActive(true);
 			}
 			if (isIt != 0 && (bool)Game.Player)
 			{
@@ -420,7 +420,7 @@ public class Vehicle : MonoBehaviour
                     Physics.IgnoreCollision(ramoSphere.collider, cldr);
                 }
             }
-            ramoSphere.active = false; //DRAGONHERE - MAJOR UNITY BUG: We need to set this all the time, as colliders that are instantiated using a prefab and are then thrown inside of rightbodies are not properly initialized until some of their settings are toggled
+            ramoSphere.SetActive(false); //DRAGONHERE - MAJOR UNITY BUG: We need to set this all the time, as colliders that are instantiated using a prefab and are then thrown inside of rightbodies are not properly initialized until some of their settings are toggled
             ramoSphereScale = (((Game.Settings.ramoSpheres) * 15) +
                 camOffset * 1);
             zorbBall = Game.Settings.zorbSpeed != 0f ? zorbBall : false;
@@ -445,13 +445,13 @@ public class Vehicle : MonoBehaviour
 
         if (Game.Settings.laserLock[vehId] > 0f)
         {
-            laserLock.active = true;
+            laserLock.SetActive(true);
             laserLock.transform.localScale = Vector3.one *
                 (((Game.Settings.laserLock[vehId]) + camOffset * 0.1f) * 10f);
         }
         else
         {
-            laserLock.active = false;
+            laserLock.SetActive(false);
             laserLock.transform.localScale = Vector3.zero;
         }
     }

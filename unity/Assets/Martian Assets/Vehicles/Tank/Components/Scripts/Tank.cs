@@ -165,18 +165,18 @@ public class Tank : MonoBehaviour
 		if (!vehicle.networkView.isMine && (bool)vehicle.vehicleNet)
 		{
             //Enable advanced physics
-			if (vehicle.vehicleNet.simulatePhysics && simpleTracks.active)
+			if (vehicle.vehicleNet.simulatePhysics && simpleTracks.activeInHierarchy)
 			{
                 vehicle.myRigidbody.useGravity = true; //Gravity is simulated on the authoratative client instance that owns this tank - it just makes the networked instances jittery
-				simpleTracks.SetActiveRecursively(false);
-				superTracks.SetActiveRecursively(true);
+				simpleTracks.SetActive(false);
+				superTracks.SetActive(true);
 			}
             //Disable advanced physics
-			else if (!vehicle.vehicleNet.simulatePhysics && superTracks.active)
+			else if (!vehicle.vehicleNet.simulatePhysics && superTracks.activeInHierarchy)
 			{
                 vehicle.myRigidbody.useGravity = true; //Gravity is simulated on the authoratative client instance that owns this tank - it just makes the networked instances jittery
-				simpleTracks.SetActiveRecursively(true);
-				superTracks.SetActiveRecursively(false);
+				simpleTracks.SetActive(true);
+				superTracks.SetActive(false);
 			}
 		}
 	}

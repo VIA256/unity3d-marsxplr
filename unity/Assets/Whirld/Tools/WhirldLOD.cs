@@ -53,9 +53,9 @@ public class WhirldLOD : MonoBehaviour
             for (int i = 0; i < lodObjs.Length; i++)
             {
                 bool desired = (i == level);
-                if (lodObjs[i].active != desired)
+                if (lodObjs[i].activeInHierarchy != desired)
                 {
-                    lodObjs[i].SetActiveRecursively(desired);
+                    lodObjs[i].SetActive(desired);
                 }
             }
             lastLevel = level;

@@ -148,8 +148,8 @@ public class Buggy : MonoBehaviour
 		}
 		else 
         {
-			leftTrail.gameObject.active = false;
-			rightTrail.gameObject.active = false;
+			leftTrail.gameObject.SetActive(false);
+			rightTrail.gameObject.SetActive(false);
 		}
 
 		//Initialize Bouyancy Points
@@ -195,7 +195,7 @@ public class Buggy : MonoBehaviour
 			}
 		}
 		wingMesh = ((lod.level != 0) ? wing1 : wing0).mesh;
-		((lod.level != 0) ? wing1 : wing0).gameObject.active = wingOpen;
+		((lod.level != 0) ? wing1 : wing0).gameObject.SetActive(wingOpen);
 		if (wingOpen)
         {
 			if (baseVertices == null)
@@ -285,7 +285,7 @@ public class Buggy : MonoBehaviour
 				0,
 				0
 			);
-			if (axels[i].gameObject.active)
+			if (axels[i].gameObject.activeInHierarchy)//DRAGONHERE activechange
             {
 				axels[i].LookAt(wheels[i].position);
 			}
@@ -923,9 +923,9 @@ public class Buggy : MonoBehaviour
     {
 		for (int i = 0; i < 4; i++)
         {
-			wheelGraphics[i].Find("Detailed").gameObject.SetActiveRecursively(level == 0);
-			wheelGraphics[i].Find("Simple").gameObject.active = level != 0;
-			axels[i].gameObject.SetActiveRecursively(level == 0);
+			wheelGraphics[i].Find("Detailed").gameObject.SetActive(level == 0);
+			wheelGraphics[i].Find("Simple").gameObject.SetActive(level != 0);
+			axels[i].gameObject.SetActive(level == 0);
 		}
 	}
 }

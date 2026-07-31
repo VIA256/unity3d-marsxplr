@@ -130,9 +130,9 @@ public class Jet : MonoBehaviour
         //Landing Gear
 		if (vehicle.specialInput)
 		{
-            if (!landingGear[lod.level].active)
+            if (!landingGear[lod.level].activeInHierarchy)
             {
-                landingGear[lod.level].SetActiveRecursively(true);
+                landingGear[lod.level].SetActive(true);
             }
             if (landingGearScale < 1)
             {
@@ -141,17 +141,17 @@ public class Jet : MonoBehaviour
 		}
 		else
 		{
-            if (landingGear[lod.level].active &&
+            if (landingGear[lod.level].activeInHierarchy &&
                 landingGearScale > 0)
             {
                 landingGearScale -= Time.deltaTime;
             }
-            else if (landingGear[lod.level].active)
+            else if (landingGear[lod.level].activeInHierarchy)
             {
-                landingGear[lod.level].SetActiveRecursively(false);
+                landingGear[lod.level].SetActive(false);
             }
 		}
-        if (landingGear[lod.level].active)
+        if (landingGear[lod.level].activeInHierarchy)
         {
             Vector3 locscl = landingGear[lod.level].transform.localScale;
             locscl.y =

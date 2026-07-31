@@ -71,19 +71,19 @@ public class VehicleMe : MonoBehaviour
                         ).isIt != 0))
 			{
 				laserLock = hit.transform.gameObject;
-				vehicle.laserAimer.active = false;
-				vehicle.laserAimerLocked.active = true;
+				vehicle.laserAimer.SetActive(false);
+				vehicle.laserAimerLocked.SetActive(true);
 			}
 			else
 			{
 				laserLock = null;
-				vehicle.laserAimer.active = true;
-				vehicle.laserAimerLocked.active = false;
+				vehicle.laserAimer.SetActive(true);
+				vehicle.laserAimerLocked.SetActive(false);
 			}
 		}
 		else
 		{
-            vehicle.laserAimer.active = vehicle.laserAimer.active = false;
+            vehicle.laserAimer.SetActive (false);
 			laserLock = null;
 		}
 
