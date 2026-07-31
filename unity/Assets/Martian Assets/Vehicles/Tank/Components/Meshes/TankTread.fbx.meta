@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 2bfc1203c02d74eb4ac83ea8dbc3d3eb
+guid: a16b34525e65e8c45be67b429d178693
 ModelImporter:
   fileIDToRecycleName:
-    4300000: Mesh.001_Mesh
+    4300000: STL file
   serializedVersion: 10
   materials:
     importMaterials: 1

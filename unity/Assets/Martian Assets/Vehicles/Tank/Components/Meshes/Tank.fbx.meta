@@ -1,10 +1,8 @@
 fileFormatVersion: 2
-guid: 1d8569fe9d8154bea96747d816d6daa3
+guid: 53fc8f8ecea50ee419691aad08e34d60
 ModelImporter:
   fileIDToRecycleName:
-    4300000: Mesh_001
-    4300002: Mesh
-    7400000: Default Take //// TankTread
+    4300000: STL file
   serializedVersion: 10
   materials:
     importMaterials: 1
@@ -22,7 +20,7 @@ ModelImporter:
     clipAnimations: []
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     swapUVChannels: 0
@@ -47,31 +45,11 @@ ModelImporter:
         first: 4
         second: 801a0600
       data:
-        first: 111
-        second: 605fa900
-    Mesh:
-      data:
-        first: 1
-        second: a2860100
-      data:
-        first: 4
-        second: 821a0600
-      data:
         first: 23
         second: 60182300
       data:
         first: 33
         second: a05a3200
-    Mesh_001:
       data:
-        first: 1
-        second: a4860100
-      data:
-        first: 4
-        second: 841a0600
-      data:
-        first: 23
-        second: 62182300
-      data:
-        first: 33
-        second: a25a3200
+        first: 111
+        second: 605fa900
