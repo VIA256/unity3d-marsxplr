@@ -1234,8 +1234,7 @@ public class Lobby : MonoBehaviour
 
 			GUILayout.BeginHorizontal();
 
-			if (Application.platform == RuntimePlatform.WindowsPlayer ||
-                Application.platform == RuntimePlatform.OSXPlayer)
+			if (Settings.isDesktopPlatform())
 			{
 				if (GUILayout.Button("<< Exit Game", GUILayout.Height(30f)))
 				{

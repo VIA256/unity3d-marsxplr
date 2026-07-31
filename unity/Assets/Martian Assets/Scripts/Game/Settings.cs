@@ -138,6 +138,13 @@ public class Settings : MonoBehaviour
 	public float networkInterpolation = 0.0f;
 	public bool isAdmin = false;
 
+	public static bool isDesktopPlatform()
+	{
+		return Application.platform == RuntimePlatform.OSXPlayer ||
+			Application.platform == RuntimePlatform.WindowsPlayer ||
+			Application.platform == RuntimePlatform.LinuxPlayer;
+	}
+
 	public void Start()
 	{
 		simplified = true;
@@ -180,8 +187,7 @@ public class Settings : MonoBehaviour
 
         if (
             Screen.fullScreen ||
-            Application.platform == RuntimePlatform.OSXPlayer ||
-            Application.platform == RuntimePlatform.WindowsPlayer)
+            Settings.isDesktopPlatform())
         {
             GUILayout.BeginHorizontal();
             if (
