@@ -101,7 +101,7 @@ public class MiniMap : MonoBehaviour
                 Screen.height - 20f - Screen.height * 0.001f,
                 Screen.width * 0.25f - 50f, 20f),
             camHeight,
-            200f,
-            1300f);
+            100f,
+            1200f);
 	}
 }
