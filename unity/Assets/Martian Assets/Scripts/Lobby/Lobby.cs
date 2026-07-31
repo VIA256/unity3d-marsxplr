@@ -613,6 +613,8 @@ public class Lobby : MonoBehaviour
 			userIsRegistered = GUILayout.Toggle(userIsRegistered, "I am registered");
 			GUILayout.EndHorizontal();*/
 
+			GUILayout.Space (10f);
+
 			GUILayout.BeginHorizontal();
 			GUILayout.Label("", GUILayout.Width(100f));
 			userRemembered = GUILayout.Toggle(userRemembered, "Remember Me");
