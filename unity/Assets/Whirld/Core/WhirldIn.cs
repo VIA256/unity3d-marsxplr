@@ -1225,7 +1225,7 @@ public class WhirldIn : System.Object
         return null;
 	}*/
 
-	public void ReadObject(Transform parent)//TODO replace the recursion with a big nested loop and lifo buffer(s) because stack overflows are scary
+	public void ReadObject(Transform parent)
 	{
 		// /*UNUSED*/ string c = null;          //Character
 		int i = 0;                              //Index of param
