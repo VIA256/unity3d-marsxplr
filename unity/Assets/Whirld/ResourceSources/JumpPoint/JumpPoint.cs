@@ -1,21 +1,23 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 [Serializable]
 public class JumpPoint : MonoBehaviour
 {
     public WhirldObject whirldObject;
+	public GameObject smoke;
     private int time = 1;
     private int randMin = 0;
     private int randMax = 0;
     private int velocity = 50;
     private float lastBlast;
 
-    public void Start()
+    public IEnumerator Start()
     {
         if (!(bool)whirldObject || whirldObject.parameters == null)
         {
-            return;
+            yield break;
         }
         if (whirldObject.parameters["JumpTime"] != null)
         {
@@ -33,6 +35,13 @@ public class JumpPoint : MonoBehaviour
         {
             velocity = (int)float.Parse((String)whirldObject.parameters["JumpVelocity"]);
         }
+
+		yield return new WaitForSeconds(15);
+
+		if(!(bool)smoke) yield break;
+		ParticleEmitter pE = (ParticleEmitter)smoke.GetComponent(typeof(ParticleEmitter));
+		if(!pE) yield break;
+		pE.emit = true;
     }
 
     public void OnTriggerEnter(Collider other)
