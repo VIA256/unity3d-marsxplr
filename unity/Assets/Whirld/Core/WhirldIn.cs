@@ -48,6 +48,7 @@ public class WhirldIn : System.Object
 	public Hashtable meshMatLibs = new Hashtable();
     public MonoBehaviour monoBehaviour; //Needed for attaching Coroutines too
 	public int readChr = 0;
+	public bool ignoreLine = false;
 
 	public void Load()
 	{
@@ -124,8 +125,7 @@ public class WhirldIn : System.Object
         //Sanity Check
         if (
             data == null ||
-            data.Length < 10 ||
-            (data[0] != '[' && data[0] != '{'))
+            data.Length < 3)
         {
             status = WhirldInStatus.SyntaxError;
             yield break;
@@ -147,8 +147,21 @@ public class WhirldIn : System.Object
                 yield break;
             }
 
-            //Ignore Newlines and Tabs
-            else if (s == '\n' || s == '\t') continue;
+			//start a comment line
+			else if (s == '/')
+			{
+				ignoreLine = true;
+				continue;
+			}
+
+            //Ignore Newlines and Tabs, terminate comment line
+            else if (s == '\n' || s == '\t')
+			{
+				if(s == '\n' && ignoreLine) ignoreLine = false;
+				continue;
+			}
+
+			else if (ignoreLine) continue;
 
             else if (s == '{') break;    //Finished reading headers
             else if (s == '[')          //Beginning new header
