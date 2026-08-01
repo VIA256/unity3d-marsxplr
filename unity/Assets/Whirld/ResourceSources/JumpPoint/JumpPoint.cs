@@ -6,7 +6,7 @@ using UnityEngine;
 public class JumpPoint : MonoBehaviour
 {
     public WhirldObject whirldObject;
-	public GameObject smoke;
+	public GameObject smokeObject;
     private float time = 1;
     private int randMin = 0;
     private int randMax = 0;
@@ -21,7 +21,6 @@ public class JumpPoint : MonoBehaviour
         }
         if (whirldObject.parameters["JumpTime"] != null)
         {
-			Debug.Log ("JumpTime: " + whirldObject.parameters["JumpTime"]);
             time = float.Parse((String)whirldObject.parameters["JumpTime"]);
         }
         if (whirldObject.parameters["JumpRandMin"] != null)
@@ -39,8 +38,8 @@ public class JumpPoint : MonoBehaviour
 
 		yield return new WaitForSeconds(15);
 
-		if(!(bool)smoke) yield break;
-		ParticleEmitter pE = (ParticleEmitter)smoke.GetComponent(typeof(ParticleEmitter));
+		if(!(bool)smokeObject) yield break;
+		ParticleEmitter pE = (ParticleEmitter)smokeObject.GetComponent(typeof(ParticleEmitter));
 		if(!pE) yield break;
 		pE.emit = true;
     }
