@@ -1067,7 +1067,7 @@ public class Settings : MonoBehaviour
 			GUILayout.BeginHorizontal();
 			cg = GUILayout.HorizontalSlider(
                 worldGrav,
-                0.81f * -1f,
+                0,//0.81f * -1f,
                 18.81f * -1f);
 			if (worldGrav != cg)
 			{
