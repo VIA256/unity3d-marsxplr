@@ -7,7 +7,7 @@ public class JumpPoint : MonoBehaviour
 {
     public WhirldObject whirldObject;
 	public GameObject smoke;
-    private int time = 1;
+    private float time = 1;
     private int randMin = 0;
     private int randMax = 0;
     private int velocity = 50;
@@ -21,7 +21,8 @@ public class JumpPoint : MonoBehaviour
         }
         if (whirldObject.parameters["JumpTime"] != null)
         {
-            time = (int)float.Parse((String)whirldObject.parameters["JumpTime"]);
+			Debug.Log ("JumpTime: " + whirldObject.parameters["JumpTime"]);
+            time = float.Parse((String)whirldObject.parameters["JumpTime"]);
         }
         if (whirldObject.parameters["JumpRandMin"] != null)
         {
