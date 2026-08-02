@@ -91,7 +91,7 @@ public class Lobby : MonoBehaviour
 	public void Awake()
 	{
 		QualitySettings.SetQualityLevel(5);
-		Screen.lockCursor = false;
+		Cursor.lockState = CursorLockMode.None;
 		Application.runInBackground = false;
 	}
 

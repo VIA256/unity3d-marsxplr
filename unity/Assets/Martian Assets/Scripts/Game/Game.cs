@@ -289,7 +289,7 @@ public class Game : MonoBehaviour
         {
             i++;
         }
-        networkView.RPC(
+        GetComponent<NetworkView>().RPC(
             "iV",
             RPCMode.All,
             Network.AllocateViewID(),
@@ -347,7 +347,7 @@ public class Game : MonoBehaviour
             if (whirldIn.worldParams["message"] != null)
             {
                 Settings.serverWelcome = (String)whirldIn.worldParams["message"];
-                networkView.RPC(
+                GetComponent<NetworkView>().RPC(
                     "msg",
                     RPCMode.All,
                     Settings.serverWelcome,
@@ -355,7 +355,7 @@ public class Game : MonoBehaviour
             }
             if (whirldIn.worldParams["marsxplr"] != null)
             {
-                networkView.RPC(
+                GetComponent<NetworkView>().RPC(
                     "sSS",
                     RPCMode.All,
                     whirldIn.worldParams["marsxplr"]);
@@ -390,8 +390,8 @@ public class Game : MonoBehaviour
 			if ((bool)PlayerVeh.ramoSphere) Destroy(PlayerVeh.ramoSphere);
 			Player.transform.position = World.baseTF.position;
 			Player.transform.rotation = World.baseTF.rotation;
-			Player.rigidbody.isKinematic = false;
-			Player.rigidbody.velocity = Vector3.zero;
+			Player.GetComponent<Rigidbody>().isKinematic = false;
+			Player.GetComponent<Rigidbody>().velocity = Vector3.zero;
 			Settings.resetTime = -10f;
 			Settings.updatePrefs(); //Rebuild a new ramosphere
 		}
@@ -402,7 +402,7 @@ public class Game : MonoBehaviour
 			Settings.serverUpdateTime < Time.time)
         {
 			Settings.serverString = Settings.packServerPrefs();
-			networkView.RPC("sSS", RPCMode.Others, Settings.serverString);
+			GetComponent<NetworkView>().RPC("sSS", RPCMode.Others, Settings.serverString);
 			if (isHost && !Network.isServer)
             {
 				//Send dedicated server my default settings
@@ -453,7 +453,7 @@ public class Game : MonoBehaviour
 			Time.time - authUpdateTime > 1f &&
 			Time.timeSinceLevelLoad > 3f)
         {
-			networkView.RPC(
+			GetComponent<NetworkView>().RPC(
 				"lMI",
 				RPCMode.Others,
 				Network.player,
@@ -534,7 +534,7 @@ public class Game : MonoBehaviour
 	public void OnGUI()
     {
 		//Cursor Locking
-        if (Screen.lockCursor)
+        if (Cursor.lockState == CursorLockMode.Locked)
         {
             GUI.depth = -999;
             GUI.Label(
@@ -695,7 +695,7 @@ public class Game : MonoBehaviour
                 "{Keyboard Shortcuts Locked ~ Press \"Tab\" to unlock}",
                 hudTextStyle);
         }
-        else if (Screen.lockCursor)
+        else if (Cursor.lockState == CursorLockMode.Locked)
         {
             GUI.Button(
                 new Rect(
@@ -1073,7 +1073,7 @@ public class Game : MonoBehaviour
                 if (val[0] == player.ipAddress)
                 {
                     //Game.Messaging.broadcast(player.ipAddress + " attempted to rejoin");
-                    networkView.RPC("dN", player, 2);
+                    GetComponent<NetworkView>().RPC("dN", player, 2);
                     Network.CloseConnection(player, true);
                 }
             }
@@ -1099,10 +1099,10 @@ public class Game : MonoBehaviour
         foreach (DictionaryEntry plrE in Players)
         {
             Vehicle veh = (Vehicle)plrE.Value;
-            networkView.RPC(
+            GetComponent<NetworkView>().RPC(
                 "iV",
                 player,
-                veh.networkView.viewID,
+                veh.GetComponent<NetworkView>().viewID,
                 veh.networkMode,
                 veh.vehId,
                 veh.gameObject.name,
@@ -1111,7 +1111,7 @@ public class Game : MonoBehaviour
                 veh.score,
                 veh.specialInput ? 1 : 0,
                 veh.zorbBall);
-            veh.networkView.RPC(
+            veh.GetComponent<NetworkView>().RPC(
                 "sC",
                 player,
                 veh.vehicleColor.r,
@@ -1126,16 +1126,16 @@ public class Game : MonoBehaviour
         if (Settings.serverString != Settings.serverDefault)
         {
             Settings.serverString = Settings.packServerPrefs();
-            networkView.RPC("sSS", player, Settings.serverString);
+            GetComponent<NetworkView>().RPC("sSS", player, Settings.serverString);
         }
 
         //Send Them World
-        networkView.RPC("lW", player, "url=" + WorldDesc.url);
+        GetComponent<NetworkView>().RPC("lW", player, "url=" + WorldDesc.url);
 
         //Welcome them!
         if (Settings.serverWelcome != "")
         {
-            networkView.RPC(
+            GetComponent<NetworkView>().RPC(
                 "msg",
                 player,
                 Settings.serverWelcome,
@@ -1147,9 +1147,9 @@ public class Game : MonoBehaviour
         foreach (DictionaryEntry plrE in Players)
         {
             if (plrE.Value == null) continue;
-            ((Vehicle)plrE.Value).networkView.enabled = false;
+            ((Vehicle)plrE.Value).GetComponent<NetworkView>().enabled = false;
             yield return null;
-            ((Vehicle)plrE.Value).networkView.enabled = true;
+            ((Vehicle)plrE.Value).GetComponent<NetworkView>().enabled = true;
         }
 
         //Update Master Server Listing
@@ -1163,9 +1163,9 @@ public class Game : MonoBehaviour
 		
 		foreach (DictionaryEntry plrE in Players)
         {
-            if (((Vehicle)plrE.Value).networkView.owner == player)
+            if (((Vehicle)plrE.Value).GetComponent<NetworkView>().owner == player)
             {
-                networkView.RPC("pD", RPCMode.All, plrE.Key);
+                GetComponent<NetworkView>().RPC("pD", RPCMode.All, plrE.Key);
                 break;
             }
         }
@@ -1209,7 +1209,7 @@ public class Game : MonoBehaviour
                 GUILayout.Height(40)))
             {
                 authTime = Time.time;
-                networkView.RPC(
+                GetComponent<NetworkView>().RPC(
                     "cP",
                     RPCMode.All,
                     Network.player,
@@ -1611,7 +1611,7 @@ public class Game : MonoBehaviour
             "'s bot" +
             (botsInGame == 1 ? "" : " " + botsInGame);
         yield return new WaitForSeconds(2f);
-        networkView.RPC(
+        GetComponent<NetworkView>().RPC(
             "iV",
             RPCMode.All,
             Network.AllocateViewID(),
@@ -1638,9 +1638,9 @@ public class Game : MonoBehaviour
             (botsInGame == 1 ? "the last bot" : ("bot " + botsInGame)));
         botsInGame--;
         materilizationEffect(bot.transform.position);
-        bot.rigidbody.isKinematic = true;
+        bot.GetComponent<Rigidbody>().isKinematic = true;
 
-        Network.Destroy(bot.rigidbody.networkView.viewID);
+        Network.Destroy(bot.GetComponent<Rigidbody>().GetComponent<NetworkView>().viewID);
 
         yield return new WaitForSeconds(0.5f);
         eSI();
@@ -1659,8 +1659,8 @@ public class Game : MonoBehaviour
 		int specialInput = (PlayerVeh.specialInput ? 1 : 0);
 		string name = Player.name;
         bool zorbBall = PlayerVeh.zorbBall;
-		Network.Destroy(Player.rigidbody.networkView.viewID);
-		networkView.RPC(
+		Network.Destroy(Player.GetComponent<Rigidbody>().GetComponent<NetworkView>().viewID);
+		GetComponent<NetworkView>().RPC(
             "iV",
             RPCMode.All,
             Network.AllocateViewID(),
@@ -1684,12 +1684,12 @@ public class Game : MonoBehaviour
         {
             if (((Vehicle)plrE.Value).isIt == 1) return;
         }
-		Player.networkView.RPC("sQ", RPCMode.All, 3);
+		Player.GetComponent<NetworkView>().RPC("sQ", RPCMode.All, 3);
 	}
 
 	public void materilizationEffect(Vector3 position)
     {
-		networkView.RPC("mE", RPCMode.All, position);
+		GetComponent<NetworkView>().RPC("mE", RPCMode.All, position);
 	}
 
 	[RPC]
@@ -1719,7 +1719,7 @@ public class Game : MonoBehaviour
                 playerList +=
                     (playerList == "" ? "" : ",") +
                     ((Vehicle)plrE.Value).name;
-                if (!((Vehicle)plrE.Value).networkView.isMine)
+                if (!((Vehicle)plrE.Value).GetComponent<NetworkView>().isMine)
                 {
                     VehicleNet vehNet = (VehicleNet)((Vehicle)plrE.Value)
                         .gameObject.GetComponent(typeof(VehicleNet));
@@ -1853,21 +1853,21 @@ public class Game : MonoBehaviour
         switch (networkMode)
         { 
             case 0:
-                objectVehicle.networkView.stateSynchronization = NetworkStateSynchronization.Unreliable;
+                objectVehicle.GetComponent<NetworkView>().stateSynchronization = NetworkStateSynchronization.Unreliable;
                 break;
             case 1:
-                objectVehicle.networkView.stateSynchronization = NetworkStateSynchronization.ReliableDeltaCompressed;
+                objectVehicle.GetComponent<NetworkView>().stateSynchronization = NetworkStateSynchronization.ReliableDeltaCompressed;
                 break;
             default:
-                objectVehicle.networkView.stateSynchronization = NetworkStateSynchronization.Off;
+                objectVehicle.GetComponent<NetworkView>().stateSynchronization = NetworkStateSynchronization.Off;
                 break;
         }
-        objectVehicle.networkView.viewID = viewID;
+        objectVehicle.GetComponent<NetworkView>().viewID = viewID;
         GameObject plyObj = (GameObject)Instantiate(
             objectVehicle,
             pos,
             Quaternion.identity);
-        plyObj.networkView.viewID = viewID;
+        plyObj.GetComponent<NetworkView>().viewID = viewID;
         GameObject vehObj = (GameObject)Instantiate(
             Game.Controller.GameVehicles[vehId],
             pos,
@@ -2060,7 +2060,7 @@ public class Game : MonoBehaviour
 
 	public void sSHS()
     {
-		networkView.RPC(
+		GetComponent<NetworkView>().RPC(
             "sSH",
             RPCMode.Server,
             serverName,

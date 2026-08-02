@@ -18,11 +18,11 @@ public class HoverThrustClustOfDust : MonoBehaviour
 			Physics.Raycast(transform.position, Vector3.down, 15f, thrustMask)
 		)
         {
-			particleEmitter.emit = true;
+			GetComponent<ParticleEmitter>().emit = true;
 		}
 		else
         {
-			particleEmitter.emit = false;
+			GetComponent<ParticleEmitter>().emit = false;
 		}
 	}
 }

@@ -75,13 +75,13 @@ public class Vehicle : MonoBehaviour
 
 	public IEnumerator Start()
 	{
-		if (networkView.viewID.isMine)
+		if (GetComponent<NetworkView>().viewID.isMine)
 		{
 			VehicleLocal vehicleLocal = (VehicleLocal)gameObject
                 .AddComponent(typeof(VehicleLocal));
 			vehicleLocal.vehicle = this;
 		}
-		if (networkView.viewID.isMine && !isBot)
+		if (GetComponent<NetworkView>().viewID.isMine && !isBot)
 		{
 			marker = (GameObject)Instantiate(
                 Game.objectMarkerMe,
@@ -120,7 +120,7 @@ public class Vehicle : MonoBehaviour
                 transform.rotation);
 			markerQuarry.transform.parent = transform;
 
-			if (isBot && networkView.viewID.isMine)
+			if (isBot && GetComponent<NetworkView>().viewID.isMine)
 			{
 				VehicleBot vehicleBot = (VehicleBot)gameObject
                     .AddComponent(typeof(VehicleBot));
@@ -137,7 +137,7 @@ public class Vehicle : MonoBehaviour
 		}
 
 		gameObject.AddComponent(typeof(Rigidbody));
-		myRigidbody = rigidbody;
+		myRigidbody = GetComponent<Rigidbody>();
 		myRigidbody.interpolation = RigidbodyInterpolation.Interpolate;
 
 		if (Game.Players.ContainsKey(name))
@@ -157,9 +157,9 @@ public class Vehicle : MonoBehaviour
         Game.Settings.updateObjects();
 
         //Force-Refresh Everyone's NetworkView - http://forum.unity3d.com/viewtopic.php?t=35724&postdays=0&postorder=asc&start=105
-        networkView.enabled = false;
+        GetComponent<NetworkView>().enabled = false;
         yield return null;
-        networkView.enabled = true;
+        GetComponent<NetworkView>().enabled = true;
 	}
 
 	public void Update()
@@ -173,7 +173,7 @@ public class Vehicle : MonoBehaviour
                 1 << 4));
         bubbles.maxEnergy = bubbles.minEnergy = (bubbles.emit ? 5 : 0);
 
-		if (isBot || !networkView.isMine)
+		if (isBot || !GetComponent<NetworkView>().isMine)
 		{
 			if (isIt != 0 && (bool)markerQuarry && !markerQuarry.activeInHierarchy)
 			{
@@ -306,7 +306,7 @@ public class Vehicle : MonoBehaviour
 		GUI.color = guicol;
 
 		GUI.depth = -1;
-		if (networkView.isMine && !isBot)
+		if (GetComponent<NetworkView>().isMine && !isBot)
 		{
             Rigidbody targetRigidbody = myRigidbody;
             if (
@@ -338,7 +338,7 @@ public class Vehicle : MonoBehaviour
 		}
 		GUI.depth = 5;
 		Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
-        bool mainTag = networkView.isMine && !isBot;
+        bool mainTag = GetComponent<NetworkView>().isMine && !isBot;
         if(Game.Settings.quarryCam && (bool)Game.QuarryVeh)
         {
             mainTag = (this == Game.QuarryVeh);
@@ -400,13 +400,13 @@ public class Vehicle : MonoBehaviour
 
     public IEnumerator OnPrefsUpdated()
     {
-        if (laserAimer) laserAimer.particleEmitter.emit = true;
-        if (laserAimerLocked) laserAimerLocked.particleEmitter.emit = true;
+        if (laserAimer) laserAimer.GetComponent<ParticleEmitter>().emit = true;
+        if (laserAimerLocked) laserAimerLocked.GetComponent<ParticleEmitter>().emit = true;
         if (Game.Settings.ramoSpheres != 0f)
         {
             yield return new WaitForSeconds(1f);
-            Vector3 tnsor = rigidbody.inertiaTensor;
-            Vector3 cg = rigidbody.centerOfMass;
+            Vector3 tnsor = GetComponent<Rigidbody>().inertiaTensor;
+            Vector3 cg = GetComponent<Rigidbody>().centerOfMass;
             if (!ramoSphere)
             {
                 ramoSphere = (GameObject)Instantiate(
@@ -417,24 +417,24 @@ public class Vehicle : MonoBehaviour
                 Collider[] colliders = (Collider[])vehObj.GetComponentsInChildren<Collider>();
                 foreach (Collider cldr in colliders)
                 {
-                    Physics.IgnoreCollision(ramoSphere.collider, cldr);
+                    Physics.IgnoreCollision(ramoSphere.GetComponent<Collider>(), cldr);
                 }
             }
             ramoSphere.SetActive(false); //DRAGONHERE - MAJOR UNITY BUG: We need to set this all the time, as colliders that are instantiated using a prefab and are then thrown inside of rightbodies are not properly initialized until some of their settings are toggled
             ramoSphereScale = (((Game.Settings.ramoSpheres) * 15) +
                 camOffset * 1);
             zorbBall = Game.Settings.zorbSpeed != 0f ? zorbBall : false;
-            if (ramoSphere.collider.isTrigger == zorbBall)
+            if (ramoSphere.GetComponent<Collider>().isTrigger == zorbBall)
             {
-                ramoSphere.collider.isTrigger = !zorbBall;
+                ramoSphere.GetComponent<Collider>().isTrigger = !zorbBall;
                 ramoSphere.transform.localScale = Vector3.zero;
-                ramoSphere.collider.enabled = true;
+                ramoSphere.GetComponent<Collider>().enabled = true;
                 ramoSphere.SendMessage("colorSet", zorbBall); //ANOTHER UNITY BUG - for some reason, SendMessage isn't working like it should...
                 ramoSphere.GetComponent<RamoSphere>().colorSet(zorbBall);
             }
-            else ramoSphere.collider.enabled = true;
-            rigidbody.inertiaTensor = tnsor;
-            rigidbody.centerOfMass = cg;
+            else ramoSphere.GetComponent<Collider>().enabled = true;
+            GetComponent<Rigidbody>().inertiaTensor = tnsor;
+            GetComponent<Rigidbody>().centerOfMass = cg;
         }
         else if (ramoSphere)
         {
@@ -460,7 +460,7 @@ public class Vehicle : MonoBehaviour
 	{
 		if (
             (bool)ramoSphere &&
-            !ramoSphere.collider.isTrigger)
+            !ramoSphere.GetComponent<Collider>().isTrigger)
 		{
 			ramoSphere.SendMessage("OnCollisionEnter", collision);
 		}
@@ -478,7 +478,7 @@ public class Vehicle : MonoBehaviour
             (Time.time - veh.lastTag >= 3f))
 		{
 			lastTag = Time.time;
-			networkView.RPC("sQ", RPCMode.All, 1);
+			GetComponent<NetworkView>().RPC("sQ", RPCMode.All, 1);
 		}
 	}
 
@@ -492,7 +492,7 @@ public class Vehicle : MonoBehaviour
                 World.baseTF.position) > 10f)
 		{
 			myRigidbody.isKinematic = true;
-			networkView.RPC("lR", RPCMode.All);
+			GetComponent<NetworkView>().RPC("lR", RPCMode.All);
 		}
 	}
 
@@ -587,7 +587,7 @@ public class Vehicle : MonoBehaviour
 		r.launchVehicle = this;
         foreach (DictionaryEntry plrE in Game.Players)
         {
-            if (((Vehicle)plrE.Value).networkView.viewID == targetViewID)
+            if (((Vehicle)plrE.Value).GetComponent<NetworkView>().viewID == targetViewID)
             {
                 r.targetVehicle = (Vehicle)plrE.Value;
                 break;
@@ -616,7 +616,7 @@ public class Vehicle : MonoBehaviour
 		r.launchVehicle = this;
         foreach (DictionaryEntry plrE in Game.Players)
         {
-            if (((Vehicle)plrE.Value).networkView.viewID == targetViewID)
+            if (((Vehicle)plrE.Value).GetComponent<NetworkView>().viewID == targetViewID)
             {
                 r.targetVehicle = (Vehicle)plrE.Value;
                 break;
@@ -644,7 +644,7 @@ public class Vehicle : MonoBehaviour
 		{
 			return;
 		}
-		if (networkView.stateSynchronization != NetworkStateSynchronization.Off)
+		if (GetComponent<NetworkView>().stateSynchronization != NetworkStateSynchronization.Off)
 		{
 			Debug.Log("sP NvN: " + gameObject.name);
 			return;
@@ -687,7 +687,7 @@ public class Vehicle : MonoBehaviour
 	[RPC]
 	public void sT(float time, NetworkMessageInfo info)
 	{
-        if (!(bool)vehicleNet && !networkView.isMine) return;
+        if (!(bool)vehicleNet && !GetComponent<NetworkView>().isMine) return;
 
         //We are recieving the ping back
         //Debug.Log(name + time + networkView.viewID);
@@ -703,9 +703,9 @@ public class Vehicle : MonoBehaviour
         }
 
         //We are authoratative instance, and are being "pinged".
-        else if (networkView.isMine)
+        else if (GetComponent<NetworkView>().isMine)
         {
-            networkView.RPC("sT", RPCMode.Others, 1f);
+            GetComponent<NetworkView>().RPC("sT", RPCMode.Others, 1f);
         }
         else
         {

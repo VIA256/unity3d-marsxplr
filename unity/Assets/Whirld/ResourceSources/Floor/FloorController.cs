@@ -19,6 +19,6 @@ public class FloorController : MonoBehaviour
 			return;
 		}
 
-        floorObject.renderer.material.mainTexture = (Texture)(whirldObject.parameters["Texture"]);
+        floorObject.GetComponent<Renderer>().material.mainTexture = (Texture)(whirldObject.parameters["Texture"]);
 	}
 }

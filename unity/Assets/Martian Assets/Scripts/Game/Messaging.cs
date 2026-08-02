@@ -125,7 +125,7 @@ public class Messaging : MonoBehaviour
 			{
 				if (Game.Settings.zorbSpeed != 0f)
 				{
-					Game.Player.networkView.RPC(
+					Game.Player.GetComponent<NetworkView>().RPC(
                         "sZ",
                         RPCMode.All,
                         !Game.PlayerVeh.zorbBall);
@@ -146,14 +146,14 @@ public class Messaging : MonoBehaviour
                 inputField == "/R")
 			{
 				Game.Settings.resetTime = Time.time;
-				Game.Player.rigidbody.isKinematic = true;
+				Game.Player.GetComponent<Rigidbody>().isKinematic = true;
 				broadcast(Game.Player.name + " Resetting in 10 seconds...");
 			}
 			else
 			{
 				inputField = Game.LanguageFilter(inputField);
 				Game.Controller.msg(inputField, (int)chatOrigins.Local);
-				Game.Controller.networkView.RPC(
+				Game.Controller.GetComponent<NetworkView>().RPC(
                     "msg",
                     RPCMode.Others, inputField + " - " + GameData.userName,
                     (int)chatOrigins.Remote);
@@ -214,7 +214,7 @@ public class Messaging : MonoBehaviour
 
 	public void broadcast(string str)
 	{
-		Game.Controller.networkView.RPC(
+		Game.Controller.GetComponent<NetworkView>().RPC(
             "msg",
             RPCMode.All,
             str,
