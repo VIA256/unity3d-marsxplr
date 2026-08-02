@@ -8,7 +8,7 @@ public class ObjExporter {
  
     public static string MeshToString(MeshFilter mf) {
         Mesh m = mf.sharedMesh;
-        Material[] mats = mf.renderer.sharedMaterials;
+        Material[] mats = mf.GetComponent<Renderer>().sharedMaterials;
         
         StringBuilder sb = new StringBuilder();
         

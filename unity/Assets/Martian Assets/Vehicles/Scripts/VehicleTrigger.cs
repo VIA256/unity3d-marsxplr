@@ -15,7 +15,7 @@ public class VehicleTrigger : MonoBehaviour
 	{
 		if (
             other.gameObject.layer != 14 &&
-            vehicle.networkView.isMine &&
+            vehicle.GetComponent<NetworkView>().isMine &&
             (bool)other.attachedRigidbody)
 		{
 			vehicle.OnRam(other.attachedRigidbody.gameObject);

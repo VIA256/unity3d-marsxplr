@@ -29,22 +29,22 @@ public class TankTrack : MonoBehaviour
 		vehicle = (Tank)transform.parent
             .transform.parent
             .gameObject.GetComponent<Tank>();
-		joint.connectedBody = vehicle.vehicle.rigidbody;
+		joint.connectedBody = vehicle.vehicle.GetComponent<Rigidbody>();
 		strtPos = transform.localPosition;
 	}
 
 	public void OnEnable()
 	{
         if (!(bool)joint.connectedBody) return;
-		rigidbody.isKinematic = true;
+		GetComponent<Rigidbody>().isKinematic = true;
 		transform.localRotation = Quaternion.identity;
 		transform.localPosition = strtPos;
 		if (joint.anchor != Vector3.zero)
 		{
 			joint.anchor = Vector3.zero;
 		}
-		rigidbody.isKinematic = false;
-		rigidbody.velocity = Vector3.zero;
+		GetComponent<Rigidbody>().isKinematic = false;
+		GetComponent<Rigidbody>().velocity = Vector3.zero;
 	}
 
 	public void OnCollisionStay(Collision collision)
@@ -57,7 +57,7 @@ public class TankTrack : MonoBehaviour
 		}
 		if (
             (bool)collision.transform.root &&
-            (bool)collision.transform.root.gameObject.rigidbody)
+            (bool)collision.transform.root.gameObject.GetComponent<Rigidbody>())
 		{
             vehicle.vehicle.OnRam(collision.transform.root.gameObject); //we hit a tank track or something
 		}
@@ -208,7 +208,7 @@ public class TankTrack : MonoBehaviour
             ((motorPower < -0.1f) || (motorPower > 0.1f)) ?
                 motorPower :
                 (locVel.z * (float)(-linearDragForce)));
-		rigidbody.AddForceAtPosition(
+		GetComponent<Rigidbody>().AddForceAtPosition(
             Quaternion.LookRotation(Vector3.Cross(
                 transform.right,
                 hit.normal)) *

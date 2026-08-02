@@ -417,7 +417,7 @@ public class Settings : MonoBehaviour
             GUILayout.Button("Reset My Position (/r)"))
 		{
 			resetTime = Time.time;
-			Game.Player.rigidbody.isKinematic = true;
+			Game.Player.GetComponent<Rigidbody>().isKinematic = true;
 			Game.Messaging.broadcast(
                 Game.Player.name +
                 " Resetting in 10 seconds...");
@@ -432,7 +432,7 @@ public class Settings : MonoBehaviour
                     "Activate") +
                 " My Xorb (/x)"))
 			{
-				Game.Player.networkView.RPC(
+				Game.Player.GetComponent<NetworkView>().RPC(
                     "sZ",
                     RPCMode.All,
                     !Game.PlayerVeh.zorbBall);
@@ -555,7 +555,7 @@ public class Settings : MonoBehaviour
             "Random Coloring" :
             "Randomize Coloring"))
 		{
-			StartCoroutine_Auto(ramdomizeVehicleColor());
+			StartCoroutine(ramdomizeVehicleColor());
 		}
 
 		GUILayout.BeginHorizontal();
@@ -672,7 +672,7 @@ public class Settings : MonoBehaviour
 				GUILayout.BeginHorizontal();
 				if (GUILayout.Button("Evict"))
 				{
-                    networkView.RPC(
+                    GetComponent<NetworkView>().RPC(
                         "dN",
                         Game.Controller.unauthPlayers[i].p,
                         2);
@@ -684,7 +684,7 @@ public class Settings : MonoBehaviour
                     }
                     else
                     {
-                        networkView.RPC(
+                        GetComponent<NetworkView>().RPC(
                             "cC",
                             RPCMode.Server,
                             Game.Controller.unauthPlayers[i].p,
@@ -704,7 +704,7 @@ public class Settings : MonoBehaviour
                     }
                     else
                     {
-                        networkView.RPC(
+                        GetComponent<NetworkView>().RPC(
                             "pI",
                             RPCMode.Server,
                             Game.Controller.unauthPlayers[i].p,
@@ -731,7 +731,7 @@ public class Settings : MonoBehaviour
             GUILayout.Space(10f);
             GUILayout.Label(plrE.Key + (veh.isPlayer ? " (Me)" : ""));
             GUILayout.TextArea(
-                (go.networkView.isMine ?
+                (go.GetComponent<NetworkView>().isMine ?
                     "" :
                     (vehNet ?
                         Mathf.RoundToInt(vehNet.ping * 1000) +
@@ -748,12 +748,12 @@ public class Settings : MonoBehaviour
                         " TmstmpOfst\n" :
                     "") +
                 (Network.isServer ?
-                    go.networkView.owner.externalIP +
+                    go.GetComponent<NetworkView>().owner.externalIP +
                         " " +
-                        go.networkView.owner.ipAddress :
+                        go.GetComponent<NetworkView>().owner.ipAddress :
                     "") +
                 "\n" +
-                    go.networkView.viewID.ToString() +
+                    go.GetComponent<NetworkView>().viewID.ToString() +
                     " " +
                     veh.networkMode /*+ "/" + go.networkView.owner.ToString()*/,
                 GUILayout.Height(30));
@@ -761,7 +761,7 @@ public class Settings : MonoBehaviour
             if (
                 (Game.Controller.isHost || isAdmin) &&
                 !veh.isBot &&
-                !go.networkView.isMine &&
+                !go.GetComponent<NetworkView>().isMine &&
                 GUILayout.Button("Evict"))
             {
                 Game.Messaging.broadcast(
@@ -770,24 +770,24 @@ public class Settings : MonoBehaviour
                     + Game.Player.name);
                 if (Network.isServer)
                 {
-                    networkView.RPC(
+                    GetComponent<NetworkView>().RPC(
                         "dN",
-                        ((Vehicle)plrE.Value).networkView.owner,
+                        ((Vehicle)plrE.Value).GetComponent<NetworkView>().owner,
                         2);
-                    ((Vehicle)plrE.Value).networkView.RPC(
+                    ((Vehicle)plrE.Value).GetComponent<NetworkView>().RPC(
                         "dN",
                         RPCMode.All,
                         2);
                     Network.CloseConnection(
-                        ((Vehicle)plrE.Value).networkView.owner,
+                        ((Vehicle)plrE.Value).GetComponent<NetworkView>().owner,
                         true);
                 }
                 else
                 {
-                    networkView.RPC(
+                    GetComponent<NetworkView>().RPC(
                         "cC",
                         RPCMode.Server,
-                        ((Vehicle)plrE.Value).networkView.owner,
+                        ((Vehicle)plrE.Value).GetComponent<NetworkView>().owner,
                         plrE.Key,
                         1);
                 }
@@ -795,7 +795,7 @@ public class Settings : MonoBehaviour
             else if (
                 (Game.Controller.isHost || isAdmin) &&
                 !veh.isBot &&
-                !go.networkView.isMine &&
+                !go.GetComponent<NetworkView>().isMine &&
                 GUILayout.Button("Ban"))
             {
                 Game.Messaging.broadcast(
@@ -805,28 +805,28 @@ public class Settings : MonoBehaviour
                 if (Network.isServer)
                 {
                     bannedIPs += (bannedIPs != "" ? "\n" : "") +
-                        ((Vehicle)plrE.Value).networkView.owner.ipAddress +
+                        ((Vehicle)plrE.Value).GetComponent<NetworkView>().owner.ipAddress +
                         " " +
                         go.name;
-                    networkView.RPC(
+                    GetComponent<NetworkView>().RPC(
                         "dN",
-                        ((Vehicle)plrE.Value).networkView.owner,
+                        ((Vehicle)plrE.Value).GetComponent<NetworkView>().owner,
                         2);
-                    ((Vehicle)plrE.Value).networkView.RPC(
+                    ((Vehicle)plrE.Value).GetComponent<NetworkView>().RPC(
                         "dN",
                         RPCMode.All,
                         2);
                     Network.CloseConnection(
-                        ((Vehicle)plrE.Value).networkView.owner,
+                        ((Vehicle)plrE.Value).GetComponent<NetworkView>().owner,
                         true);
                     Game.Controller.registerHost();
                 }
                 else
                 {
-                    networkView.RPC(
+                    GetComponent<NetworkView>().RPC(
                         "cC",
                         RPCMode.Server,
-                        ((Vehicle)plrE.Value).networkView.owner,
+                        ((Vehicle)plrE.Value).GetComponent<NetworkView>().owner,
                         plrE.Key,
                         2);
                 }
@@ -842,7 +842,7 @@ public class Settings : MonoBehaviour
 			if (bannedIPs != "" && GUILayout.Button("Unban All"))
 			{
 				bannedIPs = "";
-				Game.Controller.StartCoroutine_Auto(Game.Controller.registerHost());
+				Game.Controller.StartCoroutine(Game.Controller.registerHost());
 				updateServerPrefs();
 			}
 			string cm = GUILayout.TextField(bannedIPs);
@@ -860,7 +860,7 @@ public class Settings : MonoBehaviour
 		{
 			if (GUILayout.Button(">> Default All <<"))
 			{
-				Game.Controller.networkView.RPC(
+				Game.Controller.GetComponent<NetworkView>().RPC(
                     "sSS",
                     RPCMode.All,
                     serverDefault);
@@ -892,7 +892,7 @@ public class Settings : MonoBehaviour
                 !Game.Controller.serverHidden &&
                 !Game.Controller.hostRegistered)
 			{
-				Game.Controller.StartCoroutine_Auto(Game.Controller.registerHostSet());
+				Game.Controller.StartCoroutine(Game.Controller.registerHostSet());
 				updateServerPrefs();
 			}
 
@@ -1135,14 +1135,14 @@ public class Settings : MonoBehaviour
                 GUILayout.Button("Add Bot") &&
                 Game.Controller.botsInGame < int.MaxValue)
 			{
-				Game.Controller.StartCoroutine_Auto(Game.Controller.addBot());
+				Game.Controller.StartCoroutine(Game.Controller.addBot());
 			}
 			if (Game.Controller.botsInGame > 0)
 			{
 				GUILayout.Space(5f);
 				if (GUILayout.Button("Axe Bot"))
 				{
-					Game.Controller.StartCoroutine_Auto(Game.Controller.axeBot());
+					Game.Controller.StartCoroutine(Game.Controller.axeBot());
 				}
 			}
 			GUILayout.EndHorizontal();
@@ -1863,7 +1863,7 @@ public class Settings : MonoBehaviour
             Game.Controller.isHost &&
             GUILayout.Button("Apply Custom\nSettings"))
 		{
-			Game.Controller.networkView.RPC(
+			Game.Controller.GetComponent<NetworkView>().RPC(
                 "sSS",
                 RPCMode.All,
                 serverString);
@@ -1967,7 +1967,7 @@ public class Settings : MonoBehaviour
 			}
 		}
 
-		GameObject.Find("MiniMap").camera.enabled = minimapAllowed && useMinimap;
+		GameObject.Find("MiniMap").GetComponent<Camera>().enabled = minimapAllowed && useMinimap;
 		
         QualitySettings.SetQualityLevel(renderLevel - 1);
 		
@@ -2120,7 +2120,7 @@ public class Settings : MonoBehaviour
 		PlayerPrefs.SetFloat("vehColAccR", Game.PlayerVeh.vehicleAccent.r);
 		PlayerPrefs.SetFloat("vehColAccG", Game.PlayerVeh.vehicleAccent.g);
 		PlayerPrefs.SetFloat("vehColAccB", Game.PlayerVeh.vehicleAccent.b);
-		Game.Player.networkView.RPC(
+		Game.Player.GetComponent<NetworkView>().RPC(
             "sC",
             RPCMode.Others,
             Game.PlayerVeh.vehicleColor.r,

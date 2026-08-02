@@ -94,8 +94,8 @@ public class Buggy : MonoBehaviour
 		List<Material> materialAccents = new List<Material>();
 
 		//Init Wing Tinting
-		materialAccents.Add(wing0.renderer.material);
-		materialAccents.Add(wing1.renderer.material);
+		materialAccents.Add(wing0.GetComponent<Renderer>().material);
+		materialAccents.Add(wing1.GetComponent<Renderer>().material);
 
 		//Instantiate Wheels
 		int i;

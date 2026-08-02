@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced 'glstate.matrix.mvp' with 'UNITY_MATRIX_MVP'
 // Upgrade NOTE: replaced 'glstate.matrix.texture[0]' with 'UNITY_MATRIX_TEXTURE0'
 // Upgrade NOTE: replaced 'glstate.matrix.texture[1]' with 'UNITY_MATRIX_TEXTURE1'
@@ -32,7 +34,7 @@ float4 _CameraDepthNormalsTexture_ST;
 v2f_ao vert_ao (appdata_img v)
 {
 	v2f_ao o;
-	o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+	o.pos = UnityObjectToClipPos (v.vertex);
 	o.uv = TRANSFORM_TEX(v.texcoord, _CameraDepthNormalsTexture);
 	o.uvr = v.texcoord.xy * _NoiseScale;
 	return o;
@@ -228,7 +230,7 @@ float4 _MainTex_ST;
 v2f vert (appdata_img v)
 {
 	v2f o;
-	o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+	o.pos = UnityObjectToClipPos (v.vertex);
 	o.uv = TRANSFORM_TEX (v.texcoord, _CameraDepthNormalsTexture);
 	return o;
 }
@@ -306,7 +308,7 @@ struct v2f {
 v2f vert (appdata_img v)
 {
 	v2f o;
-	o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+	o.pos = UnityObjectToClipPos (v.vertex);
 	o.uv[0] = MultiplyUV (UNITY_MATRIX_TEXTURE0, v.texcoord);
 	o.uv[1] = MultiplyUV (UNITY_MATRIX_TEXTURE1, v.texcoord);
 	return o;

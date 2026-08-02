@@ -40,15 +40,11 @@ public class VehicleNet : MonoBehaviour
 	private Quaternion r;
 	public State[] states;
 
-	public VehicleNet()
+	public void Start()
 	{
 		pingCheck = UnityEngine.Random.Range(15, 20);
 		states = new State[15];
-	}
-
-	public void Start()
-	{
-		vehicle.networkView.observed = this;
+		vehicle.GetComponent<NetworkView>().observed = this;
 	}
 
 	public void Update()
@@ -61,7 +57,7 @@ public class VehicleNet : MonoBehaviour
 			}
 			else
 			{
-				networkView.RPC("sT", RPCMode.All, 0f);
+				GetComponent<NetworkView>().RPC("sT", RPCMode.All, 0f);
 			}
 		}
 
@@ -71,7 +67,7 @@ public class VehicleNet : MonoBehaviour
             states[14].t == 0f ||
             !vehicle.myRigidbody ||
             !Game.Player ||
-            !Game.Player.rigidbody)
+            !Game.Player.GetComponent<Rigidbody>())
 		{
 			return;
 		}
@@ -93,7 +89,7 @@ public class VehicleNet : MonoBehaviour
 		{
 			simulatePhysics = Vector3.Distance(
                 vehicle.myRigidbody.position,
-                Game.Player.rigidbody.position) < 40f;
+                Game.Player.GetComponent<Rigidbody>().position) < 40f;
 		}
 
 		vehicle.myRigidbody.isKinematic = !simulatePhysics;
@@ -194,7 +190,7 @@ public class VehicleNet : MonoBehaviour
         //We are the server, and have to keep track of relaying messages between connected clients
         if (stream.isWriting)
         {
-            if (networkView.stateSynchronization == NetworkStateSynchronization.Off)
+            if (GetComponent<NetworkView>().stateSynchronization == NetworkStateSynchronization.Off)
             {
                 Debug.Log("sNv NvS: " + gameObject.name);
                 return;
@@ -213,7 +209,7 @@ public class VehicleNet : MonoBehaviour
         //New packet recieved - add it to the states array for interpolation!
         else
         {
-            if (networkView.stateSynchronization == NetworkStateSynchronization.Off)
+            if (GetComponent<NetworkView>().stateSynchronization == NetworkStateSynchronization.Off)
             {
                 Debug.Log("sNv NvN: " + gameObject.name);
                 return;

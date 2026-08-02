@@ -194,14 +194,14 @@ public class VehicleBot : MonoBehaviour
                 1 << 8))
 		{
 			rocketFireTime = Time.time;
-			networkView.RPC(
+			GetComponent<NetworkView>().RPC(
                 "fRl",
                 RPCMode.All,
-                networkView.viewID,
+                GetComponent<NetworkView>().viewID,
                 Network.time + "",
                 vehicle.ridePos.position +
                     vehicle.transform.up * -0.1f,
-                enemy.networkView.viewID);
+                enemy.GetComponent<NetworkView>().viewID);
 		}
 
         //Bounds Checking
@@ -225,7 +225,7 @@ public class VehicleBot : MonoBehaviour
             vehicle.zorbBall &&
             (vehicle.input.y != 0f || vehicle.input.x != 0f))
         {
-            rigidbody.AddForce(
+            GetComponent<Rigidbody>().AddForce(
                 Vector3.Scale(
                     new Vector3(1f, 0f, 1f),
                     Camera.main.transform.TransformDirection(new Vector3(
@@ -235,7 +235,7 @@ public class VehicleBot : MonoBehaviour
                         0f,
                         vehicle.input.y * Game.Settings.zorbSpeed))),
                 ForceMode.Acceleration);
-            rigidbody.AddTorque(
+            GetComponent<Rigidbody>().AddTorque(
                 Camera.main.transform.TransformDirection(new Vector3(
                     vehicle.input.y,
                     0f,

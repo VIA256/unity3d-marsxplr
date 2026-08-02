@@ -19,13 +19,13 @@ public class JetThruster : MonoBehaviour
 
 	public void FixedUpdate()
 	{
-        Vector3 locvel = particleEmitter.localVelocity;
+        Vector3 locvel = GetComponent<ParticleEmitter>().localVelocity;
         locvel.x = vehicle.input.x;
         locvel.y = vehicle.input.y;
         locvel.z = Mathf.Min(-10.0f * vehicle.input.z, -0.5f);
-        particleEmitter.localVelocity = locvel;
+        GetComponent<ParticleEmitter>().localVelocity = locvel;
 		
-        if (particleEmitter.localVelocity.z >= -1f)
+        if (GetComponent<ParticleEmitter>().localVelocity.z >= -1f)
 		{
 			particleRenderer.particleRenderMode = ParticleRenderMode.Billboard;
 		}

@@ -13,9 +13,9 @@ public class LobbyDecor : MonoBehaviour
 	{
 		if (Time.time > 6f)
 		{
-			Color c = guiTexture.color;
+			Color c = GetComponent<GUITexture>().color;
 			c.a = 0;
-			guiTexture.color = c;
+			GetComponent<GUITexture>().color = c;
 		}
 		else if ((bool)bg)
 		{
@@ -40,10 +40,10 @@ public class LobbyDecor : MonoBehaviour
 		}
 		if (
             Time.time > 1.5f &&
-            !Camera.main.audio.isPlaying &&
+            !Camera.main.GetComponent<AudioSource>().isPlaying &&
             PlayerPrefs.GetInt("useMusic", 1) != 0)
 		{
-			Camera.main.audio.Play();
+			Camera.main.GetComponent<AudioSource>().Play();
 		}
 
 		if (Time.time < 5f)
@@ -53,13 +53,13 @@ public class LobbyDecor : MonoBehaviour
 			bg.color = bgc;
 			if (Time.time < 2.5f)
 			{
-				Color gtc = guiTexture.color;
+				Color gtc = GetComponent<GUITexture>().color;
                 gtc.a = Mathf.Lerp(
                     0f,
                     0.6f,
                     Time.time * (1f / 2.5f));
-				guiTexture.color = gtc;
-				guiTexture.pixelInset = new Rect(
+				GetComponent<GUITexture>().color = gtc;
+				GetComponent<GUITexture>().pixelInset = new Rect(
                     (float)(Screen.width / 2) - width / 2f,
                     (float)(Screen.height / 2) - width / 4f,
                     width,
@@ -67,7 +67,7 @@ public class LobbyDecor : MonoBehaviour
 			}
 			if (Time.time > 4.25f)
 			{
-				guiTexture.pixelInset = new Rect(
+				GetComponent<GUITexture>().pixelInset = new Rect(
                     (float)(Screen.width / 2) - width / 2f,
                     easeOutExpo(
                         Time.time - 4.25f,
@@ -83,13 +83,13 @@ public class LobbyDecor : MonoBehaviour
 			{
 				Destroy(bg);
 			}
-			Color gtc = guiTexture.color;
+			Color gtc = GetComponent<GUITexture>().color;
             gtc.a = Mathf.Lerp(
-                guiTexture.color.a,
+                GetComponent<GUITexture>().color.a,
                 Lobby.GUIAlpha - 0.4f,
                 Time.deltaTime * 4f);
-			guiTexture.color = gtc;
-			guiTexture.pixelInset = new Rect(
+			GetComponent<GUITexture>().color = gtc;
+			GetComponent<GUITexture>().pixelInset = new Rect(
                 (float)(Screen.width / 2) - width / 2f,
                 (float)Screen.height - width / 2f,
                 width,

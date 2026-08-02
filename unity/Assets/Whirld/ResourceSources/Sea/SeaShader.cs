@@ -67,7 +67,7 @@ public class SeaShader : MonoBehaviour
 	public void OnWillRenderObject()
 	{
 		
-		if( !enabled || !renderer || !renderer.sharedMaterial || !renderer.enabled )	// || Time.time < tickTime)
+		if( !enabled || !GetComponent<Renderer>() || !GetComponent<Renderer>().sharedMaterial || !GetComponent<Renderer>().enabled )	// || Time.time < tickTime)
 			return;
 			
 		//tickTime = Time.time + .05;
@@ -97,8 +97,8 @@ public class SeaShader : MonoBehaviour
 		m_HardwareWaterSupport = FindHardwareWaterSupport();
 		WaterMode mode = GetWaterMode();
 		Shader newShader = ( mode == WaterMode.Refractive ) ? m_ShaderFull : m_ShaderSimple;
-		if( renderer.sharedMaterial.shader != newShader )
-			renderer.sharedMaterial.shader = newShader;
+		if( GetComponent<Renderer>().sharedMaterial.shader != newShader )
+			GetComponent<Renderer>().sharedMaterial.shader = newShader;
 		
 		Camera reflectionCamera, refractionCamera;
 		CreateWaterObjects( cam, out reflectionCamera, out refractionCamera );
@@ -166,9 +166,9 @@ public class SeaShader : MonoBehaviour
 			
 			reflectionCamera.transform.position = oldpos;
 			GL.SetRevertBackfacing (false);
-			renderer.sharedMaterial.SetTexture( "_ReflectionTex", m_ReflectionTexture );
+			GetComponent<Renderer>().sharedMaterial.SetTexture( "_ReflectionTex", m_ReflectionTexture );
 		}
-		else renderer.sharedMaterial.SetTexture( "_ReflectionTex", null );
+		else GetComponent<Renderer>().sharedMaterial.SetTexture( "_ReflectionTex", null );
 		
 		// Render refraction
 		if( mode >= WaterMode.Refractive )
@@ -201,7 +201,7 @@ public class SeaShader : MonoBehaviour
 			m_Terrain.treeDistance = oldTreeDist;
 			m_Terrain.treeBillboardDistance = oldTreeBillDist;
 			
-			renderer.sharedMaterial.SetTexture( "_RefractionTex", m_RefractionTexture );
+			GetComponent<Renderer>().sharedMaterial.SetTexture( "_RefractionTex", m_RefractionTexture );
 		}
 		
 		QualitySettings.softVegetation = oldSoftVegetation;
@@ -237,9 +237,9 @@ public class SeaShader : MonoBehaviour
 	// Cleanup all the objects we possibly have created
 	void OnDisable()
 	{
-		if( renderer )
+		if( GetComponent<Renderer>() )
 		{
-			Material mat = renderer.sharedMaterial;
+			Material mat = GetComponent<Renderer>().sharedMaterial;
 			if( mat )
 			{
 				mat.SetTexture( "_ReflectionTex", null );
@@ -277,9 +277,9 @@ public class SeaShader : MonoBehaviour
 		isSurface = (cam.transform.position.y > WaterTransform.position.y);
 		WaterTransform.rotation = (isSurface ? Quaternion.identity : Quaternion.Euler(180, 0, 0));
 		
-		if( !renderer )
+		if( !GetComponent<Renderer>() )
 			return;
-		Material mat = renderer.sharedMaterial;
+		Material mat = GetComponent<Renderer>().sharedMaterial;
 		if( !mat )
 			return;
 			
@@ -356,11 +356,11 @@ public class SeaShader : MonoBehaviour
 			if( !reflectionCamera ) // catch both not-in-dictionary and in-dictionary-but-deleted-GO
 			{
 				GameObject go = new GameObject( "Water Refl Camera id" + GetInstanceID() + " for " + currentCamera.GetInstanceID(), typeof(Camera), typeof(Skybox) );
-				reflectionCamera = go.camera;
+				reflectionCamera = go.GetComponent<Camera>();
 				reflectionCamera.enabled = false;
 				reflectionCamera.transform.position = transform.position;
 				reflectionCamera.transform.rotation = transform.rotation;
-				reflectionCamera.gameObject.AddComponent("FlareLayer");
+				reflectionCamera.gameObject.AddComponent<FlareLayer>();
 				go.hideFlags = HideFlags.HideAndDontSave;
 				m_ReflectionCameras[currentCamera] = reflectionCamera;
 			}
@@ -385,11 +385,11 @@ public class SeaShader : MonoBehaviour
 			if( !refractionCamera ) // catch both not-in-dictionary and in-dictionary-but-deleted-GO
 			{
 				GameObject go = new GameObject( "Water Refr Camera id" + GetInstanceID() + " for " + currentCamera.GetInstanceID(), typeof(Camera), typeof(Skybox) );
-				refractionCamera = go.camera;
+				refractionCamera = go.GetComponent<Camera>();
 				refractionCamera.enabled = false;
 				refractionCamera.transform.position = transform.position;
 				refractionCamera.transform.rotation = transform.rotation;
-				refractionCamera.gameObject.AddComponent("FlareLayer");
+				refractionCamera.gameObject.AddComponent<FlareLayer>();
 				go.hideFlags = HideFlags.HideAndDontSave;
 				m_RefractionCameras[currentCamera] = refractionCamera;
 			}
@@ -406,10 +406,10 @@ public class SeaShader : MonoBehaviour
 	
 	public WaterMode FindHardwareWaterSupport()
 	{
-		if( !SystemInfo.supportsRenderTextures || !renderer || !m_ShaderFull )
+		if( !SystemInfo.supportsRenderTextures || !GetComponent<Renderer>() || !m_ShaderFull )
 			return WaterMode.Simple;
 			
-		Material mat = renderer.sharedMaterial;
+		Material mat = GetComponent<Renderer>().sharedMaterial;
 		if( !mat )
 			return WaterMode.Simple;
 			

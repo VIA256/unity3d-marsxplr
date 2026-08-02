@@ -84,7 +84,7 @@ public class CameraVehicle : MonoBehaviour
 		if (Game.Settings.useHypersound == 1)
         {
 			Game.Settings.gameMusic.pitch = Mathf.Clamp(
-				-0.5f + camTarget.rigidbody.velocity.magnitude / 15f,
+				-0.5f + camTarget.GetComponent<Rigidbody>().velocity.magnitude / 15f,
 				0.8f,
 				1.5f
 			);
@@ -127,10 +127,10 @@ public class CameraVehicle : MonoBehaviour
 		}
 
 		//Green Arrow
-		Vector3 targetPos = transform.InverseTransformPoint(camera.ScreenToWorldPoint(new Vector3(
-			camera.pixelWidth - 30f - 65f,
+		Vector3 targetPos = transform.InverseTransformPoint(GetComponent<Camera>().ScreenToWorldPoint(new Vector3(
+			GetComponent<Camera>().pixelWidth - 30f - 65f,
 			30f,
-			camera.nearClipPlane + 0.05f
+			GetComponent<Camera>().nearClipPlane + 0.05f
 		)));
 		if (Vector3.Distance(targetPos, arrow.localPosition) < 0.002f)
         {
@@ -343,15 +343,15 @@ public class CameraVehicle : MonoBehaviour
 			else if (Game.Settings.camChase == 1)
             {
 				if (
-					(bool)camTarget.transform.gameObject.rigidbody &&
-					camTarget.transform.gameObject.rigidbody.velocity.sqrMagnitude > 0.1f &&
-					camTarget.transform.gameObject.rigidbody.velocity.normalized.y < 0.8f &&
-					camTarget.transform.gameObject.rigidbody.velocity.normalized.y > -0.8f
+					(bool)camTarget.transform.gameObject.GetComponent<Rigidbody>() &&
+					camTarget.transform.gameObject.GetComponent<Rigidbody>().velocity.sqrMagnitude > 0.1f &&
+					camTarget.transform.gameObject.GetComponent<Rigidbody>().velocity.normalized.y < 0.8f &&
+					camTarget.transform.gameObject.GetComponent<Rigidbody>().velocity.normalized.y > -0.8f
 				)
                 {
 					lastDir = Vector3.Lerp(
 						lastDir,
-						camTarget.transform.gameObject.rigidbody.velocity.normalized,
+						camTarget.transform.gameObject.GetComponent<Rigidbody>().velocity.normalized,
 						0.1f
 					);
 				}
@@ -409,13 +409,13 @@ public class CameraVehicle : MonoBehaviour
 			//Arcade
 			else if (
 				Game.Settings.camChase == 2 &&
-				camTarget.transform.rigidbody.velocity.magnitude > 0f
+				camTarget.transform.GetComponent<Rigidbody>().velocity.magnitude > 0f
 			)
             {
 				float heightDamping = 3f;
 				float rotationDamping = 3f;
 				float wantedRotationAngle = Quaternion.LookRotation(
-					camTarget.transform.rigidbody.velocity
+					camTarget.transform.GetComponent<Rigidbody>().velocity
 				).eulerAngles.y;
 				wantedRotationAngle += Mathf.Lerp(
 					30f,

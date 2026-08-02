@@ -1,3 +1,6 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced 'PositionFog()' with multiply of UNITY_MATRIX_MVP by position
 // Upgrade NOTE: replaced 'V2F_POS_FOG' with 'float4 pos : SV_POSITION'
 
@@ -36,9 +39,9 @@ struct v2f {
 v2f vert (appdata_tan v)
 {	
 	v2f o;
-	o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
-	o.normal = mul( (float3x3)_Object2World, v.normal );
-	o.viewDir = mul( (float3x3)_Object2World, ObjSpaceViewDir(v.vertex) );
+	o.pos = UnityObjectToClipPos (v.vertex);
+	o.normal = mul( (float3x3)unity_ObjectToWorld, v.normal );
+	o.viewDir = mul( (float3x3)unity_ObjectToWorld, ObjSpaceViewDir(v.vertex) );
 	
 	return o;
 }
