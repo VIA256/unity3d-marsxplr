@@ -626,10 +626,10 @@ public class WhirldIn : System.Object
                             l[2].IndexOf("/"))) - 1);
                         tris.Add(int.Parse(l[1].Substring(
                             0,
-                            l[2].IndexOf("/"))) - 1);
+                            l[1].IndexOf("/"))) - 1);
                         tris.Add(int.Parse(l[3].Substring(
                             0,
-                            l[2].IndexOf("/"))) - 1);
+                            l[3].IndexOf("/"))) - 1);
                     }
                     //Attempt to triangulate face - hardly works, could use better routine here...
                     else
