@@ -8,8 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
-//using Ionic.Zlib;
-using System.IO.Compression;
+using Ionic.Zlib;
 using UnityEngine;
 
 [Serializable]
@@ -566,12 +565,12 @@ public class WhirldIn : System.Object
         String data;
         if (vS[1].Substring(lastDot + 1) == "gz")
         {
-            //data = GZipStream.UncompressString(www.bytes);
+            data = GZipStream.UncompressString(www.bytes);
             
-            GZipStream gz = new GZipStream(new MemoryStream(www.bytes), CompressionMode.Decompress);
+            /*GZipStream gz = new GZipStream(new MemoryStream(www.bytes), CompressionMode.Decompress);
             byte[] buf = new byte[www.bytes.Length];
             gz.Read(buf, 0, buf.Length);
-            data = buf.ToString();
+            data = buf.ToString();*/
 
             vS[1] = vS[1].Substring(0, lastDot);
         }
@@ -915,9 +914,11 @@ public class WhirldIn : System.Object
             System.IO.BinaryReader br;
             if (true) //Terrain RAW file is compressed
             {
-                GZipStream gz = new GZipStream(new MemoryStream(www.bytes), CompressionMode.Decompress);
+                /*GZipStream gz = new GZipStream(new MemoryStream(www.bytes), CompressionMode.Decompress);
                 byte[] buf = new byte[www.bytes.Length];
-                gz.Read(buf, 0, buf.Length);
+                gz.Read(buf, 0, buf.Length);*/
+
+				byte[] buf = GZipStream.UncompressBuffer(www.bytes);
 
                 br = new System.IO.BinaryReader(new System.IO.MemoryStream(
                     buf));
