@@ -97,11 +97,13 @@ public class CameraVehicle : MonoBehaviour
 			(Input.GetButton("Snipe") && !Game.Messaging.chatting)
 		)
         {
+        		Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Locked;
 		}
 		else
         {
 			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
 		}
 
 		//Snipe Zooming

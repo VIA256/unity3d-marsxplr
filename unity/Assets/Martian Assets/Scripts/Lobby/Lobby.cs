@@ -92,6 +92,7 @@ public class Lobby : MonoBehaviour
 	{
 		QualitySettings.SetQualityLevel(5);
 		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
 		Application.runInBackground = false;
 	}
 
