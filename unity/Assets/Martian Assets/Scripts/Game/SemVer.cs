@@ -37,44 +37,32 @@ public class SemVer
 
     public static bool operator ==(SemVer a, SemVer b)
     {
-        return (
-            a.maj == b.maj &&
-            a.min == b.min &&
-            a.patch == b.patch);
+		return a.GetSum() == b.GetSum();
     }
 
     public static bool operator !=(SemVer a, SemVer b)
     {
-        return (
-            a.maj != b.maj ||
-            a.min != b.min ||
-            a.patch != b.patch);
+		return a.GetSum() != b.GetSum();
     }
 
     public static bool operator >(SemVer a, SemVer b)
     {
-        return a.maj > b.maj ? true :
-            a.min > b.min ? true :
-                a.patch > b.patch ? true :
-                    false;
+		return a.GetSum() > b.GetSum();
     }
 
     public static bool operator >=(SemVer a, SemVer b)
     {
-        return a.maj >= b.maj ? true :
-            a.min >= b.min ? true :
-                a.patch >= b.patch ? true :
-                    false;
+		return a.GetSum() >= b.GetSum();
     }
 
     public static bool operator <=(SemVer a, SemVer b)
     {
-        return b > a;
+		return a.GetSum() <= b.GetSum();
     }
 
     public static bool operator <(SemVer a, SemVer b)
     {
-        return b >= a;
+		return a.GetSum() < b.GetSum();
     }
 
     public override string ToString()
@@ -97,6 +85,14 @@ public class SemVer
             byte.Parse(sv[0]));
         throw new FormatException();
     }
+
+	public UInt32 GetSum()
+	{
+		return
+			((UInt32)maj*256*256) +
+			((UInt32)min*256) +
+			((UInt32)patch);
+	}
 
     public override int GetHashCode()
     {
