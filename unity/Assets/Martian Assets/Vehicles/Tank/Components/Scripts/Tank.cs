@@ -79,7 +79,7 @@ public class Tank : MonoBehaviour
             ((TankTrack)track.GetComponent(typeof(TankTrack))).rightSide = true;
 		}
 
-		if (!vehicle.GetComponent<NetworkView>().isMine)
+		if (!vehicle.networkView.isMine)
 		{
 			simpleTracks = new GameObject();
 			simpleTracks.transform.parent = transform;
@@ -162,7 +162,7 @@ public class Tank : MonoBehaviour
         centerOfMass.y = Game.Settings.tankCG;
 		vehicle.myRigidbody.centerOfMass = centerOfMass;
 
-		if (!vehicle.GetComponent<NetworkView>().isMine && (bool)vehicle.vehicleNet)
+		if (!vehicle.networkView.isMine && (bool)vehicle.vehicleNet)
 		{
             //Enable advanced physics
 			if (vehicle.vehicleNet.simulatePhysics && simpleTracks.activeInHierarchy)

@@ -1,5 +1,3 @@
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
 // Upgrade NOTE: replaced 'glstate.matrix.mvp' with 'UNITY_MATRIX_MVP'
 // Upgrade NOTE: replaced 'glstate.matrix.texture[0]' with 'UNITY_MATRIX_TEXTURE0'
 // Upgrade NOTE: replaced 'samplerRECT' with 'sampler2D'
@@ -38,7 +36,7 @@ struct v2f {
 v2f vert (appdata_img v)
 {
 	v2f o;
-	o.pos = UnityObjectToClipPos (v.vertex);
+	o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
 	float2 uv = v.texcoord.xy - _CenterRadius.xy;
 	o.uv = MultiplyUV (UNITY_MATRIX_TEXTURE0, uv);
 	o.uvOrig = uv;

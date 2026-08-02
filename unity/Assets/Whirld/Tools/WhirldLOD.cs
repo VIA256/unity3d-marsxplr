@@ -12,9 +12,13 @@ public class WhirldLOD : MonoBehaviour
 	private int lastLevel = -1;
 	private float lodCheck;
 
-	public void Start()
+	public WhirldLOD()
 	{
 		lodCheck = UnityEngine.Random.Range(30, 60) / 10;
+	}
+
+	public void Start()
+	{
 		InvokeRepeating("SetLOD", 0f, lodCheck);
 	}
 

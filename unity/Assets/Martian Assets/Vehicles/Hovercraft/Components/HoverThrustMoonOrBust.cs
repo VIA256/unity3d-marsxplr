@@ -16,16 +16,16 @@ public class HoverThrustMoonOrBust : MonoBehaviour
 	public void FixedUpdate()
     {
 		float x = (float)((vehicle.input.y == 0f) ? 2 : 5) * vehicle.input.x;
-		Vector3 localVelocity = GetComponent<ParticleEmitter>().localVelocity;
+		Vector3 localVelocity = particleEmitter.localVelocity;
 		localVelocity.x = x;
-		GetComponent<ParticleEmitter>().localVelocity = localVelocity;
+		particleEmitter.localVelocity = localVelocity;
 		
 		float z = Mathf.Min(-10f * vehicle.input.y, -0.5f);
-		localVelocity = GetComponent<ParticleEmitter>().localVelocity;
+		localVelocity = particleEmitter.localVelocity;
 		localVelocity.z = z;
-		GetComponent<ParticleEmitter>().localVelocity = localVelocity;
+		particleEmitter.localVelocity = localVelocity;
 		
-		if (GetComponent<ParticleEmitter>().localVelocity.z >= -1f)
+		if (particleEmitter.localVelocity.z >= -1f)
         {
 			particleRenderer.particleRenderMode = ParticleRenderMode.Billboard;
 		}

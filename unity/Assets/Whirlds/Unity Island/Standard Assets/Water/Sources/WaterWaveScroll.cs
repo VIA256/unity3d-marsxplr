@@ -12,9 +12,9 @@ public class WaterWaveScroll : MonoBehaviour
 	
 	void Update()
 	{
-		if( !GetComponent<Renderer>() )
+		if( !renderer )
 			return;
-		Material mat = GetComponent<Renderer>().material;
+		Material mat = renderer.material;
 		if( !mat )
 			return;
 			

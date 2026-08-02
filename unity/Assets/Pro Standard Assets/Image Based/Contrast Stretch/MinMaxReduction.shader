@@ -1,5 +1,3 @@
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
 // Upgrade NOTE: replaced 'glstate.matrix.mvp' with 'UNITY_MATRIX_MVP'
 // Upgrade NOTE: replaced 'glstate.matrix.texture[0]' with 'UNITY_MATRIX_TEXTURE0'
 // Upgrade NOTE: replaced 'samplerRECT' with 'sampler2D'
@@ -34,7 +32,7 @@ uniform sampler2D _MainTex;
 
 v2f vert (appdata_img v) {
 	v2f o;
-	o.position = UnityObjectToClipPos (v.vertex);
+	o.position = mul (UNITY_MATRIX_MVP, v.vertex);
 	float2 uv = MultiplyUV (UNITY_MATRIX_TEXTURE0, v.texcoord);
 	
 	// Compute UVs to sample 2x2 pixel block.

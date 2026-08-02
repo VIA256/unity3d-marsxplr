@@ -47,7 +47,7 @@ public class ActivateTrigger : MonoBehaviour {
 						targetBehaviour.enabled = true;
 					break;	
 				case Mode.Animate:
-					targetGameObject.GetComponent<Animation>().Play ();
+					targetGameObject.animation.Play ();
 					break;	
 				case Mode.Deactivate:
 					targetGameObject.SetActive(false);

@@ -203,16 +203,16 @@ public class WhirldIn : System.Object
 				}
 					
                 //Skybox
-                else if (n == "rndSkybox") monoBehaviour.StartCoroutine(LoadSkybox(v));
+                else if (n == "rndSkybox") monoBehaviour.StartCoroutine_Auto(LoadSkybox(v));
 
                 //Texture
-                else if (n == "txt") monoBehaviour.StartCoroutine(LoadTexture(v));
+                else if (n == "txt") monoBehaviour.StartCoroutine_Auto(LoadTexture(v));
 
                 //Mesh
-                else if (n == "msh") monoBehaviour.StartCoroutine(LoadMesh(v));
+                else if (n == "msh") monoBehaviour.StartCoroutine_Auto(LoadMesh(v));
 
                 //Terrain
-                else if (n == "trn") monoBehaviour.StartCoroutine(LoadTerrain(v));
+                else if (n == "trn") monoBehaviour.StartCoroutine_Auto(LoadTerrain(v));
 
                 //Rendering Settings
                 else if (
@@ -767,7 +767,7 @@ public class WhirldIn : System.Object
                                     curMat.mainTextureScale = new Vector2(
                                         float.Parse(ml[5]),
                                         float.Parse(ml[6]));
-                                    monoBehaviour.StartCoroutine(LoadMeshTexture(
+                                    monoBehaviour.StartCoroutine_Auto(LoadMeshTexture(
                                         ml[7],
                                         curMat.name));
                                 }
@@ -845,7 +845,7 @@ public class WhirldIn : System.Object
                 mshObj.transform.parent = whirldBuffer.transform;
             }
         }
-        ;
+        msh.Optimize();
 
         threads.Remove(thread);
 

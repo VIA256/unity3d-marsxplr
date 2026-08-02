@@ -39,13 +39,13 @@ public class Rocket : MonoBehaviour
             Vector3 pos;
             Vector3 vel;
             Vector3 accel;
-            if (targetVehicle.GetComponent<NetworkView>().isMine) //Local vehicle, high precision
+            if (targetVehicle.networkView.isMine) //Local vehicle, high precision
             {
-                Vector3 refvel = targetVehicle.gameObject.GetComponent<Rigidbody>().velocity;
+                Vector3 refvel = targetVehicle.gameObject.rigidbody.velocity;
                 float reftme = Time.time;
                 yield return new WaitForSeconds(Time.fixedDeltaTime * 0.5f); //Allow target to move so we can analyze it's acceleration
                 pos = targetVehicle.transform.position;
-                vel = targetVehicle.gameObject.GetComponent<Rigidbody>().velocity;
+                vel = targetVehicle.gameObject.rigidbody.velocity;
                 accel = (vel - refvel) / (Time.time - reftme); ////Accelleration over 1 second
             }
             else //Remote vehicle, just make it look good
@@ -82,18 +82,18 @@ public class Rocket : MonoBehaviour
         //Unnecessary when autotargeting, as hits are calculated on target client
         else if (lag > 0f)
         {
-            GetComponent<Rigidbody>().position += GetComponent<Rigidbody>().transform.TransformDirection(
+            rigidbody.position += rigidbody.transform.TransformDirection(
                 0f,
                 0f,
                 velocity * lag); //Position extrapolation for non authoratative firing instances
         }
 
         //Begin Run
-        GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().transform.TransformDirection(
+        rigidbody.velocity = rigidbody.transform.TransformDirection(
             0f,
             0f,
             velocity);
-        strtPos = GetComponent<Rigidbody>().position;
+        strtPos = rigidbody.position;
         stage = 0;
 
         //Cleanup
@@ -112,12 +112,12 @@ public class Rocket : MonoBehaviour
 		}
 		if (Game.Settings.laserGrav != 0f)
 		{
-			Vector3 rigvel = GetComponent<Rigidbody>().velocity;
+			Vector3 rigvel = rigidbody.velocity;
 			rigvel.y -= Game.Settings.laserGrav *
                 (float)speedX *
                 Time.deltaTime *
                 20f;
-			GetComponent<Rigidbody>().velocity = rigvel;
+			rigidbody.velocity = rigvel;
 		}
         Vector3 vector = transform.position - strtPos;
 		RaycastHit[] hits = Physics.RaycastAll(
@@ -137,8 +137,8 @@ public class Rocket : MonoBehaviour
 
             //Non-authoratative game instances DO NOT detect vehicle laser hits. Hits are detected on authoratative instance, and then broadcast to other clients with lH RPC
             if (
-                ((targetVehicle && !targetVehicle.GetComponent<NetworkView>().isMine) ||
-                    (!targetVehicle && !launchVehicle.GetComponent<NetworkView>().isMine)) &&
+                ((targetVehicle && !targetVehicle.networkView.isMine) ||
+                    (!targetVehicle && !launchVehicle.networkView.isMine)) &&
                 collision.rigidbody)
             {
                 continue;
@@ -146,15 +146,15 @@ public class Rocket : MonoBehaviour
 
             //We are the instance if this laser on the firer's computer, & we tagged another vehicle
             if (
-                ((targetVehicle && targetVehicle.GetComponent<NetworkView>().isMine) ||
-                    (!targetVehicle && launchVehicle.GetComponent<NetworkView>().isMine)) &&
+                ((targetVehicle && targetVehicle.networkView.isMine) ||
+                    (!targetVehicle && launchVehicle.networkView.isMine)) &&
                 collision.rigidbody)
             {
                 Vehicle veh = (Vehicle)collision.transform.root.gameObject.GetComponent(typeof(Vehicle));
                 if (veh && veh.isResponding)
                 {
                     //Determine where we hit them
-                    veh.gameObject.GetComponent<NetworkView>().RPC(
+                    veh.gameObject.networkView.RPC(
                         "lH",
                         RPCMode.Others,
                         laserID,
@@ -164,7 +164,7 @@ public class Rocket : MonoBehaviour
                         launchVehicle.isIt == 1 &&
                         (Time.time - veh.lastTag) > 3f)
                     {
-                        launchVehicle.gameObject.GetComponent<NetworkView>().RPC(
+                        launchVehicle.gameObject.networkView.RPC(
                             "iS",
                             RPCMode.All,
                             veh.gameObject.name);
@@ -176,7 +176,7 @@ public class Rocket : MonoBehaviour
                         (Time.time - launchVehicle.lastTag) > 3 &&
                         (Time.time - veh.lastTag) > 3)
                     {
-                        launchVehicle.gameObject.GetComponent<NetworkView>().RPC(
+                        launchVehicle.gameObject.networkView.RPC(
                             "sQ",
                             RPCMode.All,
                             2);
@@ -186,7 +186,7 @@ public class Rocket : MonoBehaviour
                         veh.isIt == 0 &&
                         launchVehicle.isIt == 0)
                     {
-                        launchVehicle.gameObject.GetComponent<NetworkView>().RPC(
+                        launchVehicle.gameObject.networkView.RPC(
                             "dS",
                             RPCMode.All,
                             veh.gameObject.name);
@@ -203,31 +203,31 @@ public class Rocket : MonoBehaviour
             }
             else
             {
-                GetComponent<Rigidbody>().position = collision.point;
-                GetComponent<Rigidbody>().velocity = Game.Settings.laserRico *
+                rigidbody.position = collision.point;
+                rigidbody.velocity = Game.Settings.laserRico *
                     Vector3.Lerp(
                         Vector3.Scale(
-                            GetComponent<Rigidbody>().velocity,
+                            rigidbody.velocity,
                             collision.normal),
                         Vector3.Reflect(
-                            GetComponent<Rigidbody>().velocity,
+                            rigidbody.velocity,
                             collision.normal),
                         Game.Settings.laserRico);
             }
         }
 
-		strtPos = GetComponent<Rigidbody>().position;
+		strtPos = rigidbody.position;
 	}
 
 	public void laserHit(GameObject go, Vector3 pos, Vector3 norm)
 	{
 		stage = 1;
 
-		GetComponent<Rigidbody>().position = pos;
-		GetComponent<Rigidbody>().velocity = Vector3.zero;
+		rigidbody.position = pos;
+		rigidbody.velocity = Vector3.zero;
 		go.BroadcastMessage(
             "OnLaserHit",
-            launchVehicle.GetComponent<NetworkView>().isMine,
+            launchVehicle.networkView.isMine,
             SendMessageOptions.DontRequireReceiver);
 		Collider[] colliders = Physics.OverlapSphere(pos, 10f);
         foreach (Collider hit in colliders)

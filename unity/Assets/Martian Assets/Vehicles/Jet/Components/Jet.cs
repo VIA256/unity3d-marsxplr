@@ -57,19 +57,19 @@ public class Jet : MonoBehaviour
         }
 
         //Thruster Particles
-        Vector3 mainThrustPELocVel = mainThrusterParticles.gameObject.GetComponent<ParticleEmitter>().localVelocity;
+        Vector3 mainThrustPELocVel = mainThrusterParticles.gameObject.particleEmitter.localVelocity;
 		if (vehicle.specialInput)
 		{
             foreach (Transform thruster in hoverThrusters)
             {
-                thruster.gameObject.GetComponent<ParticleEmitter>().emit = true;
+                thruster.gameObject.particleEmitter.emit = true;
 
-                Vector3 pelocvel = thruster.gameObject.GetComponent<ParticleEmitter>().localVelocity;
+                Vector3 pelocvel = thruster.gameObject.particleEmitter.localVelocity;
                 pelocvel.y = -vehicle.input.z;
-                thruster.gameObject.GetComponent<ParticleEmitter>().localVelocity = pelocvel;
+                thruster.gameObject.particleEmitter.localVelocity = pelocvel;
 
-                thruster.gameObject.GetComponent<ParticleEmitter>().minSize =
-                    thruster.gameObject.GetComponent<ParticleEmitter>().maxSize =
+                thruster.gameObject.particleEmitter.minSize =
+                    thruster.gameObject.particleEmitter.maxSize =
                     Mathf.Max(0.1f, vehicle.input.z * 0.3f);
             }
 			if (lod.level == 0)
@@ -100,7 +100,7 @@ public class Jet : MonoBehaviour
 
             foreach (Transform thruster in hoverThrusters)
             {
-                thruster.gameObject.GetComponent<ParticleEmitter>().emit = false;
+                thruster.gameObject.particleEmitter.emit = false;
             }
 		}
         mainThrustPELocVel.z = Mathf.Min(
@@ -113,7 +113,7 @@ public class Jet : MonoBehaviour
             mainThrusterParticles.particleRenderMode = ParticleRenderMode.Billboard;
         }
         else mainThrusterParticles.particleRenderMode = ParticleRenderMode.Stretch;
-        mainThrusterParticles.gameObject.GetComponent<ParticleEmitter>().localVelocity = mainThrustPELocVel;
+        mainThrusterParticles.gameObject.particleEmitter.localVelocity = mainThrustPELocVel;
 
         //Camera
 		vehicle.camSmooth = !vehicle.specialInput;

@@ -111,7 +111,7 @@ public class Lobby : MonoBehaviour
         else if (userPassword != "")    //They are trying to play authenticated - don't let them in without validating their password
         {
             userNameTemp = PlayerPrefs.GetString("userName", "");
-            StartCoroutine(authenticateUser()); //Attempt Auto Login
+            StartCoroutine_Auto(authenticateUser()); //Attempt Auto Login
         }
         else
         {                               //They are a guest, just let them use whatever username they have.
@@ -270,7 +270,7 @@ public class Lobby : MonoBehaviour
         Network.isMessageQueueRunning = false; //We don't want to recieve LoadLevel commands before we are ready... This will be enabled as soon as we get to the "Game" level
 		GameData.userName = userName;
 		GameData.userCode = userCode;
-		StartCoroutine(LoadGame());
+		StartCoroutine_Auto(LoadGame());
 	}
 
 	public void OnGUI()
@@ -569,7 +569,7 @@ public class Lobby : MonoBehaviour
 			if (GUILayout.Button("Restart Connection Test"))
 			{
 				timer = 0f;
-				StartCoroutine(TestConnection(true));
+				StartCoroutine_Auto(TestConnection(true));
 			}
 			if (GUILayout.Button("Force Enable Networking (May Not Work)"))
 			{
@@ -657,7 +657,7 @@ public class Lobby : MonoBehaviour
                             Input.GetKeyDown("return") ||
                             Input.GetKeyDown("enter"))
 						{
-							StartCoroutine(authenticateUser());
+							StartCoroutine_Auto(authenticateUser());
 						}
 					}
 					else
@@ -879,7 +879,7 @@ public class Lobby : MonoBehaviour
 						else
 						{
 							GameData.userName = userName;
-							StartCoroutine(LoadGame());
+							StartCoroutine_Auto(LoadGame());
 						}
 					}
 				}

@@ -60,32 +60,32 @@ public class SeaData : MonoBehaviour
 	public void SetSeaMode()
 	{
         setMode = SeaMode;
-        seaObject.GetComponent<Renderer>().sharedMaterial.SetColor(
+        seaObject.renderer.sharedMaterial.SetColor(
             "_RefrColor",
             seaModeData[(int)SeaMode].color);
-        seaObject.GetComponent<Renderer>().sharedMaterial.SetFloat(
+        seaObject.renderer.sharedMaterial.SetFloat(
             "_WaveScale",
             seaModeData[(int)SeaMode].waves);
-        seaObject.GetComponent<Renderer>().sharedMaterial.SetFloat(
+        seaObject.renderer.sharedMaterial.SetFloat(
             "_ReflDistort",
             seaModeData[(int)SeaMode].reflection);
-        seaObject.GetComponent<Renderer>().sharedMaterial.SetFloat(
+        seaObject.renderer.sharedMaterial.SetFloat(
             "_RefrDistort",
             seaModeData[(int)SeaMode].refraction);
-        seaObjectSimple.GetComponent<Renderer>().sharedMaterial.SetColor(
+        seaObjectSimple.renderer.sharedMaterial.SetColor(
             "_Color",
             seaModeData[(int)SeaMode].color);
-        seaObjectSimBot.GetComponent<Renderer>().sharedMaterial.SetColor(
+        seaObjectSimBot.renderer.sharedMaterial.SetColor(
             "_Color",
             seaModeData[(int)SeaMode].glowColor);
 
-        Color soscol = seaObjectSimple.GetComponent<Renderer>().sharedMaterial.color;
+        Color soscol = seaObjectSimple.renderer.sharedMaterial.color;
 		soscol.a = 0.67f;//0.85f;
-        seaObjectSimple.GetComponent<Renderer>().sharedMaterial.color = soscol;
+        seaObjectSimple.renderer.sharedMaterial.color = soscol;
 
-        Color sosbcol = seaObjectSimBot.GetComponent<Renderer>().sharedMaterial.color;
+        Color sosbcol = seaObjectSimBot.renderer.sharedMaterial.color;
 		sosbcol.a = 0.67f;//0.85f;
-        seaObjectSimBot.GetComponent<Renderer>().sharedMaterial.color = sosbcol;
+        seaObjectSimBot.renderer.sharedMaterial.color = sosbcol;
 
         World.seaFogColor = seaModeData[(int)SeaMode].color;
         World.seaGlowColor = seaModeData[(int)SeaMode].glowColor;

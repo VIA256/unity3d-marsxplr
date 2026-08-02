@@ -16,7 +16,7 @@ public class RamoSphere : MonoBehaviour
 
 	public void Start()
 	{
-		shield.GetComponent<Renderer>().material.color = tagColor;
+		shield.renderer.material.color = tagColor;
 		vehicle = (Vehicle)transform.root.gameObject.GetComponent(typeof(Vehicle));
 	}
 
@@ -28,14 +28,14 @@ public class RamoSphere : MonoBehaviour
 			offset -= Mathf.Floor(offset);
 		}
 
-		shield.GetComponent<Renderer>().material.SetFloat("_Offset", offset);
+		shield.renderer.material.SetFloat("_Offset", offset);
 
-		Color srmcol = shield.GetComponent<Renderer>().material.color;
+		Color srmcol = shield.renderer.material.color;
         srmcol.a = Mathf.Lerp(
-            shield.GetComponent<Renderer>().material.color.a,
+            shield.renderer.material.color.a,
             (ram) ? ramColor.a : tagColor.a,
             Time.deltaTime * 3f);
-		shield.GetComponent<Renderer>().material.color = srmcol;
+		shield.renderer.material.color = srmcol;
 
 		shield.rotation = Quaternion.identity;
 	}
@@ -43,12 +43,12 @@ public class RamoSphere : MonoBehaviour
     public IEnumerator colorSet(bool r)
     {
         yield return new WaitForFixedUpdate(); //bizarre, but necessary...
-        if (r) shield.GetComponent<Renderer>().material.color = ramColor;
-        else shield.GetComponent<Renderer>().material.color = tagColor;
+        if (r) shield.renderer.material.color = ramColor;
+        else shield.renderer.material.color = tagColor;
 
-        Color srmcol = shield.GetComponent<Renderer>().material.color;
+        Color srmcol = shield.renderer.material.color;
         srmcol.a = 0f;
-        shield.GetComponent<Renderer>().material.color = srmcol;
+        shield.renderer.material.color = srmcol;
 
         ram = r;
     }
@@ -61,9 +61,9 @@ public class RamoSphere : MonoBehaviour
                 collision.relativeVelocity.normalized));
 		if (i > 3f)
 		{
-			Color srmcol = shield.GetComponent<Renderer>().material.color;
+			Color srmcol = shield.renderer.material.color;
             srmcol.a = ((ram) ? ramColor.a : tagColor.a) + i * 0.1f;
-			shield.GetComponent<Renderer>().material.color = srmcol;
+			shield.renderer.material.color = srmcol;
 		}
 	}
 
@@ -72,13 +72,13 @@ public class RamoSphere : MonoBehaviour
         if (other.gameObject.layer == 14) return;
 		if (
             other.name == "ORB(Clone)" &&
-            shield.GetComponent<Renderer>().material.color.a < 3f)
+            shield.renderer.material.color.a < 3f)
 		{
-			Color srmcol = shield.GetComponent<Renderer>().material.color;
+			Color srmcol = shield.renderer.material.color;
 			srmcol.a = 3f;
-			shield.GetComponent<Renderer>().material.color = srmcol;
+			shield.renderer.material.color = srmcol;
 		}
-        if (!vehicle.GetComponent<NetworkView>().isMine) return;
+        if (!vehicle.networkView.isMine) return;
 		if ((bool)other.attachedRigidbody)
 		{
 			vehicle.OnRam(other.attachedRigidbody.gameObject);
@@ -90,16 +90,16 @@ public class RamoSphere : MonoBehaviour
         if (other.gameObject.layer == 14) return;
         if (other.name == "ORB(Clone)")
         {
-            Color srmcol = shield.GetComponent<Renderer>().material.color;
+            Color srmcol = shield.renderer.material.color;
             srmcol.a = 10f;
-            shield.GetComponent<Renderer>().material.color = srmcol;
+            shield.renderer.material.color = srmcol;
         }
 	}
 
 	public void OnLaserHit()
 	{
-        Color srmcol = shield.GetComponent<Renderer>().material.color;
+        Color srmcol = shield.renderer.material.color;
         srmcol.a = 5f;
-        shield.GetComponent<Renderer>().material.color = srmcol;
+        shield.renderer.material.color = srmcol;
 	}
 }

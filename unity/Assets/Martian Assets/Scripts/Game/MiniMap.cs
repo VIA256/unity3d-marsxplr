@@ -25,10 +25,10 @@ public class MiniMap : MonoBehaviour
             Game.Controller.loadingWorld ||
             !Game.Player)
 		{
-			GetComponent<Camera>().enabled = false;
+			camera.enabled = false;
 			return;
 		}
-		GetComponent<Camera>().enabled = true;
+		camera.enabled = true;
 
 		transform.position = Camera.main.transform.position;
 

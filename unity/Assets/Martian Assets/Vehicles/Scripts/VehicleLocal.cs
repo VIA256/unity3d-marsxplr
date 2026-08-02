@@ -15,7 +15,7 @@ public class VehicleLocal : MonoBehaviour
 
 	public void Start()
 	{
-		vehicle.GetComponent<NetworkView>().observed = this;
+		vehicle.networkView.observed = this;
 		vehicle.netCode = "";
 		vehicle.isResponding = true;
 	}
@@ -25,7 +25,7 @@ public class VehicleLocal : MonoBehaviour
 		if (vehicle.networkMode == 2 && Time.time > syncPosTimer)
 		{
 			syncPosTimer = Time.time + 1f / Network.sendRate;
-			GetComponent<NetworkView>().RPC(
+			networkView.RPC(
                 "sP",
                 RPCMode.Others,
                 vehicle.myRigidbody.position,
@@ -36,7 +36,7 @@ public class VehicleLocal : MonoBehaviour
 		{
 			syncInpTimer = Time.time + 1f;
 			inputS = vehicle.input;
-			GetComponent<NetworkView>().RPC(
+			networkView.RPC(
                 "s4",
                 RPCMode.Others,
                 Mathf.RoundToInt(inputS.x * 10f),
@@ -107,7 +107,7 @@ public class VehicleLocal : MonoBehaviour
         if (collision.collider.transform.root == transform.root) return;
 		if (
             (bool)collision.transform.parent &&
-            (bool)collision.transform.parent.gameObject.GetComponent<Rigidbody>())
+            (bool)collision.transform.parent.gameObject.rigidbody)
 		{
 			vehicle.OnRam(collision.transform.parent.gameObject);
 		}
@@ -119,7 +119,7 @@ public class VehicleLocal : MonoBehaviour
 
 	public void OnSerializeNetworkView(BitStream stream)
 	{
-		if (GetComponent<NetworkView>().stateSynchronization == NetworkStateSynchronization.Off)
+		if (networkView.stateSynchronization == NetworkStateSynchronization.Off)
 		{
 			Debug.Log("sNv NvL: " + gameObject.name);
 			return;

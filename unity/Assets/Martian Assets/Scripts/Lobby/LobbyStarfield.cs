@@ -19,12 +19,12 @@ public class LobbyStarfield : MonoBehaviour
 		}
 		else if (Application.loadedLevel > 1)
 		{
-			Vector3 pewv = GetComponent<ParticleEmitter>().worldVelocity;
+			Vector3 pewv = particleEmitter.worldVelocity;
 			pewv.y = Mathf.Min(Time.timeSinceLevelLoad, 5f) * -1f;
-			GetComponent<ParticleEmitter>().worldVelocity = pewv;
+			particleEmitter.worldVelocity = pewv;
 			if (Time.timeSinceLevelLoad > 7f || QualitySettings.GetQualityLevel() < 3)
 			{
-				GetComponent<ParticleEmitter>().emit = false;
+				particleEmitter.emit = false;
 			}
 		}
 	}
