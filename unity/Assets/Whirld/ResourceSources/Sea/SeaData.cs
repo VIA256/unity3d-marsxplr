@@ -80,11 +80,11 @@ public class SeaData : MonoBehaviour
             seaModeData[(int)SeaMode].glowColor);
 
         Color soscol = seaObjectSimple.renderer.sharedMaterial.color;
-        soscol.a = 0.85f;
+		soscol.a = 0.67f;//0.85f;
         seaObjectSimple.renderer.sharedMaterial.color = soscol;
 
         Color sosbcol = seaObjectSimBot.renderer.sharedMaterial.color;
-        sosbcol.a = 0.85f;
+		sosbcol.a = 0.67f;//0.85f;
         seaObjectSimBot.renderer.sharedMaterial.color = sosbcol;
 
         World.seaFogColor = seaModeData[(int)SeaMode].color;
