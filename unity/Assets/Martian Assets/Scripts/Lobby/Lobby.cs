@@ -60,6 +60,7 @@ public class Lobby : MonoBehaviour
 	public string temp = "";
 	private Vector2 scrollPosition;
 	private string outdated = "";
+	private string outdatedWeb = "https://discord.gg/dxTFZRM";
 	// /*UNUSED*/ private bool hostRegistered = false;
 	// /*UNUSED*/ private string serverLevel = "";
 	private bool showSettings = false;
@@ -142,6 +143,10 @@ public class Lobby : MonoBehaviour
                 {
                     outdated = val[1];
                 }
+				else if (val[0] == "dl")
+				{
+					outdatedWeb = val[1];
+				}
                 else if (val[0] == "d")
                 {
                     hostDedicated = (val[1] == "1" || val[1] == "true");
@@ -1401,15 +1406,15 @@ public class Lobby : MonoBehaviour
 	public void makeWindowUpdate(int id)
 	{
 		GUILayout.Space(40f);
-		GUILayout.Label("A new Mars Explorer version is now available on the Discord Server:");
+		GUILayout.Label("A new version of Mars Explorer is available:");
 		GUILayout.Space(10f);
 		if (
-            GUILayout.Button(">> Go to the Gitea Releases page to Download MarsXPLR version " +
+            GUILayout.Button(">> Download MarsXPLR version " +
                 outdated +
-                "! <<",
+                " <<",
             GUILayout.Height(40f)))
 		{
-            OpenURL("https://gitea.moe/VIA256/marsxplr-decomp/releases");
+            OpenURL(outdatedWeb);
 		}
 		GUILayout.Space(30f);
 		GUILayout.BeginHorizontal();
