@@ -1413,7 +1413,7 @@ public class WhirldIn : System.Object
                     }
                     else if ((bool)lightSource && n == "intensity")
                     {
-                        lightSource.intensity = float.Parse(v);
+                        lightSource.intensity = float.Parse(v) * 2; //unity 4 -> 5.0.0 upgrade reduced intensity effect by 2
                     }
                     else 
                     {
