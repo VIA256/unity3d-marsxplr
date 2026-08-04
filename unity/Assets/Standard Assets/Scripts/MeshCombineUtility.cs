@@ -10,7 +10,7 @@ public class MeshCombineUtility {
 		public Matrix4x4 transform;
 	}
 	
-	public static Mesh Combine (MeshInstance[] combines, bool generateStrips)
+	public static Mesh Combine (MeshInstance[] combines)
 	{
 		int vertexCount = 0;
 		int triangleCount = 0;
@@ -20,39 +20,15 @@ public class MeshCombineUtility {
 			if (combine.mesh)
 			{
 				vertexCount += combine.mesh.vertexCount;
-				
-				if (generateStrips)
-				{
-					// SUBOPTIMAL FOR PERFORMANCE
-					int curStripCount = combine.mesh.GetTriangles(combine.subMeshIndex).Length;
-					if (curStripCount != 0)
-					{
-						if( stripCount != 0 )
-						{
-							if ((stripCount & 1) == 1 )
-								stripCount += 3;
-							else
-								stripCount += 2;
-						}
-						stripCount += curStripCount;
-					}
-					else
-					{
-						generateStrips = false;
-					}
-				}
 			}
 		}
 		
-		// Precomputed how many triangles we need instead
-		if (!generateStrips)
+		// Precomputed how many triangles we need
+		foreach( MeshInstance combine in combines )
 		{
-			foreach( MeshInstance combine in combines )
+			if (combine.mesh)
 			{
-				if (combine.mesh)
-				{
-					triangleCount += combine.mesh.GetTriangles(combine.subMeshIndex).Length;
-				}
+				triangleCount += combine.mesh.GetTriangles(combine.subMeshIndex).Length;
 			}
 		}
 		
@@ -125,41 +101,12 @@ public class MeshCombineUtility {
 		{
 			if (combine.mesh)
 			{
-				if (generateStrips)
+				int[]  inputtriangles = combine.mesh.GetTriangles(combine.subMeshIndex);
+				for (int i=0;i<inputtriangles.Length;i++)
 				{
-					int[] inputstrip = combine.mesh.GetTriangles(combine.subMeshIndex);
-					if (stripOffset != 0)
-					{
-						if ((stripOffset & 1) == 1)
-						{
-							strip[stripOffset+0] = strip[stripOffset-1];
-							strip[stripOffset+1] = inputstrip[0] + vertexOffset;
-							strip[stripOffset+2] = inputstrip[0] + vertexOffset;
-							stripOffset+=3;
-						}
-						else
-						{
-							strip[stripOffset+0] = strip[stripOffset-1];
-							strip[stripOffset+1] = inputstrip[0] + vertexOffset;
-							stripOffset+=2;
-						}
-					}
-					
-					for (int i=0;i<inputstrip.Length;i++)
-					{
-						strip[i+stripOffset] = inputstrip[i] + vertexOffset;
-					}
-					stripOffset += inputstrip.Length;
+					triangles[i+triangleOffset] = inputtriangles[i] + vertexOffset;
 				}
-				else
-				{
-					int[]  inputtriangles = combine.mesh.GetTriangles(combine.subMeshIndex);
-					for (int i=0;i<inputtriangles.Length;i++)
-					{
-						triangles[i+triangleOffset] = inputtriangles[i] + vertexOffset;
-					}
-					triangleOffset += inputtriangles.Length;
-				}
+				triangleOffset += inputtriangles.Length;
 				
 				vertexOffset += combine.mesh.vertexCount;
 			}
@@ -173,10 +120,7 @@ public class MeshCombineUtility {
 		mesh.uv = uv;
 		mesh.uv2 = uv1;
 		mesh.tangents = tangents;
-		if (generateStrips)
-			mesh.SetTriangles(strip, 0);
-		else
-			mesh.triangles = triangles;
+		mesh.triangles = triangles;
 		
 		return mesh;
 	}

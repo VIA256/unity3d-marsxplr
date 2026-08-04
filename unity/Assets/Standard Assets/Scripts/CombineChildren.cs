@@ -13,7 +13,6 @@ public class CombineChildren : MonoBehaviour {
 	/// Usually rendering with triangle strips is faster.
 	/// However when combining objects with very low triangle counts, it can be faster to use triangles.
 	/// Best is to try out which value is faster in practice.
-	public bool generateTriangleStrips = true;
 	
 	/// This option has a far longer preprocessing time at startup but leads to better runtime performance.
 	void Start () {
@@ -63,7 +62,7 @@ public class CombineChildren : MonoBehaviour {
 					gameObject.AddComponent<MeshRenderer>();
 	
 				MeshFilter filter = (MeshFilter)GetComponent(typeof(MeshFilter));
-				filter.mesh = MeshCombineUtility.Combine(instances, generateTriangleStrips);
+				filter.mesh = MeshCombineUtility.Combine(instances);
 				GetComponent<Renderer>().material = (Material)de.Key;
 				GetComponent<Renderer>().enabled = true;
 			}
@@ -80,7 +79,7 @@ public class CombineChildren : MonoBehaviour {
 				go.AddComponent<MeshRenderer>();
 				go.GetComponent<Renderer>().material = (Material)de.Key;
 				MeshFilter filter = (MeshFilter)go.GetComponent(typeof(MeshFilter));
-				filter.mesh = MeshCombineUtility.Combine(instances, generateTriangleStrips);
+				filter.mesh = MeshCombineUtility.Combine(instances);
 			}
 		}	
 	}	
