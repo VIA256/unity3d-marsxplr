@@ -1162,7 +1162,7 @@ public class Lobby : MonoBehaviour
 			}
 
 			GUILayout.EndScrollView();
-			if (Event.current.type != EventType.layout)
+			if (Event.current.type != EventType.Layout)
 			{
 				mouseInServerList = GUILayoutUtility
                     .GetLastRect()
@@ -1439,22 +1439,12 @@ public class Lobby : MonoBehaviour
         //Exit Fullscreen
         if (Screen.fullScreen)
         {
-            if (
-                Application.platform == RuntimePlatform.WindowsWebPlayer ||
-                Application.platform == RuntimePlatform.OSXWebPlayer ||
-                Application.platform == RuntimePlatform.OSXDashboardPlayer)
-            {
-                Screen.fullScreen = false;
-            }
-            else
-            {
-                Resolution resolution = Screen.resolutions[Screen.resolutions.Length - 2];
-                Screen.SetResolution(resolution.width, resolution.height, false);
-            }
+            Resolution resolution = Screen.resolutions[Screen.resolutions.Length - 2];
+            Screen.SetResolution(resolution.width, resolution.height, false);
         }
 
         //Open URL
-        if (Application.platform == RuntimePlatform.OSXWebPlayer ||
+        /*if (Application.platform == RuntimePlatform.OSXWebPlayer ||
             Application.platform == RuntimePlatform.WindowsWebPlayer)
         {
             Application.ExternalEval("var confirmPopup = window.open('" +
@@ -1463,7 +1453,7 @@ public class Lobby : MonoBehaviour
                 url +
                 "'; } }");
         }
-        else Application.OpenURL(url);
+        else */Application.OpenURL(url);
     }
 
     public String htmlDecode(String str)
