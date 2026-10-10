@@ -555,7 +555,7 @@ public class Settings : MonoBehaviour
             "Random Coloring" :
             "Randomize Coloring"))
 		{
-			StartCoroutine_Auto(ramdomizeVehicleColor());
+			StartCoroutine(ramdomizeVehicleColor());
 		}
 
 		GUILayout.BeginHorizontal();
@@ -842,7 +842,7 @@ public class Settings : MonoBehaviour
 			if (bannedIPs != "" && GUILayout.Button("Unban All"))
 			{
 				bannedIPs = "";
-				Game.Controller.StartCoroutine_Auto(Game.Controller.registerHost());
+				Game.Controller.StartCoroutine(Game.Controller.registerHost());
 				updateServerPrefs();
 			}
 			string cm = GUILayout.TextField(bannedIPs);
@@ -892,7 +892,7 @@ public class Settings : MonoBehaviour
                 !Game.Controller.serverHidden &&
                 !Game.Controller.hostRegistered)
 			{
-				Game.Controller.StartCoroutine_Auto(Game.Controller.registerHostSet());
+				Game.Controller.StartCoroutine(Game.Controller.registerHostSet());
 				updateServerPrefs();
 			}
 
@@ -1135,14 +1135,14 @@ public class Settings : MonoBehaviour
                 GUILayout.Button("Add Bot") &&
                 Game.Controller.botsInGame < int.MaxValue)
 			{
-				Game.Controller.StartCoroutine_Auto(Game.Controller.addBot());
+				Game.Controller.StartCoroutine(Game.Controller.addBot());
 			}
 			if (Game.Controller.botsInGame > 0)
 			{
 				GUILayout.Space(5f);
 				if (GUILayout.Button("Axe Bot"))
 				{
-					Game.Controller.StartCoroutine_Auto(Game.Controller.axeBot());
+					Game.Controller.StartCoroutine(Game.Controller.axeBot());
 				}
 			}
 			GUILayout.EndHorizontal();

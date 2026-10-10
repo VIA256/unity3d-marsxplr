@@ -172,7 +172,7 @@ public class Game : MonoBehaviour
 		if (GameData.gameWorlds == null) GameData.gameWorlds = GameWorlds;
 		//whirldIn = new WhirldIn();
 		//whirldIn.worldTerrainTextures = worldTerrainTextures;
-		StartCoroutine_Auto(Init());
+		StartCoroutine(Init());
 	}
 
 	public void OnDisable()
@@ -325,7 +325,7 @@ public class Game : MonoBehaviour
                     "\nPort: " +
                     Network.player.port);
                 yield return new WaitForSeconds(1f);
-                StartCoroutine_Auto(registerHostSet());
+                StartCoroutine(registerHostSet());
             }
             else
             {
@@ -376,7 +376,7 @@ public class Game : MonoBehaviour
         //Randomize new player colors if they are not custom
         yield return null;
         Settings.colorCustom = (PlayerPrefs.GetInt("vehColCustom") == 1);
-        if (!Settings.colorCustom) StartCoroutine_Auto(Settings.ramdomizeVehicleColor());
+        if (!Settings.colorCustom) StartCoroutine(Settings.ramdomizeVehicleColor());
 	}
 
 	public void Update()
@@ -1154,7 +1154,7 @@ public class Game : MonoBehaviour
 
         //Update Master Server Listing
         yield return new WaitForSeconds(5f);
-        StartCoroutine_Auto(registerHost());
+        StartCoroutine(registerHost());
     }
 
 	public IEnumerator OnPlayerDisconnected(NetworkPlayer player)
@@ -1174,7 +1174,7 @@ public class Game : MonoBehaviour
         Network.DestroyPlayerObjects(player);
         yield return new WaitForSeconds(1f);
         eSI();
-        StartCoroutine_Auto(registerHost());
+        StartCoroutine(registerHost());
 	}
 
     public void WindowServerSetup(int id)
@@ -1774,7 +1774,7 @@ public class Game : MonoBehaviour
         hostRegistered = true;
         while (hostRegistered)
         {
-            StartCoroutine_Auto(registerHost());
+            StartCoroutine(registerHost());
             yield return new WaitForSeconds(60f);
         }
 	}

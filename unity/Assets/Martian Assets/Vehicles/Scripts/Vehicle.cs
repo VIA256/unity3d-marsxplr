@@ -741,7 +741,7 @@ public class Vehicle : MonoBehaviour
 	public void sZ(bool input)
 	{
 		zorbBall = input;
-		StartCoroutine_Auto(OnPrefsUpdated());
+		StartCoroutine(OnPrefsUpdated());
 	}
 
 	[RPC]
