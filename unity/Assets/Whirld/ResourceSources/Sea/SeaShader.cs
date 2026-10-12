@@ -143,7 +143,7 @@ public class SeaShader : MonoBehaviour
 			
 			reflectionCamera.cullingMask = cullingMask & m_ReflectLayers.value; // never render water layer
 			reflectionCamera.targetTexture = m_ReflectionTexture;
-			GL.SetRevertBackfacing (true);
+            GL.invertCulling = true;
 			reflectionCamera.transform.position = newpos;
 			Vector3 euler = cam.transform.eulerAngles;
 			reflectionCamera.transform.eulerAngles = new Vector3(0, euler.y, euler.z);
@@ -165,7 +165,7 @@ public class SeaShader : MonoBehaviour
 			m_Terrain.basemapDistance = oldSplatDist;
 			
 			reflectionCamera.transform.position = oldpos;
-			GL.SetRevertBackfacing (false);
+            GL.invertCulling = false;
 			GetComponent<Renderer>().sharedMaterial.SetTexture( "_ReflectionTex", m_ReflectionTexture );
 		}
 		else GetComponent<Renderer>().sharedMaterial.SetTexture( "_ReflectionTex", null );
@@ -406,7 +406,7 @@ public class SeaShader : MonoBehaviour
 	
 	public WaterMode FindHardwareWaterSupport()
 	{
-		if( !SystemInfo.supportsRenderTextures || !GetComponent<Renderer>() || !m_ShaderFull )
+		if( !GetComponent<Renderer>() || !m_ShaderFull )
 			return WaterMode.Simple;
 			
 		Material mat = GetComponent<Renderer>().sharedMaterial;
