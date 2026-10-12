@@ -115,7 +115,7 @@ public class Messaging : MonoBehaviour
 
 		GUILayout.FlexibleSpace();
 
-		if (Event.current.type == EventType.keyDown &&
+		if (Event.current.type == EventType.KeyDown &&
             Event.current.character == '\n' &&
             inputField.Length > 0)
 		{

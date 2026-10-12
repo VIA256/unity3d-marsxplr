@@ -2226,25 +2226,11 @@ public class Settings : MonoBehaviour
         if (!Screen.fullScreen)
         {
             Screen.SetResolution(resolution.width, resolution.height, true);
-            if (Application.platform == RuntimePlatform.OSXDashboardPlayer)
-            {
-                enteredfullscreen = true;
-            }
         }
         else
         {
-            if (
-                Application.platform == RuntimePlatform.WindowsWebPlayer ||
-                Application.platform == RuntimePlatform.OSXWebPlayer ||
-                Application.platform == RuntimePlatform.OSXDashboardPlayer)
-            {
-                Screen.fullScreen = false;
-            }
-            else
-            {
-                resolution = Screen.resolutions[Screen.resolutions.Length - 2];
-                Screen.SetResolution(resolution.width, resolution.height, false);
-            }
+            resolution = Screen.resolutions[Screen.resolutions.Length - 2];
+            Screen.SetResolution(resolution.width, resolution.height, false);
             if (enteredfullscreen)
             {
                 enteredfullscreen = false;
