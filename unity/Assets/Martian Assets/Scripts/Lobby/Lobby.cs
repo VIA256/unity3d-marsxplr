@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class Lobby : MonoBehaviour
@@ -1300,7 +1301,7 @@ public class Lobby : MonoBehaviour
         GuiAnimate = 1;
         yield return new WaitForSeconds(0.75f);
 		scenePlayed = true;
-        Application.LoadLevel(2);
+        SceneManager.LoadScene(2);
     }
 
     public IEnumerator authenticateUser()

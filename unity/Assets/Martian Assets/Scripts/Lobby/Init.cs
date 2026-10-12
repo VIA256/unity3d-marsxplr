@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class Init : MonoBehaviour
@@ -8,10 +9,11 @@ public class Init : MonoBehaviour
 
 	public void Update()
     {
-		float i = Application.GetStreamProgressForLevel(Application.loadedLevel + 1);
+        int loadedLevel = SceneManager.GetActiveScene().buildIndex;
+		float i = Application.GetStreamProgressForLevel(loadedLevel + 1);
 		if (i == 1f)
         {
-			Application.LoadLevel(Application.loadedLevel + 1);
+			SceneManager.LoadScene(loadedLevel + 1);
 		}
 		else
         {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class GUIPanel
@@ -1814,14 +1815,14 @@ public class Game : MonoBehaviour
 			    }
             }
 		}
-		Application.LoadLevel(1);
+        SceneManager.LoadScene(1);
 	}
 
 	public void OnApplicationQuit()
     {
 		Network.Disconnect();
 		if (Network.isServer) unregisterHost();
-		Application.LoadLevel(1);
+		SceneManager.LoadScene(1);
 	}
 
 	[RPC]

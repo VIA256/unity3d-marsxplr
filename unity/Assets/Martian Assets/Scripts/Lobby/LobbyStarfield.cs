@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class LobbyStarfield : MonoBehaviour
@@ -8,7 +9,8 @@ public class LobbyStarfield : MonoBehaviour
 
 	public void Update()
 	{
-		if (Application.loadedLevel == 1 && Lobby.GUIHide > 0f)
+        int loadedLevel = SceneManager.GetActiveScene().buildIndex;
+		if (loadedLevel == 1 && Lobby.GUIHide > 0f)
 		{
             Color col =
                 ((ParticleRenderer)gameObject.GetComponent(typeof(ParticleRenderer)))
@@ -17,7 +19,7 @@ public class LobbyStarfield : MonoBehaviour
 			col.a = 0.5f - Lobby.GUIHide / 2f;
             ((ParticleRenderer)gameObject.GetComponent(typeof(ParticleRenderer))).material.SetColor("_TintColor", col);
 		}
-		else if (Application.loadedLevel > 1)
+		else if (loadedLevel > 1)
 		{
 			Vector3 pewv = GetComponent<ParticleEmitter>().worldVelocity;
 			pewv.y = Mathf.Min(Time.timeSinceLevelLoad, 5f) * -1f;
