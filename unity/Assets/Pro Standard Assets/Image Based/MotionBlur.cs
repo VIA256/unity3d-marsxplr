@@ -28,15 +28,18 @@ public class MotionBlur : ImageEffectBase
 			DestroyImmediate(accumTexture);
 			accumTexture = new RenderTexture(source.width, source.height, 0);
 			accumTexture.hideFlags = HideFlags.HideAndDontSave;
-			ImageEffects.Blit( source, accumTexture );
+			/*ImageEffects.Blit( source, accumTexture );*/
+            Graphics.Blit(source, accumTexture);
 		}
 		
 		// If Extra Blur is selected, downscale the texture to 4x4 smaller resolution.
 		if (extraBlur)
 		{
 			RenderTexture blurbuffer = RenderTexture.GetTemporary(source.width/4, source.height/4, 0);
-			ImageEffects.Blit(accumTexture, blurbuffer);
-			ImageEffects.Blit(blurbuffer,accumTexture);
+			/*ImageEffects.Blit(accumTexture, blurbuffer);
+			ImageEffects.Blit(blurbuffer,accumTexture);*/
+            Graphics.Blit(accumTexture, blurbuffer);
+            Graphics.Blit(blurbuffer, accumTexture);
 			RenderTexture.ReleaseTemporary(blurbuffer);
 		}
 		
