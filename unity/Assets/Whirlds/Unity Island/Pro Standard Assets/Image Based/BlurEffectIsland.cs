@@ -18,26 +18,12 @@ public class BlurEffectIsland : MonoBehaviour
 	// Basically it just takes 4 texture samples and averages them.
 	// By applying it repeatedly and spreading out sample locations
 	// we get a Gaussian blur approximation.
-	
-	private static string blurMatString =
-@"Shader ""BlurConeTap"" {
-	SubShader {
-		Pass {
-			ZTest Always Cull Off ZWrite Off Fog { Mode Off }
-			SetTexture [__RenderTex] {constantColor (0,0,0,0.25) combine texture * constant alpha}
-			SetTexture [__RenderTex] {constantColor (0,0,0,0.25) combine texture * constant + previous}
-			SetTexture [__RenderTex] {constantColor (0,0,0,0.25) combine texture * constant + previous}
-			SetTexture [__RenderTex] {constantColor (0,0,0,0.25) combine texture * constant + previous}
-		}
-	}
-	Fallback off
-}";
 
 	static Material m_Material = null;
 	protected static Material material {
 		get {
 			if (m_Material == null) {
-				m_Material = new Material( blurMatString );
+				m_Material = new Material( Shader.Find("Hidden/BlurConeTap") );
 				m_Material.hideFlags = HideFlags.HideAndDontSave;
 				m_Material.shader.hideFlags = HideFlags.HideAndDontSave;
 			}
@@ -142,8 +128,8 @@ public class BlurEffectIsland : MonoBehaviour
 
 		// Direct3D needs interesting texel offsets!		
 		Vector2 off = Vector2.zero;
-		if( dest != null )
-			off = dest.GetTexelOffset() * 0.75f;
+		/* OBSOLETE if( dest != null )
+			off = dest.GetTexelOffset() * 0.75f;*/
 		
 		Set4TexCoords( off.x, off.y, offsetX, offsetY );
 		GL.Vertex3( 0,0, .1f );
