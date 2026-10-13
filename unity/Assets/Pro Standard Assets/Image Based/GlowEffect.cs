@@ -207,8 +207,8 @@ public class GlowEffect : MonoBehaviour
 		
 		// Direct3D needs interesting texel offsets!		
 		Vector2 off = Vector2.zero;
-		if( dest != null )
-			off = dest.GetTexelOffset() * 0.75f;
+		/*if( dest != null ) //GetTexelOffset() always returns zero now, no need to use it
+			off = dest.GetTexelOffset() * 0.75f;*/
 		
 		Set4TexCoords( off.x, off.y, offsetX, offsetY );
 		GL.Vertex3( 0,0, .1f );
