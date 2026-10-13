@@ -1077,6 +1077,9 @@ public class WhirldIn : System.Object
             ((Terrain)trnObj.GetComponent(typeof(Terrain))).terrainData = trnDat;
             trnObj.AddComponent(typeof(TerrainCollider));
             ((TerrainCollider)trnObj.GetComponent(typeof(TerrainCollider))).terrainData = trnDat;
+			
+			//set the shader so that its not all shiny
+			((Terrain)trnObj.GetComponent(typeof(Terrain))).materialType = Terrain.MaterialType.BuiltInLegacyDiffuse;
 
             objects.Add(tName, trnObj);
             //Delete this temporary terrain object AFTER world is fully loaded
