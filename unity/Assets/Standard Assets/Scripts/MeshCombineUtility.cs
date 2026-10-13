@@ -14,7 +14,6 @@ public class MeshCombineUtility {
 	{
 		int vertexCount = 0;
 		int triangleCount = 0;
-		int stripCount = 0;
 		foreach( MeshInstance combine in combines )
 		{
 			if (combine.mesh)
@@ -39,9 +38,7 @@ public class MeshCombineUtility {
 		Vector2[] uv1 = new Vector2[vertexCount];
 		Color[] colors = new Color[vertexCount];
 		
-		int[] triangles = new int[triangleCount];
-		int[] strip = new int[stripCount];
-		
+		int[] triangles = new int[triangleCount];		
 		int offset;
 		
 		offset=0;
@@ -95,7 +92,6 @@ public class MeshCombineUtility {
 		}
 		
 		int triangleOffset=0;
-		int stripOffset=0;
 		int vertexOffset=0;
 		foreach( MeshInstance combine in combines )
 		{
