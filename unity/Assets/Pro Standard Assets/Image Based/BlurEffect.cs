@@ -19,27 +19,12 @@ public class BlurEffect : MonoBehaviour
 	// Basically it just takes 4 texture samples and averages them.
 	// By applying it repeatedly and spreading out sample locations
 	// we get a Gaussian blur approximation.
-	
-	private static string blurMatString =
-@"Shader ""BlurConeTap"" {
-	Properties { _MainTex ("""", any) = """" {} }
-	SubShader {
-		Pass {
-			ZTest Always Cull Off ZWrite Off Fog { Mode Off }
-			SetTexture [_MainTex] {constantColor (0,0,0,0.25) combine texture * constant alpha}
-			SetTexture [_MainTex] {constantColor (0,0,0,0.25) combine texture * constant + previous}
-			SetTexture [_MainTex] {constantColor (0,0,0,0.25) combine texture * constant + previous}
-			SetTexture [_MainTex] {constantColor (0,0,0,0.25) combine texture * constant + previous}
-		}
-	}
-	Fallback off
-}";
 
 	static Material m_Material = null;
 	protected static Material material {
 		get {
 			if (m_Material == null) {
-				m_Material = new Material( blurMatString );
+				m_Material = new Material( Shader.Find("Hidden/BlurConeTap") );
 				m_Material.hideFlags = HideFlags.HideAndDontSave;
 				m_Material.shader.hideFlags = HideFlags.HideAndDontSave;
 			}
@@ -49,7 +34,7 @@ public class BlurEffect : MonoBehaviour
 	
 	protected void OnDisable() {
 		if( m_Material ) {
-			DestroyImmediate( m_Material.shader );
+			//DestroyImmediate( m_Material.shader );
 			DestroyImmediate( m_Material );
 		}
 	}	

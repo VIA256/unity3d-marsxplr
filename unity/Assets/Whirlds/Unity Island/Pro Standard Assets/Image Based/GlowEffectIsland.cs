@@ -36,7 +36,7 @@ public class GlowEffectIsland : MonoBehaviour
 	protected static Material compositeMaterial {
 		get {
 			if (m_CompositeMaterial == null) {
-				m_CompositeMaterial = new Material (Shader.Find("Hidden/GlowCompose"));
+				m_CompositeMaterial = new Material (Shader.Find("Hidden/GlowComposeIsland"));
 				m_CompositeMaterial.hideFlags = HideFlags.HideAndDontSave;
 				m_CompositeMaterial.shader.hideFlags = HideFlags.HideAndDontSave;
 			}
@@ -57,7 +57,7 @@ public class GlowEffectIsland : MonoBehaviour
 	protected static Material blurMaterial {
 		get {
 			if (m_BlurMaterial == null) {
-				m_BlurMaterial = new Material( Shader.Find("Hidden/GlowConeTap") );
+				m_BlurMaterial = new Material( Shader.Find("Hidden/GlowConeTapIsland") );
 				m_BlurMaterial.hideFlags = HideFlags.HideAndDontSave;
 				m_BlurMaterial.shader.hideFlags = HideFlags.HideAndDontSave;
 			}
@@ -89,11 +89,11 @@ public class GlowEffectIsland : MonoBehaviour
 	protected void OnDisable()
 	{
 		if( m_CompositeMaterial ) {
-			DestroyImmediate( m_CompositeMaterial.shader );
+			//DestroyImmediate( m_CompositeMaterial.shader );
 			DestroyImmediate( m_CompositeMaterial );
 		}
 		if( m_BlurMaterial ) {
-			DestroyImmediate( m_BlurMaterial.shader );
+			//DestroyImmediate( m_BlurMaterial.shader );
 			DestroyImmediate( m_BlurMaterial );
 		}
 		if( m_DownsampleMaterial )

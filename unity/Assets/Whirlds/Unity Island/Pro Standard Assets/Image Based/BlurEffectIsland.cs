@@ -23,7 +23,7 @@ public class BlurEffectIsland : MonoBehaviour
 	protected static Material material {
 		get {
 			if (m_Material == null) {
-				m_Material = new Material( Shader.Find("Hidden/BlurConeTap") );
+				m_Material = new Material( Shader.Find("Hidden/BlurConeTapIsland") );
 				m_Material.hideFlags = HideFlags.HideAndDontSave;
 				m_Material.shader.hideFlags = HideFlags.HideAndDontSave;
 			}
