@@ -54,9 +54,9 @@ Shader "ForceField" {
                 f.normal = normalize (f.normal);
                 
                 half4 ramp = tex2D (_RampTex, f.uv2) * _Color.a;
-                half4 texture = tex2D (_SurfaceTex, f.uv) * ramp * _Color;
+                half4 txture = tex2D (_SurfaceTex, f.uv) * ramp * _Color;
                 
-                return half4 (texture.r, texture.g, texture.b, ramp.r);
+                return half4 (txture.r, txture.g, txture.b, ramp.r);
             }
             
             ENDCG 
