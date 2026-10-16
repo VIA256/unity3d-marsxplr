@@ -8,22 +8,7 @@ public class EntryPoint : MonoBehaviour
 	{
 		yield return new WaitForSeconds(15);
 		
-		ParticleEmitter pe = (ParticleEmitter)GetComponent(typeof(ParticleEmitter));
-		pe.emit = true;
+		ParticleSystem ps = (ParticleSystem)GetComponent(typeof(ParticleSystem));
+		ps.Play();
 	}
 }
-
-/* old .js
-
-
-
-function Start () {
-	yield new WaitForSeconds(15);
-	
-	var pe : ParticleEmitter = GetComponent(ParticleEmitter);
-	pe.emit = true; 
-}
-
-
-
-*/
