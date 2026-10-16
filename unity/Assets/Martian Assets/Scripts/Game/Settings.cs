@@ -2203,9 +2203,10 @@ public class Settings : MonoBehaviour
 
 	public void updateObjects()
 	{
-        foreach (ParticleEmitter pE in FindObjectsOfType(typeof(ParticleEmitter)))
+        foreach (ParticleSystem pS in FindObjectsOfType(typeof(ParticleSystem)))
         {
-            pE.emit = (renderLevel >= 3);
+			if(renderLevel >= 3) { if(!pS.isPlaying) pS.Play(); }
+			else if(pS.isPlaying) pS.Stop();
         }
 
         foreach (Light light in FindObjectsOfType(typeof(Light)))
