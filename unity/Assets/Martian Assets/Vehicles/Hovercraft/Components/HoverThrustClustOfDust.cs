@@ -13,16 +13,17 @@ public class HoverThrustClustOfDust : MonoBehaviour
 
 	public void FixedUpdate()
     {
+		ParticleSystem pS = GetComponent<ParticleSystem>();
 		if (
 			transform.position.y < Game.Settings.lavaAlt + 15f ||
 			Physics.Raycast(transform.position, Vector3.down, 15f, thrustMask)
 		)
         {
-			GetComponent<ParticleEmitter>().emit = true;
+			if(!pS.isPlaying) pS.Play();
 		}
 		else
         {
-			GetComponent<ParticleEmitter>().emit = false;
+			if(pS.isPlaying) pS.Stop();
 		}
 	}
 }

@@ -5,33 +5,29 @@ using UnityEngine;
 public class HoverThrustMoonOrBust : MonoBehaviour
 {
 	public Vehicle vehicle;
-	public ParticleRenderer particleRenderer;
+	public ParticleSystemRenderer particleRenderer;
 
 	public void Start()
     {
 		vehicle = (Vehicle)gameObject.transform.root.gameObject.GetComponentInChildren(typeof(Vehicle));
-		particleRenderer = (ParticleRenderer)gameObject.GetComponent("ParticleRenderer");
+		particleRenderer = (ParticleSystemRenderer)gameObject.GetComponent("ParticleSystemRenderer");
 	}
 
 	public void FixedUpdate()
     {
-		float x = (float)((vehicle.input.y == 0f) ? 2 : 5) * vehicle.input.x;
-		Vector3 localVelocity = GetComponent<ParticleEmitter>().localVelocity;
-		localVelocity.x = x;
-		GetComponent<ParticleEmitter>().localVelocity = localVelocity;
+		ParticleSystem pS = GetComponent<ParticleSystem>();
 		
-		float z = Mathf.Min(-10f * vehicle.input.y, -0.5f);
-		localVelocity = GetComponent<ParticleEmitter>().localVelocity;
-		localVelocity.z = z;
-		GetComponent<ParticleEmitter>().localVelocity = localVelocity;
+		ParticleSystem.VelocityOverLifetimeModule localVelocity = pS.velocityOverLifetime;
+		localVelocity.x = (float)((vehicle.input.y == 0f) ? 2 : 5) * vehicle.input.x;
+		localVelocity.z = Mathf.Min(-10f * vehicle.input.y, -0.5f);
 		
-		if (GetComponent<ParticleEmitter>().localVelocity.z >= -1f)
+		if (pS.velocityOverLifetime.z.constant >= -1f)
         {
-			particleRenderer.particleRenderMode = ParticleRenderMode.Billboard;
+			particleRenderer.renderMode = ParticleSystemRenderMode.Billboard;
 		}
 		else
         {
-			particleRenderer.particleRenderMode = ParticleRenderMode.Stretch;
+			particleRenderer.renderMode = ParticleSystemRenderMode.Stretch;
 		}
 	}
 }
