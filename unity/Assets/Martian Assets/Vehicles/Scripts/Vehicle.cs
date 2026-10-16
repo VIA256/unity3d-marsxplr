@@ -14,7 +14,7 @@ public class Vehicle : MonoBehaviour
 	public GameObject laserAimer;
 	public GameObject laserAimerLocked;
 	public GameObject laserLock;
-	public ParticleEmitter bubbles;
+	public ParticleSystem bubbles;
 
 	public int vehId = 0;
 	public int networkMode = 0;
@@ -164,14 +164,19 @@ public class Vehicle : MonoBehaviour
 
 	public void Update()
 	{
-        bubbles.emit = (
+		if(
             transform.position.y < Game.Settings.lavaAlt - 2 ||
             Physics.Raycast(
                 transform.position + (Vector3.up * 200),
                 Vector3.down,
                 198f,
-                1 << 4));
-        bubbles.maxEnergy = bubbles.minEnergy = (bubbles.emit ? 5 : 0);
+                1 << 4))
+		{
+			if (!bubbles.isPlaying) bubbles.Play();
+		} else
+		{
+			if(bubbles.isPlaying) bubbles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+		}
 
 		if (isBot || !GetComponent<NetworkView>().isMine)
 		{
@@ -400,8 +405,8 @@ public class Vehicle : MonoBehaviour
 
     public IEnumerator OnPrefsUpdated()
     {
-        if (laserAimer) laserAimer.GetComponent<ParticleEmitter>().emit = true;
-        if (laserAimerLocked) laserAimerLocked.GetComponent<ParticleEmitter>().emit = true;
+        if (laserAimer) laserAimer.GetComponent<ParticleSystem>().Play();
+        if (laserAimerLocked) laserAimerLocked.GetComponent<ParticleSystem>().Play();
         if (Game.Settings.ramoSpheres != 0f)
         {
             yield return new WaitForSeconds(1f);
