@@ -8,7 +8,7 @@ public class Jet : MonoBehaviour
 	public GameObject[] landingGear;
 	public float landingGearScale;
 	public Transform[] hoverThrusters;
-	public ParticleRenderer mainThrusterParticles;
+	public ParticleSystemRenderer mainThrusterParticles;
 	public ThrustCone mainThrusterCone;
 	public Transform[] mainThruster;
 	public LayerMask thrustMask;
@@ -57,25 +57,25 @@ public class Jet : MonoBehaviour
         }
 
         //Thruster Particles
-        Vector3 mainThrustPELocVel = mainThrusterParticles.gameObject.GetComponent<ParticleEmitter>().localVelocity;
+        ParticleSystem.VelocityOverLifetimeModule mainThrustPELocVel = mainThrusterParticles.gameObject.GetComponent<ParticleSystem>().velocityOverLifetime;
 		if (vehicle.specialInput)
 		{
             foreach (Transform thruster in hoverThrusters)
             {
-                thruster.gameObject.GetComponent<ParticleEmitter>().emit = true;
+				ParticleSystem pS = thruster.gameObject.GetComponent<ParticleSystem>();
+				
+				if(!pS.isPlaying) pS.Play();
 
-                Vector3 pelocvel = thruster.gameObject.GetComponent<ParticleEmitter>().localVelocity;
-                pelocvel.y = -vehicle.input.z;
-                thruster.gameObject.GetComponent<ParticleEmitter>().localVelocity = pelocvel;
-
-                thruster.gameObject.GetComponent<ParticleEmitter>().minSize =
-                    thruster.gameObject.GetComponent<ParticleEmitter>().maxSize =
-                    Mathf.Max(0.1f, vehicle.input.z * 0.3f);
+                ParticleSystem.VelocityOverLifetimeModule pelocvel = pS.velocityOverLifetime;
+                pelocvel.yMultiplier = -vehicle.input.z;
+				
+				ParticleSystem.SizeOverLifetimeModule pesize = pS.sizeOverLifetime;
+                pesize.size = Mathf.Max(0.1f, vehicle.input.z * 0.3f);
             }
 			if (lod.level == 0)
 			{
-                mainThrustPELocVel.x = vehicle.input.x;
-                mainThrustPELocVel.y = -vehicle.input.y;
+                mainThrustPELocVel.xMultiplier = vehicle.input.x;
+                mainThrustPELocVel.yMultiplier = -vehicle.input.y;
 			}
 			else
 			{
@@ -91,7 +91,7 @@ public class Jet : MonoBehaviour
 
 			if (lod.level == 0)
 			{
-                mainThrustPELocVel.x = mainThrustPELocVel.y = 0.0f;
+                mainThrustPELocVel.xMultiplier = mainThrustPELocVel.yMultiplier = 0.0f;
             }
 			else
 			{
@@ -100,20 +100,21 @@ public class Jet : MonoBehaviour
 
             foreach (Transform thruster in hoverThrusters)
             {
-                thruster.gameObject.GetComponent<ParticleEmitter>().emit = false;
+				ParticleSystem pS = thruster.gameObject.GetComponent<ParticleSystem>();
+				
+				if(pS.isPlaying) pS.Stop();
             }
 		}
-        mainThrustPELocVel.z = Mathf.Min(
+        mainThrustPELocVel.zMultiplier = Mathf.Min(
             -10.0f * (vehicle.specialInput ?
                 0.1f :
                 vehicle.input.z),
             -0.5f);
-        if (mainThrustPELocVel.z >= -1)
+        if (mainThrustPELocVel.zMultiplier >= -1)
         {
-            mainThrusterParticles.particleRenderMode = ParticleRenderMode.Billboard;
+            mainThrusterParticles.renderMode = ParticleSystemRenderMode.Billboard;
         }
-        else mainThrusterParticles.particleRenderMode = ParticleRenderMode.Stretch;
-        mainThrusterParticles.gameObject.GetComponent<ParticleEmitter>().localVelocity = mainThrustPELocVel;
+        else mainThrusterParticles.renderMode = ParticleSystemRenderMode.Stretch;
 
         //Camera
 		vehicle.camSmooth = !vehicle.specialInput;

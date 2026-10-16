@@ -5,7 +5,7 @@ using UnityEngine;
 public class JetThruster : MonoBehaviour
 {
 	public Vehicle vehicle;
-	public ParticleRenderer particleRenderer;
+	public ParticleSystemRenderer particleRenderer;
 
 	public void Start()
 	{
@@ -14,24 +14,23 @@ public class JetThruster : MonoBehaviour
 		{
             Destroy(this);
 		}
-		particleRenderer = (ParticleRenderer)gameObject.GetComponent("ParticleRenderer");
+		particleRenderer = (ParticleSystemRenderer)gameObject.GetComponent("ParticleSystemRenderer");
 	}
 
 	public void FixedUpdate()
 	{
-        Vector3 locvel = GetComponent<ParticleEmitter>().localVelocity;
+       	ParticleSystem.VelocityOverLifetimeModule locvel = GetComponent<ParticleSystem>().velocityOverLifetime;
         locvel.x = vehicle.input.x;
         locvel.y = vehicle.input.y;
         locvel.z = Mathf.Min(-10.0f * vehicle.input.z, -0.5f);
-        GetComponent<ParticleEmitter>().localVelocity = locvel;
 		
-        if (GetComponent<ParticleEmitter>().localVelocity.z >= -1f)
+        if (locvel.z.constant >= -1f)
 		{
-			particleRenderer.particleRenderMode = ParticleRenderMode.Billboard;
+			particleRenderer.renderMode = ParticleSystemRenderMode.Billboard;
 		}
 		else
 		{
-			particleRenderer.particleRenderMode = ParticleRenderMode.Stretch;
+			particleRenderer.renderMode = ParticleSystemRenderMode.Stretch;
 		}
 	}
 }
