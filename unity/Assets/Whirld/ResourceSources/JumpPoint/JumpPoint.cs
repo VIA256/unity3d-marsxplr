@@ -39,9 +39,9 @@ public class JumpPoint : MonoBehaviour
 		yield return new WaitForSeconds(15);
 
 		if(!(bool)smokeObject) yield break;
-		ParticleEmitter pE = (ParticleEmitter)smokeObject.GetComponent(typeof(ParticleEmitter));
-		if(!pE) yield break;
-		pE.emit = true;
+		ParticleSystem pS = (ParticleSystem)smokeObject.GetComponent(typeof(ParticleSystem));
+		if(!pS) yield break;
+		pS.Play();
     }
 
     public void OnTriggerEnter(Collider other)
