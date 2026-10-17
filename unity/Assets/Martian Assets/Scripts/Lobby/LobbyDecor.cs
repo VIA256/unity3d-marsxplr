@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 [Serializable]
 public class LobbyDecor : MonoBehaviour
 {
 	public Lobby Lobby;
-	public GUITexture bg;
+	public RawImage bg;
 
 	public int logoOffset;
 
@@ -13,17 +14,14 @@ public class LobbyDecor : MonoBehaviour
 	{
 		if (Time.time > 6f)
 		{
-			Color c = GetComponent<GUITexture>().color;
+			Color c = GetComponent<RawImage>().color;
 			c.a = 0;
-			GetComponent<GUITexture>().color = c;
+			GetComponent<RawImage>().color = c;
 		}
 		else if ((bool)bg)
 		{
-			bg.pixelInset = new Rect(
-                0f,
-                0f,
-                Screen.width,
-                Screen.height);
+			bg.rectTransform.anchoredPosition = new Vector2(0f, 0f);
+			bg.rectTransform.sizeDelta = new Vector2((float)Screen.width, (float)Screen.height);
 		}
 	}
 
@@ -53,28 +51,30 @@ public class LobbyDecor : MonoBehaviour
 			bg.color = bgc;
 			if (Time.time < 2.5f)
 			{
-				Color gtc = GetComponent<GUITexture>().color;
+				Color gtc = GetComponent<RawImage>().color;
                 gtc.a = Mathf.Lerp(
                     0f,
-                    0.6f,
+                    1f,
                     Time.time * (1f / 2.5f));
-				GetComponent<GUITexture>().color = gtc;
-				GetComponent<GUITexture>().pixelInset = new Rect(
-                    (float)(Screen.width / 2) - width / 2f,
-                    (float)(Screen.height / 2) - width / 4f,
-                    width,
-                    width / 2f);
+				GetComponent<RawImage>().color = gtc;
+				GetComponent<RawImage>().rectTransform.anchoredPosition = new Vector2(
+					(float)(Screen.width / 2) - width / 2f,
+                    (float)(Screen.height / 2) - width / 4f);
+				GetComponent<RawImage>().rectTransform.sizeDelta = new Vector2(
+					width,
+					width / 2f);
 			}
 			if (Time.time > 4.25f)
 			{
-				GetComponent<GUITexture>().pixelInset = new Rect(
-                    (float)(Screen.width / 2) - width / 2f,
+				GetComponent<RawImage>().rectTransform.anchoredPosition = new Vector2(
+					(float)(Screen.width / 2) - width / 2f,
                     easeOutExpo(
                         Time.time - 4.25f,
                         (float)(Screen.height / 2) - width / 4f,
-                        (float)Screen.height - width / 2f, 0.75f),
-                    width,
-                    width / 2f);
+                        (float)Screen.height - width / 2f, 0.75f));
+				GetComponent<RawImage>().rectTransform.sizeDelta = new Vector2(
+					width,
+					width / 2f);
 			}
 		}
 		else if (Time.time > 6f)
@@ -83,17 +83,18 @@ public class LobbyDecor : MonoBehaviour
 			{
 				Destroy(bg);
 			}
-			Color gtc = GetComponent<GUITexture>().color;
+			Color gtc = GetComponent<RawImage>().color;
             gtc.a = Mathf.Lerp(
-                GetComponent<GUITexture>().color.a,
-                Lobby.GUIAlpha - 0.4f,
+                GetComponent<RawImage>().color.a,
+                Lobby.GUIAlpha,
                 Time.deltaTime * 4f);
-			GetComponent<GUITexture>().color = gtc;
-			GetComponent<GUITexture>().pixelInset = new Rect(
-                (float)(Screen.width / 2) - width / 2f,
-                (float)Screen.height - width / 2f,
-                width,
-                width / 2f);
+			GetComponent<RawImage>().color = gtc;	
+			GetComponent<RawImage>().rectTransform.anchoredPosition = new Vector2(
+				(float)(Screen.width / 2) - width / 2f,
+                (float)Screen.height - width / 2f);
+			GetComponent<RawImage>().rectTransform.sizeDelta = new Vector2(
+				width,
+				width / 2f);
 		}
 
 		logoOffset = (int)(width / 2f);
