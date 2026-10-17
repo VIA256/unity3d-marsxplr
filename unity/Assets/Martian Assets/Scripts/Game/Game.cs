@@ -127,8 +127,8 @@ public class Game : MonoBehaviour
 	[HideInInspector]
 	public float fps;
 	
-	[NonSerialized]
-	public static bool useNAT = false;
+	//[NonSerialized]
+	//public static bool useNAT = false;
 
 	[HideInInspector]
 	public void Start()

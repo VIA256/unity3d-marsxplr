@@ -28,22 +28,22 @@ public class Lobby : MonoBehaviour
 	private float lastHostListRefresh = -1000.0f;
 	private float hostListRefreshTimeout = 5.0f;
 
-	private ConnectionTesterStatus natCapable = ConnectionTesterStatus.Undetermined;
+	//private ConnectionTesterStatus natCapable = ConnectionTesterStatus.Undetermined;
 	// /*UNUSED*/ private bool NATHosts = false;
-	private bool probingPublicIP = false;
+	//private bool probingPublicIP = false;
 	//private bool doneTesting = false;
 	private float timer = 0.0f;
-	private bool filterNATHosts = false;
-	private bool forceNAT = false;
+	//private bool filterNATHosts = false;
+	//private bool forceNAT = false;
 	// /*UNUSED*/ private bool hideTest = false;
-	private string masterServerMessage = "";
-	private int masterServerConFailures = 0;
+	//private string masterServerMessage = "";
+	//private int masterServerConFailures = 0;
 	private string testMessage = "";
 	private string[] netConIP;
 	private int netConPort;
 	private int netConAttempts = 0;
-	private bool useMasterServer = true;
-	private bool disableMasterServer = false;
+	//private bool useMasterServer = true;
+	//private bool disableMasterServer = false;
 	private bool doNetworking = true;
 	[NonSerialized]
 	public string userName = "";
@@ -86,7 +86,7 @@ public class Lobby : MonoBehaviour
 	private bool hostDedicated = false;
 	private string[] dedicatedIP;
 	private int dedicatedPort;
-	private bool dedicatedNAT;
+	//private bool dedicatedNAT;
 	// /*UNUSED*/ private int dedicatedHostAttempts;
 
 	public void Awake()
@@ -181,24 +181,24 @@ public class Lobby : MonoBehaviour
                     String[] ipStr = val[1].Split(":"[0]);
                     listServerIP = ipStr[0];
                     listServerPort = int.Parse(ipStr[1]);
-                    MasterServer.ipAddress = listServerIP;
-                    MasterServer.port = listServerPort;
+                    //MasterServer.ipAddress = listServerIP;
+                    //MasterServer.port = listServerPort;
                 }
                 else if (
                     (val[0] == "f" && !useAlternateServer) ||
                     (val[0] == "f2" && useAlternateServer))
                 {
-                    String[] ipStr = val[1].Split(":"[0]);
+                    /*String[] ipStr = val[1].Split(":"[0]);
                     Network.natFacilitatorIP = ipStr[0];
-                    Network.natFacilitatorPort = int.Parse(ipStr[1]);
+                    Network.natFacilitatorPort = int.Parse(ipStr[1]);*/
                 }
                 else if (
                     (val[0] == "t" && !useAlternateServer) ||
                     (val[0] == "t2" && useAlternateServer))
                 {
-                    String[] ipStr = val[1].Split(":"[0]);
+                    /*String[] ipStr = val[1].Split(":"[0]);
                     Network.connectionTesterIP = ipStr[0];
-                    Network.connectionTesterPort = int.Parse(ipStr[1]);
+                    Network.connectionTesterPort = int.Parse(ipStr[1]);*/
                 }
                 else if (val[0] == "b")
                 {
@@ -220,10 +220,10 @@ public class Lobby : MonoBehaviour
         GameData.gameWorlds = wlds.ToArray();
         messages = msgs.ToArray();
 
-        MasterServer.RequestHostList(gameName);
+        //MasterServer.RequestHostList(gameName);
     }
     
-	public void OnFailedToConnectToMasterServer(NetworkConnectionError info)
+	/*public void OnFailedToConnectToMasterServer(NetworkConnectionError info)
 	{
         if (
             info == NetworkConnectionError.CreateSocketOrThreadFailure &&
@@ -234,7 +234,7 @@ public class Lobby : MonoBehaviour
         MasterServer.ClearHostList();
         masterServerMessage = " Master server connection failure: " + info;
         masterServerConFailures += 1;
-	}
+	}*/
 
 	public void OnFailedToConnect(NetworkConnectionError info)
 	{
@@ -244,8 +244,8 @@ public class Lobby : MonoBehaviour
             "Game could not be connected to.\nPlease try joining a different game!\n\n\n" +
             (info == NetworkConnectionError.ConnectionFailed ?
                 "You may be blocked by a network firewall.\n(See \"How Do I configure My Router\" on the FAQ @ MarsXPLR.com)\n" :
-                (info == NetworkConnectionError.NATTargetNotConnected ?
-                    "\nThe person hosting the game you were connecting to\nmay have stopped playing Mars Explorer." :
+                (/*info == NetworkConnectionError.NATTargetNotConnected ?
+                    "\nThe person hosting the game you were connecting to\nmay have stopped playing Mars Explorer." :*/
                     info.ToString()
                 )
             )
@@ -446,13 +446,13 @@ public class Lobby : MonoBehaviour
 		GUILayout.Label(serverDetails);
 	}
 
-    public IEnumerator TestConnection(bool force)
+    /*public IEnumerator TestConnection(bool force)
     {
         disableMasterServer = false;
         probingPublicIP = false;
         if (timer == 0.0f) timer = Time.time + 15;
         testMessage = "testing";
-        // /*UNUSED*/ doneTesting = false;
+        // UNUSED doneTesting = false;
         doNetworking = false;
 
         natCapable = Network.TestConnection(force);
@@ -467,7 +467,7 @@ public class Lobby : MonoBehaviour
             case ConnectionTesterStatus.Error:
                 GameData.errorMessage = "Your computer does not appear to be online...\nNetworking was defaulted to Local Area Network mode.\n\n(You can play with friends over a LAN, but not with people all around the world over the internet)";
                 testMessage = "Computer is Offline.";
-                // /*UNUSED*/ doneTesting = true;
+                // UNUSED doneTesting = true;
                 doNetworking = true;
                 useMasterServer = false;
                 break;
@@ -476,7 +476,7 @@ public class Lobby : MonoBehaviour
                 testMessage = "Private IP with no NAT punchthrough - Local network, non internet games only.";
                 //filterNATHosts = true;
                 Game.useNAT = true;
-                // /*UNUSED*/ doneTesting = true;
+                // UNUSED doneTesting = true;
                 doNetworking = true;
                 useMasterServer = false;
                 break;
@@ -492,14 +492,14 @@ public class Lobby : MonoBehaviour
                 // NAT functionality is enabled in case a server is started,
                 // clients should enable this based on if the host requires it
                 Game.useNAT = true;
-                // /*UNUSED*/ doneTesting = true;
+                // UNUSED doneTesting = true;
                 doNetworking = true;
                 useMasterServer = true;
                 break;
             case ConnectionTesterStatus.PublicIPIsConnectable:
                 testMessage = "Directly connectable public IP address.";
                 Game.useNAT = false;
-                // /*UNUSED*/ doneTesting = true;
+                // UNUSED doneTesting = true;
                 doNetworking = true;
                 useMasterServer = true;
                 break;
@@ -521,7 +521,7 @@ public class Lobby : MonoBehaviour
                 {
                     probingPublicIP = false;    // reset
                     Game.useNAT = true;
-                    // /*UNUSED*/ doneTesting = true;
+                    // UNUSED doneTesting = true;
                     doNetworking = true;
                     useMasterServer = false;
                 }
@@ -529,7 +529,7 @@ public class Lobby : MonoBehaviour
             case ConnectionTesterStatus.PublicIPNoServerStarted:
                 testMessage = "Public IP address but server not initialized, it must be started to check server accessibility. Restart connection test when ready.";
                 doNetworking = true;
-                // /*UNUSED*/ doneTesting = true;
+                // UNUSED doneTesting = true;
                 useMasterServer = true;
                 break;
             default:
@@ -537,7 +537,7 @@ public class Lobby : MonoBehaviour
                 doNetworking = false;
                 break;
         }
-    }
+    }*/
 
 	public void MakeWindow(int id)
 	{
@@ -568,17 +568,17 @@ public class Lobby : MonoBehaviour
 			GUILayout.BeginHorizontal();
 			GUILayout.FlexibleSpace();
 			GUILayout.BeginVertical(GUILayout.Width(300f));
-			if (GUILayout.Button("Restart Connection Test"))
+			/*if (GUILayout.Button("Restart Connection Test"))
 			{
 				timer = 0f;
 				StartCoroutine(TestConnection(true));
-			}
+			}*/
 			if (GUILayout.Button("Force Enable Networking (May Not Work)"))
 			{
-				Game.useNAT = true;
+				//Game.useNAT = true;
 				// /*UNUSED*/ doneTesting = true;
 				doNetworking = true;
-				useMasterServer = true;
+				//useMasterServer = true;
 				testMessage = "Network testing failed, networking force enabled";
 			}
 			GUILayout.EndVertical();
@@ -833,7 +833,7 @@ public class Lobby : MonoBehaviour
 					Network.Disconnect();
 					if (hostDedicated && dedicatedIP.Length > 0)
 					{
-						Game.useNAT = (dedicatedNAT || forceNAT);
+						//Game.useNAT = (dedicatedNAT || forceNAT);
 						temp = Network.Connect(dedicatedIP, dedicatedPort) + "";
 						netConIP = dedicatedIP;
 						netConPort = dedicatedPort;
@@ -853,18 +853,18 @@ public class Lobby : MonoBehaviour
                                 netConIP[0] +
                                 ":" +
                                 netConPort +
-                                (Game.useNAT ? " NAT" : "") +
+                                //(Game.useNAT ? " NAT" : "") +
                                 ")\n\n\n\nIf this fails, please uncheck the\n\"Utilize dedicated servers for hosting games\"\n option in the Settings below.";
 						}
 					}
 					else
 					{
-						Game.useNAT = !Network.HavePublicAddress();
+						//Game.useNAT = !Network.HavePublicAddress();
 						port = 2500;
 						NetworkConnectionError info;
 						while (true)
 						{
-							info = Network.InitializeServer(9, port, Game.useNAT);
+							info = Network.InitializeServer(9, port, false/*Game.useNAT*/);
                             if (port < 2600 && info != NetworkConnectionError.NoError)
                             {
                                 port++;
@@ -907,7 +907,7 @@ public class Lobby : MonoBehaviour
             int activePlayers = 0;
             int activePlayersVisible = 0;
             int availableServers = 0;
-			if (useMasterServer && !disableMasterServer)
+			/*if (useMasterServer && !disableMasterServer)
 			{
 				dedicatedIP = new String[0];
 
@@ -926,7 +926,7 @@ public class Lobby : MonoBehaviour
                     {
                         activePlayers += element.connectedPlayers;
 
-                        if (filterNATHosts && element.useNat) continue;
+                        //if (filterNATHosts && element.useNat) continue;
 
                         serverData = element.comment.Split(";"[0]);
                         gameVersion = new SemVer(0);
@@ -946,7 +946,7 @@ public class Lobby : MonoBehaviour
                             availableServers++;
                             dedicatedIP = element.ip;
                             dedicatedPort = element.port;
-                            dedicatedNAT = element.useNat;
+                            //dedicatedNAT = element.useNat;
                             continue;
                         }
                         else if (GameData.gameVersion != gameVersion) continue;
@@ -972,7 +972,7 @@ public class Lobby : MonoBehaviour
                         serverVersion = 0.0f;
                         String serverWorld = "";
                         String serverPlayers = "";
-                        // /*UNUSED*/ String serverWorldURL = "";
+                        // UNUSED String serverWorldURL = "";
                         String bannedIPs = "";
                         String serverLag = "";
                         bool isLocked = false;
@@ -1033,7 +1033,7 @@ public class Lobby : MonoBehaviour
                                         (isLocked ? "(Password Protected)" : "Join Game")),
                                     GUILayout.Width(170)))
                             {
-                                Game.useNAT = (element.useNat || forceNAT);
+                                //Game.useNAT = (element.useNat || forceNAT);
                                 temp = Network.Connect(element.ip, element.port) + "";
                                 netConIP = element.ip;
                                 netConPort = element.port;
@@ -1048,7 +1048,7 @@ public class Lobby : MonoBehaviour
                                         element.ip[0] +
                                         ":" +
                                         element.port +
-                                        ((element.useNat || forceNAT) ? " NAT" : "") +
+                                        //((element.useNat || forceNAT) ? " NAT" : "") +
                                         ")\n\n\n\nPlay safe! Don't share personal information online,\nand don't trust anyone who asks you for it.";
                                 }
                             }
@@ -1069,7 +1069,7 @@ public class Lobby : MonoBehaviour
                                 element.ip[0] +
                                 ":" +
                                 element.port +
-                                (element.useNat ? " NAT" : "") +
+                                //(element.useNat ? " NAT" : "") +
                                 (serverVersion != 0.0 ? " (» Dedicated Host Server)" : "");
                         }
                         i++;
@@ -1107,12 +1107,12 @@ public class Lobby : MonoBehaviour
 					GUILayout.Label("\n(All games requiring Network Address Translation have been hidden)");
 				}
 
-			}
+			}*/if(false){}
 			else
 			{
                 GUILayout.Label("\n\n" +
-                    (disableMasterServer ?
-                        "Your computer" :
+                    (/*disableMasterServer ?
+                        "Your computer" :*/
                         "Even if your computer") +
                         " isn't connected to the internet - don't worry!\nYou can still play Mars Explorer on your own, or with friends on your local network.\n\nIf a friend is already hosting a game, enter their IP address here:\n");
 				if (remoteIP == null)
@@ -1134,7 +1134,7 @@ public class Lobby : MonoBehaviour
                         remoteIP +
                         ":" +
                         port +
-                        (Game.useNAT ? " NAT" : "") +
+                        //(Game.useNAT ? " NAT" : "") +
                         ")\n\n\n\nPlay safe! Don't share personal information online,\nand don't trust anyone who asks you for it.";
 					Network.Connect(remoteIP, port);
 					List<String> remIP = new List<String>();
@@ -1145,7 +1145,7 @@ public class Lobby : MonoBehaviour
 					PlayerPrefs.SetString("remoteIP", remoteIP);
 				}
 				GUILayout.Space(5f);
-				Game.useNAT = GUILayout.Toggle(Game.useNAT, " Enable NAT (generally unneeded)");
+				//Game.useNAT = GUILayout.Toggle(Game.useNAT, " Enable NAT (generally unneeded)");
 				GUILayout.EndVertical();
 				GUILayout.FlexibleSpace();
 				GUILayout.EndHorizontal();
@@ -1176,14 +1176,14 @@ public class Lobby : MonoBehaviour
 			if (showSettings)
 			{
 				GUILayout.BeginHorizontal();
-				if (!disableMasterServer)
+				/*if (!disableMasterServer)
 				{
 					if (useMasterServer)
 					{
 						if (GUILayout.Button("Switch to Direct Connect"))
 						{
 							useMasterServer = false;
-							Game.useNAT = false;
+							//Game.useNAT = false;
 						}
 					}
 					else if (GUILayout.Button("Switch to Server List"))
@@ -1229,9 +1229,9 @@ public class Lobby : MonoBehaviour
                             ""));
 					if (useMasterServer)
 					{
-						forceNAT = GUILayout.Toggle(forceNAT, "Force NAT");
+						//forceNAT = GUILayout.Toggle(forceNAT, "Force NAT");
 					}
-				}
+				}*/if(false){}
 				else
 				{
 					GUILayout.EndHorizontal();
@@ -1252,7 +1252,7 @@ public class Lobby : MonoBehaviour
 				GUILayout.Space(5f);
 			}
 
-			if (showSettings)
+			/*if (showSettings)
 			{
 				if (GUILayout.Button("Hide Settings", GUILayout.Height(30f)))
 				{
@@ -1262,7 +1262,7 @@ public class Lobby : MonoBehaviour
 			else if (GUILayout.Button("Show Settings", GUILayout.Height(30f)))
 			{
 				showSettings = true;
-			}
+			}*/
 
 			if (messages != null && messages.Length > 0)
 			{
@@ -1281,7 +1281,7 @@ public class Lobby : MonoBehaviour
 			GUILayout.EndHorizontal();
 		}
 
-		if (
+		/*if (
             autoHostListRefresh &&
             (Time.time > lastHostListRequest + hostListRefreshTimeout ||
                 lastHostListRefresh < 0f) &&
@@ -1293,7 +1293,7 @@ public class Lobby : MonoBehaviour
 				lastHostListRefresh = Time.time;
 			}
 			lastHostListRequest = Time.time;
-		}
+		}*/
 	}
 
     public IEnumerator LoadGame()
