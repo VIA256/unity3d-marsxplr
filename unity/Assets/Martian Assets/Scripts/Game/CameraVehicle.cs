@@ -4,8 +4,6 @@ using UnityEngine;
 [Serializable]
 public class CameraVehicle : MonoBehaviour
 {
-	public GUILayer guiLayer;
-
 	public Transform arrow;
 	public Vector3 lastDir;
 	public float lastY;
