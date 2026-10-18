@@ -44,7 +44,7 @@ public class Lobby : MonoBehaviour
 	private int netConAttempts = 0;
 	//private bool useMasterServer = true;
 	//private bool disableMasterServer = false;
-	private bool doNetworking = true;
+	//private bool doNetworking = true;
 	[NonSerialized]
 	public string userName = "";
 	[NonSerialized]
@@ -236,7 +236,7 @@ public class Lobby : MonoBehaviour
         masterServerConFailures += 1;
 	}*/
 
-	public void OnFailedToConnect(NetworkConnectionError info)
+	/*public void OnFailedToConnect(NetworkConnectionError info)
 	{
         if (Network.isClient) return; //We already connected to a different server
 
@@ -244,8 +244,8 @@ public class Lobby : MonoBehaviour
             "Game could not be connected to.\nPlease try joining a different game!\n\n\n" +
             (info == NetworkConnectionError.ConnectionFailed ?
                 "You may be blocked by a network firewall.\n(See \"How Do I configure My Router\" on the FAQ @ MarsXPLR.com)\n" :
-                (/*info == NetworkConnectionError.NATTargetNotConnected ?
-                    "\nThe person hosting the game you were connecting to\nmay have stopped playing Mars Explorer." :*/
+                (//info == NetworkConnectionError.NATTargetNotConnected ?
+                    //"\nThe person hosting the game you were connecting to\nmay have stopped playing Mars Explorer." :
                     info.ToString()
                 )
             )
@@ -264,16 +264,16 @@ public class Lobby : MonoBehaviour
         {
             GameData.errorMessage += "\n\nReconnection Attempt Failed.";
         }
-	}
+	}*/
 
-	public void OnConnectedToServer()
+	/*public void OnConnectedToServer()
 	{
 		GameData.errorMessage = "";
         Network.isMessageQueueRunning = false; //We don't want to recieve LoadLevel commands before we are ready... This will be enabled as soon as we get to the "Game" level
 		GameData.userName = userName;
 		GameData.userCode = userCode;
 		StartCoroutine(LoadGame());
-	}
+	}*/
 
 	public void OnGUI()
 	{
@@ -373,7 +373,7 @@ public class Lobby : MonoBehaviour
                     (float)Screen.width * 0.5f - width / 2f - 50f,
                     lobbyDecor.logoOffset - 70,
                     width + 100f,
-                    (float)(doNetworking && userName != "" ?
+                    (float)(/*doNetworking && */userName != "" ?
                         Screen.height - lobbyDecor.logoOffset + 10 :
                         320) + 100
                     ),
@@ -542,7 +542,7 @@ public class Lobby : MonoBehaviour
 	public void MakeWindow(int id)
 	{
         //Test User's Network
-		if (!doNetworking)
+		/*if (!doNetworking)
 		{
 			GUILayout.FlexibleSpace();
 			if (testMessage == "testing")
@@ -568,15 +568,15 @@ public class Lobby : MonoBehaviour
 			GUILayout.BeginHorizontal();
 			GUILayout.FlexibleSpace();
 			GUILayout.BeginVertical(GUILayout.Width(300f));
-			/*if (GUILayout.Button("Restart Connection Test"))
+			if (GUILayout.Button("Restart Connection Test"))
 			{
 				timer = 0f;
 				StartCoroutine(TestConnection(true));
-			}*/
+			}
 			if (GUILayout.Button("Force Enable Networking (May Not Work)"))
 			{
 				//Game.useNAT = true;
-				// /*UNUSED*/ doneTesting = true;
+				// UNUSED doneTesting = true;
 				doNetworking = true;
 				//useMasterServer = true;
 				testMessage = "Network testing failed, networking force enabled";
@@ -585,7 +585,7 @@ public class Lobby : MonoBehaviour
 			GUILayout.FlexibleSpace();
 			GUILayout.EndHorizontal();
 			GUILayout.FlexibleSpace();
-		}
+		}*/if(false){}
         //Get user's name
 		else if (userName == "")
 		{
@@ -823,22 +823,22 @@ public class Lobby : MonoBehaviour
 		    
             // Start a new server
 
-			if (Network.peerType == NetworkPeerType.Disconnected)
+			if (/*Network.peerType == NetworkPeerType.Disconnected*/true)
 			{
 				if (GUILayout.Button(
-                    "Host Game >>",
+                    "New Game",//"Host Game >>",
                     GUILayout.Width(238f),
                     GUILayout.Height(30f)))
 				{
-					Network.Disconnect();
-					if (hostDedicated && dedicatedIP.Length > 0)
+					//Network.Disconnect();
+					/*if (hostDedicated && dedicatedIP.Length > 0)
 					{
 						//Game.useNAT = (dedicatedNAT || forceNAT);
 						temp = Network.Connect(dedicatedIP, dedicatedPort) + "";
 						netConIP = dedicatedIP;
 						netConPort = dedicatedPort;
 						netConAttempts = 1;
-						// /*UNUSED*/ dedicatedHostAttempts = 1;
+						// UNUSED dedicatedHostAttempts = 1;
 						if (temp != "NoError")
 						{
 							GameData.errorMessage =
@@ -856,15 +856,15 @@ public class Lobby : MonoBehaviour
                                 //(Game.useNAT ? " NAT" : "") +
                                 ")\n\n\n\nIf this fails, please uncheck the\n\"Utilize dedicated servers for hosting games\"\n option in the Settings below.";
 						}
-					}
+					}*/if(false){}
 					else
 					{
 						//Game.useNAT = !Network.HavePublicAddress();
 						port = 2500;
-						NetworkConnectionError info;
+						/*NetworkConnectionError info;
 						while (true)
 						{
-							info = Network.InitializeServer(9, port, false/*Game.useNAT*/);
+							info = Network.InitializeServer(9, port, false);//Game.useNAT);
                             if (port < 2600 && info != NetworkConnectionError.NoError)
                             {
                                 port++;
@@ -877,7 +877,7 @@ public class Lobby : MonoBehaviour
 						if (info != NetworkConnectionError.NoError)
 						{
 							GameData.errorMessage = "\nCould not start server: " + info;
-						}
+						}*/if(false){}
 						else
 						{
 							GameData.userName = userName;
@@ -1108,11 +1108,12 @@ public class Lobby : MonoBehaviour
 				}
 
 			}*/if(false){}
-			else
+            GUILayout.Label("\n\nThis version of MarsXPLR has no multiplayer");
+			/*else
 			{
                 GUILayout.Label("\n\n" +
-                    (/*disableMasterServer ?
-                        "Your computer" :*/
+                    (//disableMasterServer ?
+                        //"Your computer" :
                         "Even if your computer") +
                         " isn't connected to the internet - don't worry!\nYou can still play Mars Explorer on your own, or with friends on your local network.\n\nIf a friend is already hosting a game, enter their IP address here:\n");
 				if (remoteIP == null)
@@ -1160,7 +1161,7 @@ public class Lobby : MonoBehaviour
                     " players in this version - " +
                     availableServers +
                     " available dedicated servers");
-			}
+			}*/
 
 			GUILayout.EndScrollView();
 			if (Event.current.type != EventType.Layout)
@@ -1398,10 +1399,10 @@ public class Lobby : MonoBehaviour
             Input.GetKeyDown(KeyCode.Mouse0))
 		{
 			GameData.errorMessage = "";
-			if (!Network.isServer && Network.peerType != NetworkPeerType.Disconnected)
+			/*if (!Network.isServer && Network.peerType != NetworkPeerType.Disconnected)
 			{
 				Network.Disconnect();
-			}
+			}*/
 		}
 	}
 
