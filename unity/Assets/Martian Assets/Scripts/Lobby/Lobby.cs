@@ -1379,14 +1379,14 @@ public class Lobby : MonoBehaviour
         }
     }
 
-	public int sortHostArray(HostData a, HostData b)
+	/*public int sortHostArray(HostData a, HostData b)
 	{
 		return (a.connectedPlayers > b.connectedPlayers) ?
             (-1) :
             ((a.connectedPlayers < b.connectedPlayers) ?
                 1 :
                 0);
-	}
+	}*/
 
 	public void errorWindow(int id)
 	{
