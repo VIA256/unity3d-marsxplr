@@ -1517,7 +1517,7 @@ public class Settings : MonoBehaviour
 				}
 			}
 
-			GUILayout.Space(20f);
+			/*GUILayout.Space(20f);
 			GUILayout.Label("Network Mode:");
 
 			if (GUILayout.Toggle(networkMode == 0, "UDP") != (networkMode == 0))
@@ -1592,7 +1592,7 @@ public class Settings : MonoBehaviour
 				updateServerPrefs();
 			}
 			GUILayout.Label((!(networkInterpolation < 0.01f)) ? (networkInterpolation * 1000f + " ms") : "Auto", GUILayout.Width(65f));
-			GUILayout.EndHorizontal();
+			GUILayout.EndHorizontal();*/
 
 		}
 		else
@@ -1838,7 +1838,7 @@ public class Settings : MonoBehaviour
 				}
 			}
 
-			GUILayout.Space(20f);
+			/*GUILayout.Space(20f);
 			GUILayout.Label("Networking:");
 			GUILayout.Toggle(networkMode == 0, "UDP");
 			GUILayout.Toggle(networkMode == 1, "RDC");
@@ -1853,10 +1853,10 @@ public class Settings : MonoBehaviour
                     "Auto" :
                     (networkInterpolation * 1000) + " ms"),
                 GUILayout.Width(65));
-			GUILayout.EndHorizontal();
+			GUILayout.EndHorizontal();*/
 		}
 
-		GUILayout.Label("nTime: " + Mathf.RoundToInt((float)Network.time));
+		//GUILayout.Label("nTime: " + Mathf.RoundToInt((float)Network.time));
 		
         GUILayout.Space(20f);
 		GUILayout.Label("Settings I/O:");
@@ -1937,14 +1937,14 @@ public class Settings : MonoBehaviour
 			camContrast.enabled = false;
 		}
 
-		if (networkPhysics == 2)
+		/*if (networkPhysics == 2)
 		{
 			Network.sendRate = 10f;
 		}
 		else
 		{
 			Network.sendRate = 15f;
-		}
+		}*/
 
 		if (ramoSpheres == 0f)
 		{
@@ -2204,9 +2204,9 @@ public class Settings : MonoBehaviour
             "jetfp:" + firepower[3] + ";" +
             "jetll:" + laserLock[3] + ";" +
 
-            "netm:" + networkMode + ";" +
+            /*"netm:" + networkMode + ";" +
             "netph:" + networkPhysics + ";" +
-            "netin:" + networkInterpolation + ";" +
+            "netin:" + networkInterpolation + ";" +*/
         "";
 	}
 
