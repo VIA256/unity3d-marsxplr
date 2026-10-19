@@ -153,10 +153,11 @@ public class Messaging : MonoBehaviour
 			{
 				inputField = Game.LanguageFilter(inputField);
 				Game.Controller.msg(inputField, (int)chatOrigins.Local);
-				Game.Controller.GetComponent<NetworkView>().RPC(
+
+				/*Game.Controller.GetComponent<NetworkView>().RPC(
                     "msg",
                     RPCMode.Others, inputField + " - " + GameData.userName,
-                    (int)chatOrigins.Remote);
+                    (int)chatOrigins.Remote);*/
 
 			}
 			inputField = "";
@@ -214,10 +215,13 @@ public class Messaging : MonoBehaviour
 
 	public void broadcast(string str)
 	{
-		Game.Controller.GetComponent<NetworkView>().RPC(
+		Game.Controller.msg(
+			str,
+            (int)chatOrigins.Server
+		);/*Game.Controller.GetComponent<NetworkView>().RPC(
             "msg",
             RPCMode.All,
             str,
-            (int)chatOrigins.Server);
+            (int)chatOrigins.Server);*/
 	}
 }

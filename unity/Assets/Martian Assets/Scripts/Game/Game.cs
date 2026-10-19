@@ -24,15 +24,15 @@ public class GUIPanel
 [Serializable]
 public class unauthPlayer
 {
-    public NetworkPlayer p;
+    //public NetworkPlayer p;
     public string n;
     public float t;
-    public unauthPlayer(NetworkPlayer p, string n, float t)
+    /*public unauthPlayer(NetworkPlayer p, string n, float t)
     {
         this.p = p;
         this.n = n;
         this.t = t;
-    }
+    }*/
 }
 
 [Serializable]
@@ -134,19 +134,19 @@ public class Game : MonoBehaviour
 	public void Start()
     {
 		//if i started in the game scene in the editor, the master server stuff must be set or it defaults to some unknown thing
-		if(!Lobby.scenePlayed)
+		/*if(!Lobby.scenePlayed)
 		{
 			MasterServer.ipAddress = "omc.band";
 			MasterServer.port = 25010;
-		}
+		}*/
 		
 		//Network.minimumAllocatableViewIDs = 3;
-		if (Network.peerType == NetworkPeerType.Disconnected)
+		/*if (Network.peerType == NetworkPeerType.Disconnected)
         {
 			//We are running in the editor, and have started the game in world load mode
 			Network.InitializeServer(9, 2500, !Network.HavePublicAddress());
-		}
-		if (Network.isServer)
+		}*/
+		if (true)//Network.isServer)
         {
 			isHost = true;
 		}
@@ -164,7 +164,7 @@ public class Game : MonoBehaviour
 		Controller = (Game)gameObject.GetComponent<Game>();
 		if (GameData.userName == "") GameData.userName = "MarsRacer";
 		Settings.bannedIPs = GameData.masterBlacklist;
-		Settings.networkMode = GameData.networkMode;
+		//Settings.networkMode = GameData.networkMode;
 		Players = new Hashtable();
 		
 		botsInGame = 0;
@@ -187,7 +187,7 @@ public class Game : MonoBehaviour
         //Wait for Server to send us players via RPC - Probably totally unnecessary
         yield return null;
         //We are now ready to recieve RPC calls!
-        Network.isMessageQueueRunning = true;
+        //Network.isMessageQueueRunning = true;
 
         //Allow World to Load
         while (worldLoaded == false) yield return null;
@@ -290,7 +290,15 @@ public class Game : MonoBehaviour
         {
             i++;
         }
-        GetComponent<NetworkView>().RPC(
+        StartCoroutine(iV(
+            GameVehicleID,
+            (i != 1 ? temp + " " + i : temp),
+            0,
+            (isHost ? 1 : 0),
+            0,
+            0,
+            false
+        ));/*GetComponent<NetworkView>().RPC(
             "iV",
             RPCMode.All,
             Network.AllocateViewID(),
@@ -301,16 +309,16 @@ public class Game : MonoBehaviour
             (isHost ? 1 : 0),
             0,
             0,
-            false);
+            false);*/
 
         if (isHost)
         {
-            if (!Network.isServer)
+            /*if (!Network.isServer)
             {
                 sSHS(); //Send dedicated server my default settings
-            }
+            }*/
             
-            if (Network.isServer)
+            /*if (Network.isServer)
             {
                 Game.Messaging.broadcast(
                     "You are hosting a server!\n" +
@@ -343,23 +351,26 @@ public class Game : MonoBehaviour
                         "") +
                     "\nPort: " +
                     Network.connections[0].port);
-            }
+            }*/
 
             if (whirldIn.worldParams["message"] != null)
             {
                 Settings.serverWelcome = (String)whirldIn.worldParams["message"];
-                GetComponent<NetworkView>().RPC(
+                msg(
+                    Settings.serverWelcome,
+                    (int)chatOrigins.Remote
+                );/*GetComponent<NetworkView>().RPC(
                     "msg",
                     RPCMode.All,
                     Settings.serverWelcome,
-                    (int)chatOrigins.Remote);
+                    (int)chatOrigins.Remote);*/
             }
             if (whirldIn.worldParams["marsxplr"] != null)
             {
-                GetComponent<NetworkView>().RPC(
+                sSS((String)whirldIn.worldParams["marsxplr"]);/*GetComponent<NetworkView>().RPC(
                     "sSS",
                     RPCMode.All,
-                    whirldIn.worldParams["marsxplr"]);
+                    whirldIn.worldParams["marsxplr"]);*/
             }
         }
         else
@@ -403,12 +414,12 @@ public class Game : MonoBehaviour
 			Settings.serverUpdateTime < Time.time)
         {
 			Settings.serverString = Settings.packServerPrefs();
-			GetComponent<NetworkView>().RPC("sSS", RPCMode.Others, Settings.serverString);
-			if (isHost && !Network.isServer)
+			sSS(Settings.serverString);//GetComponent<NetworkView>().RPC("sSS", RPCMode.Others, Settings.serverString);
+			/*if (isHost && !Network.isServer)
             {
 				//Send dedicated server my default settings
 				sSHS();
-			}
+			}*/
 			Settings.serverUpdateTime = 0f;
 		}
 		
@@ -447,7 +458,7 @@ public class Game : MonoBehaviour
 		}
 
 		//Let server know that we are knocking at the door
-		if (
+		/*if (
 			Network.peerType != NetworkPeerType.Disconnected &&
 			!isHost &&
 			WorldDesc.url == "" &&
@@ -460,7 +471,7 @@ public class Game : MonoBehaviour
 				Network.player,
 				GameData.userName);
 			authUpdateTime = Time.time;
-		}
+		}*/
 		
 		if (!worldLoaded)
         {
@@ -592,15 +603,15 @@ public class Game : MonoBehaviour
                         new Rect(10, 10, wdth, hght),
                         (Game.Settings.simplified ?
                             "<<" :
-                            "<< Stop Hosting Game")))
+                            "<< End Game")))//"<< Stop Hosting Game")))
                     {
-                        if (
-                            !Network.isServer ||
-                            Network.connections.Length < 1)
+                        if (true
+                            /*!Network.isServer ||
+                            Network.connections.Length < 1*/)
                         {
                             netKillMode = 1;
-                            Network.Disconnect();
-                            unregisterHost();
+                            SceneManager.LoadScene(1);//Network.Disconnect();
+                            //unregisterHost();
                         }
                         else
                         {
@@ -609,7 +620,7 @@ public class Game : MonoBehaviour
                         }
                     }
                 }
-                else
+                /*else
                 {
                     if (GUI.Button(
                         new Rect(10, 10, wdth, hght),
@@ -632,10 +643,10 @@ public class Game : MonoBehaviour
                         killServer = false;
                         Game.Settings.simplified = false;
                     }
-                }
+                }*/
             }
         }
-        else
+        /*else
         {
             if (GUI.Button(
                 new Rect(10, 10, wdth, hght),
@@ -646,7 +657,7 @@ public class Game : MonoBehaviour
                 netKillMode = 1;
                 Network.Disconnect();
             }
-        }
+        }*/
 
         //Hide GUI Button
         if (GUI.Button(
@@ -969,7 +980,7 @@ public class Game : MonoBehaviour
 			Settings.showDialogPlayer();
 			break;
 		case 3:
-			Settings.showDialogPlayers();
+			//Settings.showDialogPlayers();
 			break;
 		case 4:
 			showDialogVehicles();
@@ -1062,7 +1073,7 @@ public class Game : MonoBehaviour
 		}
 	}
 
-	public IEnumerator OnPlayerConnected(NetworkPlayer player)
+	/*public IEnumerator OnPlayerConnected(NetworkPlayer player)
     {
 		//Make sure they aren't banned
         if (Settings.bannedIPs != "")
@@ -1144,7 +1155,7 @@ public class Game : MonoBehaviour
         }
 
         //Force-Refresh Everyone's NetworkViews
-        // /*DEAD LINK*/ http://forum.unity3d.com/viewtopic.php?t=35724&postdays=0&postorder=asc&start=105
+        // DEAD LINK http://forum.unity3d.com/viewtopic.php?t=35724&postdays=0&postorder=asc&start=105
         foreach (DictionaryEntry plrE in Players)
         {
             if (plrE.Value == null) continue;
@@ -1156,11 +1167,11 @@ public class Game : MonoBehaviour
         //Update Master Server Listing
         yield return new WaitForSeconds(5f);
         StartCoroutine(registerHost());
-    }
+    }*/
 
-	public IEnumerator OnPlayerDisconnected(NetworkPlayer player)
+	/*public IEnumerator OnPlayerDisconnected(NetworkPlayer player)
     {
-        // /*UNUSED*/ String pName = "";
+        // UNUSED String pName = "";
 		
 		foreach (DictionaryEntry plrE in Players)
         {
@@ -1176,11 +1187,11 @@ public class Game : MonoBehaviour
         yield return new WaitForSeconds(1f);
         eSI();
         StartCoroutine(registerHost());
-	}
+	}*/
 
     public void WindowServerSetup(int id)
     {
-        if (!isHost && WorldDesc.url == "")
+        /*if (!isHost && WorldDesc.url == "")
         {
             GUILayout.FlexibleSpace();
             GUILayout.FlexibleSpace();
@@ -1231,7 +1242,7 @@ public class Game : MonoBehaviour
             }
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
-        }
+        }*/if(false){}
         else if (
             whirldIn.status == WhirldInStatus.Success ||
             worldLoaded == true)
@@ -1316,13 +1327,13 @@ public class Game : MonoBehaviour
             GUILayout.EndHorizontal();
             GUILayout.Space(40f);
         }
-        else if (!isHost)
+        /*else if (!isHost)
         {
             GUILayout.Space(150f);
             GUILayout.Label("Initializing connection with game server...");
             netKillMode = 1;
             Network.Disconnect();
-        }
+        }*/
         else    //Getting ready to host a game
         {
             if (
@@ -1341,8 +1352,8 @@ public class Game : MonoBehaviour
             GUILayout.Space(40f);
             String[] tabs = {
                             "Select a World",
-                            "Use Custom World",
-                            "Server Settings"};
+                            "Use Custom World"/*,
+                            "Server Settings"*/};
             hostPanelTab = GUILayout.SelectionGrid(
                 hostPanelTab,
                 tabs,
@@ -1580,7 +1591,7 @@ public class Game : MonoBehaviour
                     GUILayout.Width(150f)))
                 {
                     netKillMode = 1;
-                    Network.Disconnect();
+                    SceneManager.LoadScene(1);//Network.Disconnect();
                 }
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
@@ -1592,7 +1603,7 @@ public class Game : MonoBehaviour
                     GUILayout.Height(40f)))
                 {
                     netKillMode = 1;
-                    Network.Disconnect();
+                    SceneManager.LoadScene(1);//Network.Disconnect();
                 }
                 GUILayout.Space(32f);
             }
@@ -1612,7 +1623,15 @@ public class Game : MonoBehaviour
             "'s bot" +
             (botsInGame == 1 ? "" : " " + botsInGame);
         yield return new WaitForSeconds(2f);
-        GetComponent<NetworkView>().RPC(
+        StartCoroutine(iV(
+            GameVehicleID,
+            temp,
+            1,
+            0,
+            0,
+            0,
+            PlayerVeh.zorbBall
+        ));/*GetComponent<NetworkView>().RPC(
             "iV",
             RPCMode.All,
             Network.AllocateViewID(),
@@ -1623,7 +1642,7 @@ public class Game : MonoBehaviour
             0,
             0,
             0,
-            PlayerVeh.zorbBall);
+            PlayerVeh.zorbBall);*/
 	}
 
 	public IEnumerator axeBot()
@@ -1641,7 +1660,7 @@ public class Game : MonoBehaviour
         materilizationEffect(bot.transform.position);
         bot.GetComponent<Rigidbody>().isKinematic = true;
 
-        Network.Destroy(bot.GetComponent<Rigidbody>().GetComponent<NetworkView>().viewID);
+        GameObject.Destroy(bot);//Network.Destroy(bot.GetComponent<Rigidbody>().GetComponent<NetworkView>().viewID);
 
         yield return new WaitForSeconds(0.5f);
         eSI();
@@ -1660,8 +1679,16 @@ public class Game : MonoBehaviour
 		int specialInput = (PlayerVeh.specialInput ? 1 : 0);
 		string name = Player.name;
         bool zorbBall = PlayerVeh.zorbBall;
-		Network.Destroy(Player.GetComponent<Rigidbody>().GetComponent<NetworkView>().viewID);
-		GetComponent<NetworkView>().RPC(
+		GameObject.Destroy(Player);//Network.Destroy(Player.GetComponent<Rigidbody>().GetComponent<NetworkView>().viewID);
+		StartCoroutine(iV(
+            GameVehicleID,
+            name,
+            0,
+            isIt,
+            score,
+            specialInput,
+            zorbBall
+        ));/*GetComponent<NetworkView>().RPC(
             "iV",
             RPCMode.All,
             Network.AllocateViewID(),
@@ -1672,10 +1699,10 @@ public class Game : MonoBehaviour
             isIt,
             score,
             specialInput,
-            zorbBall);
+            zorbBall);*/
 	}
 
-	[RPC]
+	//[RPC]
 	public void eSI() //Ensure Someone is It
     {
 		if (!Player) return;
@@ -1685,15 +1712,15 @@ public class Game : MonoBehaviour
         {
             if (((Vehicle)plrE.Value).isIt == 1) return;
         }
-		Player.GetComponent<NetworkView>().RPC("sQ", RPCMode.All, 3);
+		PlayerVeh.sQ(3);//Player.GetComponent<NetworkView>().RPC("sQ", RPCMode.All, 3);
 	}
 
 	public void materilizationEffect(Vector3 position)
     {
-		GetComponent<NetworkView>().RPC("mE", RPCMode.All, position);
+		mE(position);//GetComponent<NetworkView>().RPC("mE", RPCMode.All, position);
 	}
 
-	[RPC]
+	//[RPC]
 	public void mE(Vector3 position)
     {
 		Instantiate(
@@ -1702,7 +1729,7 @@ public class Game : MonoBehaviour
             new Quaternion(0f, 0f, 0f, 1f));
 	}
 
-	public IEnumerator registerHost()
+	/*public IEnumerator registerHost()
     {
         if (serverHidden || !Network.isServer) yield break;
         yield return new WaitForSeconds(1f);
@@ -1767,9 +1794,9 @@ public class Game : MonoBehaviour
                     "") +
                 (serverPassword != "" ? ";l=1" : "") +
                 bannedIPs);
-	}
+	}*/
 
-	public IEnumerator registerHostSet()
+	/*public IEnumerator registerHostSet()
     {
         if (serverHidden) yield break;
         hostRegistered = true;
@@ -1778,15 +1805,15 @@ public class Game : MonoBehaviour
             StartCoroutine(registerHost());
             yield return new WaitForSeconds(60f);
         }
-	}
+	}*/
 
-	public void unregisterHost()
+	/*public void unregisterHost()
     {
 		hostRegistered = false;
 		MasterServer.UnregisterHost();
-	}
+	}*/
 
-	public void OnDisconnectedFromServer(NetworkDisconnection info)
+	/*public void OnDisconnectedFromServer(NetworkDisconnection info)
     {
 		if (!Network.isServer && netKillMode != 1)
         {
@@ -1816,19 +1843,19 @@ public class Game : MonoBehaviour
             }
 		}
         SceneManager.LoadScene(1);
-	}
+	}*/
 
 	public void OnApplicationQuit()
     {
-		Network.Disconnect();
-		if (Network.isServer) unregisterHost();
+		/*Network.Disconnect();
+		if (Network.isServer) unregisterHost();*/
 		SceneManager.LoadScene(1);
 	}
 
-	[RPC]
+	//[RPC]
 	public IEnumerator iV(
-        NetworkViewID viewID,
-        int networkMode,
+        //NetworkViewID viewID,
+        //int networkMode,
         int vehId,
         string vehName,
         int isBot,
@@ -1840,7 +1867,7 @@ public class Game : MonoBehaviour
 		//while(worldLoaded == false) yield return null;
 
         Vector3 pos = Vector3.zero;
-        if (viewID.isMine)
+        if (true)//viewID.isMine)
         {
             //Dragonhere: possibly gove other client instances time to build their vehicles before they are bombarded with NetworkViews that they can't handle.
             yield return new WaitForSeconds(0.25f);
@@ -1851,7 +1878,7 @@ public class Game : MonoBehaviour
         }
 
         //Create Vehicle
-        switch (networkMode)
+        /*switch (networkMode)
         { 
             case 0:
                 objectVehicle.GetComponent<NetworkView>().stateSynchronization = NetworkStateSynchronization.Unreliable;
@@ -1862,13 +1889,13 @@ public class Game : MonoBehaviour
             default:
                 objectVehicle.GetComponent<NetworkView>().stateSynchronization = NetworkStateSynchronization.Off;
                 break;
-        }
-        objectVehicle.GetComponent<NetworkView>().viewID = viewID;
+        }*/
+        //objectVehicle.GetComponent<NetworkView>().viewID = viewID;
         GameObject plyObj = (GameObject)Instantiate(
             objectVehicle,
             pos,
             Quaternion.identity);
-        plyObj.GetComponent<NetworkView>().viewID = viewID;
+        //plyObj.GetComponent<NetworkView>().viewID = viewID;
         GameObject vehObj = (GameObject)Instantiate(
             Game.Controller.GameVehicles[vehId],
             pos,
@@ -1876,7 +1903,7 @@ public class Game : MonoBehaviour
         vehObj.transform.parent = plyObj.transform;
         Vehicle plyVeh = plyObj.GetComponent<Vehicle>();
         plyVeh.vehObj = vehObj;
-        if (viewID.isMine && World.baseTF != null)
+        if (/*viewID.isMine && */World.baseTF != null)
         {
             //DRAGONHERE - MAJOR UNITY BUG: If we are instantiated at any other than the identity rotation, it totally messes up rotation locking on vehicle joints such as tank tracks
             plyObj.transform.rotation = World.baseTF.rotation;
@@ -1888,7 +1915,7 @@ public class Game : MonoBehaviour
 
         //Configure Vehicle
         plyObj.name = vehName;
-        plyVeh.networkMode = networkMode;
+        //plyVeh.networkMode = networkMode;
         plyVeh.vehId = vehId;
         plyVeh.isBot = (isBot == 1);
         plyVeh.isIt = isIt;
@@ -1896,11 +1923,11 @@ public class Game : MonoBehaviour
         plyVeh.specialInput = (specialInput == 1);
         plyVeh.zorbBall = zorbBall;
 
-        if (viewID.isMine && isBot == 0) Player = plyObj;
+        if (/*viewID.isMine && */isBot == 0) Player = plyObj;
         if (plyVeh.isIt == 1) QuarryVeh = plyVeh;
 	}
 
-	[RPC]
+	/*[RPC]
 	public void pD(string pName)
     {
 		if (Players[pName] == null) return;
@@ -1918,9 +1945,9 @@ public class Game : MonoBehaviour
 			Destroy(((Vehicle)Players[pName]).gameObject);
 		}
 		Players.Remove(pName);
-	}
+	}*/
 
-	[RPC]
+	/*[RPC]
 	public void pI(
         NetworkPlayer nPlayer,
         string pName,
@@ -1934,9 +1961,9 @@ public class Game : MonoBehaviour
             return;
         }
         authenticatedPlayers.Add(nPlayer, 1);*/
-    }
+    //}*/
 
-	[RPC]
+	/*[RPC]
 	public void cC(
         NetworkPlayer nPlayer,
         string pName,
@@ -1944,9 +1971,9 @@ public class Game : MonoBehaviour
         NetworkMessageInfo info)
     {
         //Network.CloseConnection(nPlayer, true);
-    }
+    }*/
 
-	[RPC]
+	/*[RPC]
 	public void cP(NetworkPlayer player, string pass)
     {
 		if (
@@ -1955,15 +1982,15 @@ public class Game : MonoBehaviour
         {   //They sent the right password
 			authenticatedPlayers.Add(player, 1);
 		}
-	}
+	}*/
 
-	[RPC]
-	public void sSS(string str, NetworkMessageInfo info)
+	//[RPC]
+	public void sSS(string str)//, NetworkMessageInfo info)
     {
         //if (isHost && !info.networkView.isMine) return;
 		Settings.serverString = str;
 		
-        if (!info.networkView.isMine)
+        /*if (!info.networkView.isMine)
         {
 			if (str == Settings.serverDefault)
             {
@@ -1977,7 +2004,7 @@ public class Game : MonoBehaviour
                     "(Server Settings Updated)",
                     (int)chatOrigins.Server);
 			}
-		}
+		}*/
 
 		string[] prefs = str.Split(";"[0]);
 		string[] val = null;
@@ -2046,20 +2073,20 @@ public class Game : MonoBehaviour
             else if (val[0] == "jetfp") Settings.firepower[3] = Mathf.Clamp(int.Parse(val[1]), 0, 3);
             else if (val[0] == "jetll") Settings.laserLock[3] = Mathf.Clamp(float.Parse(val[1]), 0, 1);
 
-            else if (val[0] == "netm") Settings.networkMode = Mathf.Clamp(int.Parse(val[1]), 0, 2);
-            else if (val[0] == "netph") Settings.networkPhysics = Mathf.Clamp(int.Parse(val[1]), 0, 2);
-            else if (val[0] == "netin") Settings.networkInterpolation = Mathf.Clamp(float.Parse(val[1]), 0, 0.5f);
+            //else if (val[0] == "netm") Settings.networkMode = Mathf.Clamp(int.Parse(val[1]), 0, 2);
+            //else if (val[0] == "netph") Settings.networkPhysics = Mathf.Clamp(int.Parse(val[1]), 0, 2);
+            //else if (val[0] == "netin") Settings.networkInterpolation = Mathf.Clamp(float.Parse(val[1]), 0, 0.5f);
         }
         Settings.updatePrefs();
 	}
 
-	[RPC]
+	//[RPC]
 	public void sH()
     {
 		isHost = true;
 	}
 
-	public void sSHS()
+	/*public void sSHS()
     {
 		GetComponent<NetworkView>().RPC(
             "sSH",
@@ -2074,9 +2101,9 @@ public class Game : MonoBehaviour
             serverPassword,
             GameData.gameVersion,
             serverHidden);
-	}
+	}*/
 
-	[RPC]
+	/*[RPC]
 	public void sSH(string sname, string sworld, string swelcome, string sblacklist, string spassword, SemVer gVersion, bool shidden, NetworkMessageInfo info)
     {
 		serverName = sname;
@@ -2086,8 +2113,8 @@ public class Game : MonoBehaviour
 		serverHidden = shidden;
 
 		string url = "";
-		// /*UNUSED*/ int fmt = 0;
-		// /*UNUSED*/ string material = "0";
+		// UNUSED int fmt = 0;
+		// UNUSED string material = "0";
 		string[] wrld = sworld.Split(";"[0]);
         foreach (String dat in wrld)
         {
@@ -2098,21 +2125,21 @@ public class Game : MonoBehaviour
             else if (vals[0] == "nme") WorldDesc.name = vals[1];
         }
 		WorldDesc.url = url;
-	}
+	}*/
 
-	[RPC]
+	/*[RPC]
 	public void sSB(string sblacklist)
     {
 		Settings.bannedIPs = sblacklist;
-	}
+	}*/
 
-	[RPC]
+	/*[RPC]
 	public void dN(int rsn)
     {
 		netKillMode = rsn;
-	}
+	}*/
 
-	[RPC]
+	//[RPC]
 	public void msg(string str, int origin)
     {
 		ChatEntry entry = new ChatEntry();
@@ -2123,13 +2150,13 @@ public class Game : MonoBehaviour
 		Messaging.scrollPosition.y = 1000000f;
 	}
 
-	[RPC]
+	/*[RPC]
 	public void lW(string str)
     {
         //url=http://location;fmt=1;mat=material;
 		string url = "";
-		// /*UNUSED*/ int fmt = 0;
-        // /*UNUSED*/ string material = "0";
+		// UNUSED int fmt = 0;
+        // UNUSED string material = "0";
 		string[] wrld = str.Split(";"[0]);
         foreach (String dat in wrld)
         {
@@ -2142,9 +2169,9 @@ public class Game : MonoBehaviour
 		WorldDesc.url = url;
         //WorldDesc.format = fmt;
 		LoadWorld();
-	}
+	}*/
 
-	[RPC]
+	/*[RPC]
 	public void lMI(NetworkPlayer p, string n)
     {
 		if (!isHost) return; //We don't need to know about this...
@@ -2159,7 +2186,7 @@ public class Game : MonoBehaviour
             }
 		}
 		unauthPlayers.Add(new unauthPlayer(p, n, Time.time));
-	}
+	}*/
 
 	public void LoadWorld()
     {
@@ -2174,7 +2201,6 @@ public class Game : MonoBehaviour
 		string pattern = "anus|ash0le|ash0les|asholes| ass |Ass Monkey|Assface|assh0le|assh0lez|bastard|bastards|bastardz|basterd|suka|asshole|assholes|assholz|asswipe|azzhole|bassterds|basterdz|Biatch|bitch|bitches|Blow Job|blowjob|in bed|butthole|buttwipe|c0ck|c0cks|c0k|Clit|cnts|cntz|cockhead| cock |cock-head|CockSucker|cock-sucker| cum |cunt|cunts|cuntz|dick|dild0|dild0s|dildo|dildos|dilld0|dilld0s|dominatricks|dominatrics|dominatrix|f.u.c.k|f u c k|f u c k e r|fag|fag1t|faget|fagg1t|faggit|faggot|fagit|fags|fagz|faig|faigs|fuck|fucker|fuckin|mother fucker|fucking|fucks|Fudge Packer|fuk|Fukah|Fuken|fuker|Fukin|Fukk|Fukkah|Fukken|Fukker|Fukkin|gay|gayboy|gaygirl|gays|gayz|God-dam|God dam|h00r|h0ar|h0re|jackoff|jerk-off|jizz|kunt|kunts|kuntz|Lesbian|Lezzian|Lipshits|Lipshitz|masochist|masokist|massterbait|masstrbait|masstrbate|masterbaiter|masterbate|masterbates|Motha Fucker|Motha Fuker|Motha Fukkah|Motha Fukker|Mother Fucker|Mother Fukah|Mother Fuker|Mother Fukkah|Mother Fukker|mother-fucker|Mutha Fucker|Mutha Fukah|Mutha Fuker|Mutha Fukkah|Mutha Fukker|orafis|orgasim|orgasm|orgasum|oriface|orifice|orifiss|packi|packie|packy|paki|pakie|peeenus|peeenusss|peenus|peinus|pen1s|penas|penis|penis-breath|penus|penuus|Phuc|Phuck|Phuk|Phuker|Phukker|polac|polack|polak|Poonani|pr1c|pr1ck|pr1k|pusse|pussee|pussy|puuke|puuker|queer|queers|queerz|qweers|qweerz|qweir|recktum|rectum|retard|sadist|scank|schlong|screwing| sex |sh1t|sh1ter|sh1ts|sh1tter|sh1tz|shit|shits|shitter|Shitty|Shity|shitz|Shyt|Shyte|Shytty|Shyty|skanck|skank|skankee| sob |skankey|skanks|Skanky|slut|sluts|Slutty|slutz|son-of-a-bitch|va1jina|vag1na|vagiina|vagina|vaj1na|vajina|vullva|vulva|xxx|b!+ch|bitch|blowjob|clit|arschloch|fuck|shit|asshole|b!tch|b17ch|b1tch|bastard|bi+ch|boiolas|buceta|c0ck|cawk|chink|clits|cunt|dildo|dirsa|ejakulate|fatass|fcuk|fuk|fux0r|l3itch|lesbian|masturbate|masterbat*|motherfucker|s.o.b.|mofo|nigga|nigger|n1gr|nigur|niiger|niigr|nutsack|phuck|blue balls|blue_balls|blueballs|pussy|scrotum|shemale|sh!t|slut|smut|teets|tits|boobs|b00bs|testical|testicle|titt|jackoff|whoar|whore|fuck|shit|arse|bi7ch|bitch|bollock|breasts|cunt|dick|fag |feces|fuk|futkretzn|gay|jizz|masturbat*|piss|poop|porn|p0rn|pr0n|shiz|splooge|b00b|testicle|titt|wank";
 		return Regex.Replace(str, pattern, "#", RegexOptions.IgnoreCase);*/
 
-        // the kids that played this game back then are no longer kids. little need to babysit them anymore
         return str;
 	}
 }

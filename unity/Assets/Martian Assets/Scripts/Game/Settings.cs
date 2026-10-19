@@ -651,7 +651,7 @@ public class Settings : MonoBehaviour
 		GUILayout.FlexibleSpace();
 	}
 
-	public void showDialogPlayers()
+	/*public void showDialogPlayers()
 	{
 		GUILayout.FlexibleSpace();
 
@@ -720,7 +720,7 @@ public class Settings : MonoBehaviour
 			GUILayout.Label("Active Players:");
 		}
 
-		// /*UNUSED*/ GameObject[] gos;
+		// UNUSED GameObject[] gos;
 		Vehicle veh;
 		VehicleNet vehNet;
         foreach (DictionaryEntry plrE in Game.Players)
@@ -755,7 +755,7 @@ public class Settings : MonoBehaviour
                 "\n" +
                     go.GetComponent<NetworkView>().viewID.ToString() +
                     " " +
-                    veh.networkMode /*+ "/" + go.networkView.owner.ToString()*/,
+                    veh.networkMode,//+ "/" + go.networkView.owner.ToString(),
                 GUILayout.Height(30));
             GUILayout.BeginHorizontal();
             if (
@@ -852,7 +852,7 @@ public class Settings : MonoBehaviour
 				updateServerPrefs();
 			}
 		}
-	}
+	}*/
 
 	public void showDialogServer()
 	{
@@ -860,10 +860,10 @@ public class Settings : MonoBehaviour
 		{
 			if (GUILayout.Button(">> Default All <<"))
 			{
-				Game.Controller.GetComponent<NetworkView>().RPC(
+				Game.Controller.sSS(serverDefault);/*Game.Controller.GetComponent<NetworkView>().RPC(
                     "sSS",
                     RPCMode.All,
-                    serverDefault);
+                    serverDefault);*/
 			}
 
 			GUILayout.Space(20f);
@@ -878,7 +878,7 @@ public class Settings : MonoBehaviour
 			GUILayout.Space(20f);
 			GUILayout.Label("Server Features:");
 
-			Game.Controller.serverHidden = GUILayout.Toggle(
+			/*Game.Controller.serverHidden = GUILayout.Toggle(
                 Game.Controller.serverHidden,
                 "Hide Server from List");
 			if (
@@ -894,7 +894,7 @@ public class Settings : MonoBehaviour
 			{
 				Game.Controller.StartCoroutine(Game.Controller.registerHostSet());
 				updateServerPrefs();
-			}
+			}*/
 
 			GUILayout.BeginHorizontal();
 			GUILayout.Label("Password?");
@@ -1863,10 +1863,10 @@ public class Settings : MonoBehaviour
             Game.Controller.isHost &&
             GUILayout.Button("Apply Custom\nSettings"))
 		{
-			Game.Controller.GetComponent<NetworkView>().RPC(
+			Game.Controller.sSS(serverString);/*Game.Controller.GetComponent<NetworkView>().RPC(
                 "sSS",
                 RPCMode.All,
-                serverString);
+                serverString);*/
 		}
 	}
 
