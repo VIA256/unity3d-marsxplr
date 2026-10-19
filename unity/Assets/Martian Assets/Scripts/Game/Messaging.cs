@@ -125,10 +125,12 @@ public class Messaging : MonoBehaviour
 			{
 				if (Game.Settings.zorbSpeed != 0f)
 				{
-					Game.Player.GetComponent<NetworkView>().RPC(
+					Game.PlayerVeh.sZ(
+						!Game.PlayerVeh.zorbBall
+					);/*Game.Player.GetComponent<NetworkView>().RPC(
                         "sZ",
                         RPCMode.All,
-                        !Game.PlayerVeh.zorbBall);
+                        !Game.PlayerVeh.zorbBall);*/
 					Game.Controller.msg(
                         "XORB " + (Game.PlayerVeh.zorbBall ?
                             "Activated" :

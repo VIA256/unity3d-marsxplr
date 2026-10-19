@@ -22,7 +22,7 @@ public class VehicleLocal : MonoBehaviour
 
 	public void Update()
 	{
-		if (vehicle.networkMode == 2 && Time.time > syncPosTimer)
+		/*if (vehicle.networkMode == 2 && Time.time > syncPosTimer)
 		{
 			syncPosTimer = Time.time + 1f / Network.sendRate;
 			GetComponent<NetworkView>().RPC(
@@ -30,9 +30,9 @@ public class VehicleLocal : MonoBehaviour
                 RPCMode.Others,
                 vehicle.myRigidbody.position,
                 vehicle.myRigidbody.rotation);
-		}
+		}*/
 
-		if (Time.time > syncInpTimer && vehicle.input != inputS)
+		/*if (Time.time > syncInpTimer && vehicle.input != inputS)
 		{
 			syncInpTimer = Time.time + 1f;
 			inputS = vehicle.input;
@@ -43,7 +43,7 @@ public class VehicleLocal : MonoBehaviour
                 Mathf.RoundToInt(inputS.y * 10f),
                 Mathf.RoundToInt(inputS.z * 10f),
                 Mathf.RoundToInt(inputS.w * 10f));
-		}
+		}*/
 	}
 
 	public void FixedUpdate()

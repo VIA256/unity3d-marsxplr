@@ -194,14 +194,19 @@ public class VehicleBot : MonoBehaviour
                 1 << 8))
 		{
 			rocketFireTime = Time.time;
-			GetComponent<NetworkView>().RPC(
+			vehicle.fRl(
+                Time.time + "",
+                vehicle.ridePos.position +
+                    vehicle.transform.up * -0.1f,
+                enemy.GetComponent<Vehicle>()
+            );/*GetComponent<NetworkView>().RPC(
                 "fRl",
                 RPCMode.All,
                 GetComponent<NetworkView>().viewID,
                 Network.time + "",
                 vehicle.ridePos.position +
                     vehicle.transform.up * -0.1f,
-                enemy.GetComponent<NetworkView>().viewID);
+                enemy.GetComponent<NetworkView>().viewID);*/
 		}
 
         //Bounds Checking

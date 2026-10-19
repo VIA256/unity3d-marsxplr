@@ -432,10 +432,12 @@ public class Settings : MonoBehaviour
                     "Activate") +
                 " My Xorb (/x)"))
 			{
-				Game.Player.GetComponent<NetworkView>().RPC(
+				Game.PlayerVeh.sZ(
+					!Game.PlayerVeh.zorbBall
+				);/*Game.Player.GetComponent<NetworkView>().RPC(
                     "sZ",
                     RPCMode.All,
-                    !Game.PlayerVeh.zorbBall);
+                    !Game.PlayerVeh.zorbBall);*/
 			}
 		}
 
@@ -2120,7 +2122,14 @@ public class Settings : MonoBehaviour
 		PlayerPrefs.SetFloat("vehColAccR", Game.PlayerVeh.vehicleAccent.r);
 		PlayerPrefs.SetFloat("vehColAccG", Game.PlayerVeh.vehicleAccent.g);
 		PlayerPrefs.SetFloat("vehColAccB", Game.PlayerVeh.vehicleAccent.b);
-		Game.Player.GetComponent<NetworkView>().RPC(
+		Game.PlayerVeh.sC(
+			Game.PlayerVeh.vehicleColor.r,
+            Game.PlayerVeh.vehicleColor.g,
+            Game.PlayerVeh.vehicleColor.b,
+            Game.PlayerVeh.vehicleAccent.r,
+            Game.PlayerVeh.vehicleAccent.g,
+            Game.PlayerVeh.vehicleAccent.b
+		);/*Game.Player.GetComponent<NetworkView>().RPC(
             "sC",
             RPCMode.Others,
             Game.PlayerVeh.vehicleColor.r,
@@ -2128,7 +2137,7 @@ public class Settings : MonoBehaviour
             Game.PlayerVeh.vehicleColor.b,
             Game.PlayerVeh.vehicleAccent.r,
             Game.PlayerVeh.vehicleAccent.g,
-            Game.PlayerVeh.vehicleAccent.b);
+            Game.PlayerVeh.vehicleAccent.b);*/
 	}
 
 	public string packServerPrefs()

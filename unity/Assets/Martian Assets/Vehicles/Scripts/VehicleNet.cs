@@ -49,7 +49,7 @@ public class VehicleNet : MonoBehaviour
 
 	public void Update()
 	{
-		if (vehicle.networkMode == 2 && Time.time > lastPing + (float)pingCheck)
+		/*if (vehicle.networkMode == 2 && Time.time > lastPing + (float)pingCheck)
 		{
 			if (lastPing < 0f)
 			{
@@ -59,7 +59,7 @@ public class VehicleNet : MonoBehaviour
 			{
 				GetComponent<NetworkView>().RPC("sT", RPCMode.All, 0f);
 			}
-		}
+		}*/
 
 		if (
             !updatePosition ||

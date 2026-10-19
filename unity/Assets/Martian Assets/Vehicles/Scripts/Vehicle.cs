@@ -75,13 +75,13 @@ public class Vehicle : MonoBehaviour
 
 	public IEnumerator Start()
 	{
-		if (GetComponent<NetworkView>().viewID.isMine)
+		if (true)//GetComponent<NetworkView>().viewID.isMine)
 		{
 			VehicleLocal vehicleLocal = (VehicleLocal)gameObject
                 .AddComponent(typeof(VehicleLocal));
 			vehicleLocal.vehicle = this;
 		}
-		if (GetComponent<NetworkView>().viewID.isMine && !isBot)
+		if (/*GetComponent<NetworkView>().viewID.isMine && */!isBot)
 		{
 			marker = (GameObject)Instantiate(
                 Game.objectMarkerMe,
@@ -120,7 +120,7 @@ public class Vehicle : MonoBehaviour
                 transform.rotation);
 			markerQuarry.transform.parent = transform;
 
-			if (isBot && GetComponent<NetworkView>().viewID.isMine)
+			if (isBot/* && GetComponent<NetworkView>().viewID.isMine*/)
 			{
 				VehicleBot vehicleBot = (VehicleBot)gameObject
                     .AddComponent(typeof(VehicleBot));
@@ -157,9 +157,9 @@ public class Vehicle : MonoBehaviour
         Game.Settings.updateObjects();
 
         //Force-Refresh Everyone's NetworkView - http://forum.unity3d.com/viewtopic.php?t=35724&postdays=0&postorder=asc&start=105
-        GetComponent<NetworkView>().enabled = false;
+        //GetComponent<NetworkView>().enabled = false;
         yield return null;
-        GetComponent<NetworkView>().enabled = true;
+        //GetComponent<NetworkView>().enabled = true;
 	}
 
 	public void Update()
@@ -178,7 +178,7 @@ public class Vehicle : MonoBehaviour
 			if(bubbles.isPlaying) bubbles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 		}
 
-		if (isBot || !GetComponent<NetworkView>().isMine)
+		if (isBot)// || !GetComponent<NetworkView>().isMine)
 		{
 			if (isIt != 0 && (bool)markerQuarry && !markerQuarry.activeInHierarchy)
 			{
@@ -311,7 +311,7 @@ public class Vehicle : MonoBehaviour
 		GUI.color = guicol;
 
 		GUI.depth = -1;
-		if (GetComponent<NetworkView>().isMine && !isBot)
+		if (/*GetComponent<NetworkView>().isMine && */!isBot)
 		{
             Rigidbody targetRigidbody = myRigidbody;
             if (
@@ -343,7 +343,7 @@ public class Vehicle : MonoBehaviour
 		}
 		GUI.depth = 5;
 		Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
-        bool mainTag = GetComponent<NetworkView>().isMine && !isBot;
+        bool mainTag = /*GetComponent<NetworkView>().isMine && */!isBot;
         if(Game.Settings.quarryCam && (bool)Game.QuarryVeh)
         {
             mainTag = (this == Game.QuarryVeh);
@@ -483,7 +483,7 @@ public class Vehicle : MonoBehaviour
             (Time.time - veh.lastTag >= 3f))
 		{
 			lastTag = Time.time;
-			GetComponent<NetworkView>().RPC("sQ", RPCMode.All, 1);
+			sQ(1);//GetComponent<NetworkView>().RPC("sQ", RPCMode.All, 1);
 		}
 	}
 
@@ -497,11 +497,11 @@ public class Vehicle : MonoBehaviour
                 World.baseTF.position) > 10f)
 		{
 			myRigidbody.isKinematic = true;
-			GetComponent<NetworkView>().RPC("lR", RPCMode.All);
+			lR();//GetComponent<NetworkView>().RPC("lR", RPCMode.All);
 		}
 	}
 
-	[RPC]
+	//[RPC]
 	public IEnumerator lR()
 	{
         if (
@@ -529,13 +529,13 @@ public class Vehicle : MonoBehaviour
         OnPrefsUpdated(); //Rebuild a new ramosphere
 	}
 
-	[RPC]
+	//[RPC]
 	public void fR(
-        NetworkViewID LaunchedByViewID,
+        //NetworkViewID LaunchedByViewID,
         string id,
         Vector3 pos,
-        Vector3 ang,
-        NetworkMessageInfo info)
+        Vector3 ang/*,
+        NetworkMessageInfo info*/)
 	{
         GameObject btemp = (GameObject)Instantiate(
             Game.objectRocket,
@@ -543,20 +543,20 @@ public class Vehicle : MonoBehaviour
             Quaternion.Euler(ang));
         Rocket r = (Rocket)btemp.GetComponent(typeof(Rocket));
 		r.laserID = id;
-		if (!info.networkView.isMine)
+		/*if (!info.networkView.isMine)
 		{
 			r.lag = (float)(Network.time - info.timestamp);
-		}
+		}*/
 		r.launchVehicle = this;
 	}
 
-	[RPC]
+	//[RPC]
 	public void fS(
-        NetworkViewID LaunchedByViewID,
+        //NetworkViewID LaunchedByViewID,
         string id,
         Vector3 pos,
-        Vector3 ang,
-        NetworkMessageInfo info)
+        Vector3 ang/*,
+        NetworkMessageInfo info*/)
 	{
         GameObject btemp = (GameObject)Instantiate(
             Game.objectRocketSnipe,
@@ -564,20 +564,20 @@ public class Vehicle : MonoBehaviour
             Quaternion.Euler(ang));
         Rocket r = (Rocket)btemp.GetComponent(typeof(Rocket));
 		r.laserID = id;
-		if (!info.networkView.isMine)
+		/*if (!info.networkView.isMine)
 		{
 			r.lag = (float)(Network.time - info.timestamp);
-		}
+		}*/
 		r.launchVehicle = this;
 	}
 
-	[RPC]
+	//[RPC]
 	public void fRl(
-        NetworkViewID LaunchedByViewID,
+        //NetworkViewID LaunchedByViewID,
         string id,
         Vector3 pos,
-        NetworkViewID targetViewID,
-        NetworkMessageInfo info)
+        /*NetworkViewID*/Vehicle targetViewID/*,
+        NetworkMessageInfo info*/)
 	{
 		GameObject btemp = (GameObject)Instantiate(
             Game.objectRocket,
@@ -585,14 +585,14 @@ public class Vehicle : MonoBehaviour
             Quaternion.identity);
         Rocket r = (Rocket)btemp.GetComponent(typeof(Rocket));
 		r.laserID = id;
-		if (!info.networkView.isMine)
+		/*if (!info.networkView.isMine)
 		{
 			r.lag = (float)(Network.time - info.timestamp);
-		}
+		}*/
 		r.launchVehicle = this;
         foreach (DictionaryEntry plrE in Game.Players)
         {
-            if (((Vehicle)plrE.Value).GetComponent<NetworkView>().viewID == targetViewID)
+            if (((Vehicle)plrE.Value)/*.GetComponent<NetworkView>().viewID*/ == targetViewID)
             {
                 r.targetVehicle = (Vehicle)plrE.Value;
                 break;
@@ -600,13 +600,13 @@ public class Vehicle : MonoBehaviour
         }
 	}
 
-	[RPC]
+	//[RPC]
 	public void fSl(
-        NetworkViewID LaunchedByViewID,
+        //NetworkViewID LaunchedByViewID,
         string id,
         Vector3 pos,
-        NetworkViewID targetViewID,
-        NetworkMessageInfo info)
+        /*NetworkViewID*/Vehicle targetViewID/*,
+        NetworkMessageInfo info*/)
 	{
         GameObject btemp = (GameObject)Instantiate(
             Game.objectRocketSnipe,
@@ -614,14 +614,14 @@ public class Vehicle : MonoBehaviour
             Quaternion.identity);
         Rocket r = (Rocket)btemp.GetComponent(typeof(Rocket));
 		r.laserID = id;
-		if (!info.networkView.isMine)
+		/*if (!info.networkView.isMine)
 		{
 			r.lag = (float)(Network.time - info.timestamp);
-		}
+		}*/
 		r.launchVehicle = this;
         foreach (DictionaryEntry plrE in Game.Players)
         {
-            if (((Vehicle)plrE.Value).GetComponent<NetworkView>().viewID == targetViewID)
+            if (((Vehicle)plrE.Value)/*.GetComponent<NetworkView>().viewID*/ == targetViewID)
             {
                 r.targetVehicle = (Vehicle)plrE.Value;
                 break;
@@ -629,7 +629,7 @@ public class Vehicle : MonoBehaviour
         }
 	}
 
-	[RPC]
+	//[RPC]
 	public void lH(string n, Vector3 pos)
 	{
 		GameObject go = GameObject.Find("lsr#" + n);
@@ -642,7 +642,7 @@ public class Vehicle : MonoBehaviour
 		}
 	}
 
-	[RPC]
+	/*[RPC]
 	public void sP(Vector3 pos, Quaternion rot, NetworkMessageInfo info)
 	{
 		if (!vehicleNet)
@@ -687,9 +687,9 @@ public class Vehicle : MonoBehaviour
             vehicleNet.ping,
             png,
             1f / Network.sendRate);
-	}
+	}*/
 
-	[RPC]
+	/*[RPC]
 	public void sT(float time, NetworkMessageInfo info)
 	{
         if (!(bool)vehicleNet && !GetComponent<NetworkView>().isMine) return;
@@ -719,15 +719,15 @@ public class Vehicle : MonoBehaviour
                 true :
                 false);
         }
-	}
+	}*/
 
-	[RPC]
+	/*[RPC]
 	public void s4(int x, int y, int z, int w)
 	{
 		input = new Vector4(x / 10, y / 10, z / 10, w / 10);
-	}
+	}*/
 
-	[RPC]
+	//[RPC]
 	public void sI(bool input)
 	{
 		specialInput = input;
@@ -736,20 +736,20 @@ public class Vehicle : MonoBehaviour
             SendMessageOptions.DontRequireReceiver);
 	}
 
-	[RPC]
+	//[RPC]
 	public void sB(bool input)
 	{
 		brakes = input;
 	}
 
-	[RPC]
+	//[RPC]
 	public void sZ(bool input)
 	{
 		zorbBall = input;
 		StartCoroutine(OnPrefsUpdated());
 	}
 
-	[RPC]
+	//[RPC]
 	public void sQ(int mode)
 	{
         foreach (DictionaryEntry plrE in Game.Players)
@@ -783,7 +783,7 @@ public class Vehicle : MonoBehaviour
 		lastTag = Time.time;
 	}
 
-	[RPC]
+	//[RPC]
 	public void iS(string name)
 	{
 		score++;
@@ -792,25 +792,25 @@ public class Vehicle : MonoBehaviour
             (int)chatOrigins.Server);
 	}
 
-	[RPC]
+	//[RPC]
 	public void dS(string name)
 	{
 		score--;
 	}
 
-	[RPC]
+	//[RPC]
 	public void iT()
 	{
 		scoreTime++;
 	}
 
-	[RPC]
+	//[RPC]
 	public void sS(int s)
 	{
 		score = s;
 	}
 
-	[RPC]
+	//[RPC]
 	public void sC(
         float cR,
         float cG,
@@ -833,7 +833,7 @@ public class Vehicle : MonoBehaviour
 		updateColor = true;
 	}
 
-	[RPC]
+	//[RPC]
 	public void dN(int rsn)
 	{
 		netKillMode = rsn;

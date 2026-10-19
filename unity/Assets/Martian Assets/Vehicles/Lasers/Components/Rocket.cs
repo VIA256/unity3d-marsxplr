@@ -154,20 +154,25 @@ public class Rocket : MonoBehaviour
                 if (veh && veh.isResponding)
                 {
                     //Determine where we hit them
-                    veh.gameObject.GetComponent<NetworkView>().RPC(
+                    veh.lH(
+                        laserID,
+                        collision.transform.InverseTransformDirection(collision.point)
+                    );/*veh.gameObject.GetComponent<NetworkView>().RPC(
                         "lH",
                         RPCMode.Others,
                         laserID,
-                        collision.transform.InverseTransformDirection(collision.point));
+                        collision.transform.InverseTransformDirection(collision.point));*/
                     //We are quarry, and made a tag
                     if (
                         launchVehicle.isIt == 1 &&
                         (Time.time - veh.lastTag) > 3f)
                     {
-                        launchVehicle.gameObject.GetComponent<NetworkView>().RPC(
+                        launchVehicle.iS(
+                            veh.gameObject.name
+                        );/*launchVehicle.gameObject.GetComponent<NetworkView>().RPC(
                             "iS",
                             RPCMode.All,
-                            veh.gameObject.name);
+                            veh.gameObject.name);*/
                         veh.lastTag = Time.time;
                     }
                     //They were quarry, and we tagged them
@@ -176,20 +181,24 @@ public class Rocket : MonoBehaviour
                         (Time.time - launchVehicle.lastTag) > 3 &&
                         (Time.time - veh.lastTag) > 3)
                     {
-                        launchVehicle.gameObject.GetComponent<NetworkView>().RPC(
+                        launchVehicle.sQ(
+                            2
+                        );/*launchVehicle.gameObject.GetComponent<NetworkView>().RPC(
                             "sQ",
                             RPCMode.All,
-                            2);
+                            2);*/
                     }
                     //They weren't quarry, and we weren't supposed to shoot them
                     else if (
                         veh.isIt == 0 &&
                         launchVehicle.isIt == 0)
                     {
-                        launchVehicle.gameObject.GetComponent<NetworkView>().RPC(
+                        launchVehicle.dS(
+                            veh.gameObject.name
+                        );/*launchVehicle.gameObject.GetComponent<NetworkView>().RPC(
                             "dS",
                             RPCMode.All,
-                            veh.gameObject.name);
+                            veh.gameObject.name);*/
                     }
                 }
             }

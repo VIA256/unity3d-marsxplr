@@ -16,19 +16,21 @@ public class VehicleMe : MonoBehaviour
             (!Game.Messaging || !Game.Messaging.chatting) &&
             Time.time > Game.Controller.kpTime)
 		{
-			GetComponent<NetworkView>().RPC(
+			vehicle.sI(
+				vehicle.specialInput ? false : true
+			);/*GetComponent<NetworkView>().RPC(
                 "sI",
                 RPCMode.All,
-                vehicle.specialInput ? false : true);
+                vehicle.specialInput ? false : true);*/
 			Game.Controller.kpTime = Time.time + Game.Controller.kpDur;
 		}
 		if (Input.GetButton("Fire3") && !vehicle.brakes)
 		{
-			GetComponent<NetworkView>().RPC("sB", RPCMode.All, true);
+			vehicle.sB(true);//GetComponent<NetworkView>().RPC("sB", RPCMode.All, true);
 		}
 		else if (!Input.GetButton("Fire3") && vehicle.brakes)
 		{
-			GetComponent<NetworkView>().RPC("sB", RPCMode.All, false);
+			vehicle.sB(false);//GetComponent<NetworkView>().RPC("sB", RPCMode.All, false);
 		}
 		vehicle.input.x = Input.GetAxis("Horizontal");
 		vehicle.input.y = Input.GetAxis("Vertical");
@@ -114,13 +116,27 @@ public class VehicleMe : MonoBehaviour
                             Vector3.Distance(
                                 transform.position,
                                 laserLock.transform.position) > 500)));
-                GetComponent<NetworkView>().RPC(
+                if(snipe)
+				{
+					vehicle.fSl(
+						Time.time.ToString(),
+                    	vehicle.ridePos.position + vehicle.transform.up * -0.1f,
+                    	laserLock.GetComponent<Vehicle>()
+					);
+				} else
+				{
+					vehicle.fRl(
+						Time.time.ToString(),
+                    	vehicle.ridePos.position + vehicle.transform.up * -0.1f,
+                    	laserLock.GetComponent<Vehicle>()
+					);
+				}/*GetComponent<NetworkView>().RPC(
                     (snipe ? "fSl" : "fRl"),
                     RPCMode.All,
                     GetComponent<NetworkView>().viewID,
                     Network.time.ToString(),
                     vehicle.ridePos.position + vehicle.transform.up * -0.1f,
-                    laserLock.GetComponent<NetworkView>().viewID);
+                    laserLock.GetComponent<NetworkView>().viewID);*/
 			}
 			else
 			{
@@ -137,13 +153,27 @@ public class VehicleMe : MonoBehaviour
                     (Input.GetButton("Snipe") &&
                         Game.Settings.firepower[vehicle.vehId] > 1) ||
                     Game.Settings.firepower[vehicle.vehId] > 2);
-			    GetComponent<NetworkView>().RPC(
+			    if(snipe)
+				{
+					vehicle.fS(
+						Time.time.ToString(),
+						vehicle.ridePos.position + vehicle.transform.up * -0.1f,
+                    	rang.eulerAngles
+					);
+				} else
+				{
+					vehicle.fR(
+						Time.time.ToString(),
+						vehicle.ridePos.position + vehicle.transform.up * -0.1f,
+                    	rang.eulerAngles
+					);
+				}/*GetComponent<NetworkView>().RPC(
                     (snipe ? "fS" : "fR"),
                     RPCMode.All,
                     GetComponent<NetworkView>().viewID,
                     Network.time.ToString(),
                     vehicle.ridePos.position + vehicle.transform.up * -0.1f,
-                    rang.eulerAngles);
+                    rang.eulerAngles);*/
 			}
             rocketFireTime = Time.time + ((snipe ?
                 (Game.Settings.firepower[vehicle.vehId] > 2f ?
