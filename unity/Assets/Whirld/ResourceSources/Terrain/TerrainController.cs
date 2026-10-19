@@ -61,8 +61,8 @@ public class TerrainController : MonoBehaviour
             trnDat.alphamapResolution);
         dat.heightMap = trnDat.GetHeights(0,
             0,
-            trnDat.heightmapWidth,
-            trnDat.heightmapHeight);
+            trnDat.heightmapResolution,
+            trnDat.heightmapResolution);
 
         ReSplat();
     }
@@ -115,10 +115,10 @@ public class TerrainController : MonoBehaviour
                     dat.heightMap[
                         (int)((float)x /
                             (float)trnDat.alphamapResolution *
-                            (float)trnDat.heightmapWidth),
+                            (float)trnDat.heightmapResolution),
                         (int)((float)y /
                             (float)trnDat.alphamapResolution *
-                            (float)trnDat.heightmapHeight)
+                            (float)trnDat.heightmapResolution)
                     ] * trnDat.size.y;
                 if (trnAlt < seaLevel)
                 {
