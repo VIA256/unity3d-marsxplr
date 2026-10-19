@@ -44,12 +44,12 @@ public class VehicleNet : MonoBehaviour
 	{
 		pingCheck = UnityEngine.Random.Range(15, 20);
 		states = new State[15];
-		vehicle.GetComponent<NetworkView>().observed = this;
+		//vehicle.GetComponent<NetworkView>().observed = this;
 	}
 
-	public void Update()
+	/*public void Update()
 	{
-		/*if (vehicle.networkMode == 2 && Time.time > lastPing + (float)pingCheck)
+		if (vehicle.networkMode == 2 && Time.time > lastPing + (float)pingCheck)
 		{
 			if (lastPing < 0f)
 			{
@@ -59,7 +59,7 @@ public class VehicleNet : MonoBehaviour
 			{
 				GetComponent<NetworkView>().RPC("sT", RPCMode.All, 0f);
 			}
-		}*/
+		}
 
 		if (
             !updatePosition ||
@@ -183,9 +183,9 @@ public class VehicleNet : MonoBehaviour
                 vehicle.isResponding = false;
             }
         }
-	}
+	}*/
 
-	public void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+	/*public void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
 	{
         //We are the server, and have to keep track of relaying messages between connected clients
         if (stream.isWriting)
@@ -248,5 +248,5 @@ public class VehicleNet : MonoBehaviour
                 states[0] = state;
             }
         }
-	}
+	}*/
 }
