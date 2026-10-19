@@ -78,7 +78,7 @@ public class RamoSphere : MonoBehaviour
 			srmcol.a = 3f;
 			shield.GetComponent<Renderer>().material.color = srmcol;
 		}
-        if (!vehicle.GetComponent<NetworkView>().isMine) return;
+        //if (!vehicle.GetComponent<NetworkView>().isMine) return;
 		if ((bool)other.attachedRigidbody)
 		{
 			vehicle.OnRam(other.attachedRigidbody.gameObject);
