@@ -10,6 +10,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using Ionic.Zlib;
 using UnityEngine;
+using UnityEngine.Networking;
 
 [Serializable]
 public enum WhirldInStatus
@@ -90,10 +91,11 @@ public class WhirldIn : System.Object
             statusTxt = "Downloading World Definition";
             info = "";
             urlPath = url.Substring(0, url.LastIndexOf("/") + 1);
-            WWW www = new WWW(url);
+            UnityWebRequest www = UnityWebRequest.Get(url);
+            www.SendWebRequest();
             while (!www.isDone)
             {
-                progress = www.progress;
+                progress = www.downloadProgress;
                 yield return new WaitForSeconds(0.1f);
             }
             progress = 1f;
@@ -110,7 +112,7 @@ public class WhirldIn : System.Object
                 status = WhirldInStatus.WWWError;
                 yield break;
             }
-            data = www.text;
+            data = www.downloadHandler.text;
 
         }
 
@@ -427,10 +429,11 @@ public class WhirldIn : System.Object
         threads.Add(thread, "");
 
         String url = GetURL(vS[1]);
-        WWW www = new WWW(url);
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        www.SendWebRequest();
         while (!www.isDone)
         {
-            threads[thread] = www.progress;
+            threads[thread] = www.downloadProgress;
             yield return null;
         }
         if (www.error != null)
@@ -447,13 +450,12 @@ public class WhirldIn : System.Object
         }
 
         threads[thread] = "Initializing";
-        //Texture2D txt = www.texture;
         Texture2D txt = new Texture2D(
             4,
             4,
             TextureFormat.DXT1,
             true);
-        www.LoadImageIntoTexture(txt);
+        txt.LoadImage(www.downloadHandler.data);
         txt.wrapMode = (
             (vS[2] == null || float.Parse(vS[2]) == 0f) ?
                 TextureWrapMode.Clamp :
@@ -480,10 +482,11 @@ public class WhirldIn : System.Object
         threads.Add(thread, "");
 
         url = GetURL(url);
-        WWW www = new WWW(url);
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        www.SendWebRequest();
         while (!www.isDone)
         {
-            threads[thread] = www.progress;
+            threads[thread] = www.downloadProgress;
             yield return null;
         }
         if (www.error != null)
@@ -506,7 +509,7 @@ public class WhirldIn : System.Object
             4,
             TextureFormat.DXT1,
             true);
-        www.LoadImageIntoTexture(mshTxt);
+        mshTxt.LoadImage(www.downloadHandler.data);
         mshTxt.wrapMode = TextureWrapMode.Repeat;
         mshTxt.Apply(true);
         mshTxt.Compress(true);
@@ -536,10 +539,11 @@ public class WhirldIn : System.Object
 
         //Download Mesh Object
         int hasCollider = (vS.Length > 2 ? int.Parse(vS[2]) : 0);
-        WWW www = new WWW(GetURL(vS[1]));
+        UnityWebRequest www = UnityWebRequest.Get(GetURL(vS[1]));
+        www.SendWebRequest();
         while (!www.isDone)
         {
-            threads[thread] = www.progress;
+            threads[thread] = www.downloadProgress;
             yield return null;
         }
         if (www.error != null)
@@ -565,16 +569,10 @@ public class WhirldIn : System.Object
         String data;
         if (vS[1].Substring(lastDot + 1) == "gz")
         {
-            data = GZipStream.UncompressString(www.bytes);
-            
-            /*GZipStream gz = new GZipStream(new MemoryStream(www.bytes), CompressionMode.Decompress);
-            byte[] buf = new byte[www.bytes.Length];
-            gz.Read(buf, 0, buf.Length);
-            data = buf.ToString();*/
-
+            data = GZipStream.UncompressString(www.downloadHandler.data);
             vS[1] = vS[1].Substring(0, lastDot);
         }
-        else data = www.text;
+        else data = www.downloadHandler.text;
 
         threads[thread] = "Generating";
 
@@ -681,14 +679,15 @@ public class WhirldIn : System.Object
                     {
                         //Only load a material library once, even if it is referenced by multiple meshes
                         meshMatLibs.Add(l[1], true);
-                        www = new WWW(GetURL(l[1]));
+                        www = UnityWebRequest.Get(GetURL(l[1]));
+                        www.SendWebRequest();
                         while (!www.isDone)
                         {
                             threads[thread] =
                                 "Downloading Material Library (" +
-                                Mathf.RoundToInt(www.progress * 100) +
+                                Mathf.RoundToInt(www.downloadProgress * 100) +
                                 "%)";
-                            //yield return null;
+                            yield return null;
                         }
                         if (www.error != null)
                         {
@@ -703,12 +702,12 @@ public class WhirldIn : System.Object
                         {
                             threads[thread] = "Initializing " + vS[0] + "";
                             //yield return null;
-                            String[] meshlib = www.text.Split("\n"[0]);
+                            String[] meshlib = www.downloadHandler.text.Split("\n"[0]);
                             Material curMat = null;
                             int offset = -1;
                             while (true)
                             {
-                                offset = www.text.IndexOf("map_Ka", offset + 1);
+                                offset = www.downloadHandler.text.IndexOf("map_Ka", offset + 1);
                                 if (offset == -1) break;
                             }
                             foreach (String meshline in meshlib)
@@ -845,7 +844,6 @@ public class WhirldIn : System.Object
                 mshObj.transform.parent = whirldBuffer.transform;
             }
         }
-        ;
 
         threads.Remove(thread);
 
@@ -879,10 +877,11 @@ public class WhirldIn : System.Object
 
         String thread = tName;
         threads.Add(thread, "");
-        WWW www = new WWW(tHtmp);
+        UnityWebRequest www = UnityWebRequest.Get(tHtmp);
+        www.SendWebRequest();
         while (!www.isDone)
         {
-            threads[thread] = www.progress;
+            threads[thread] = www.downloadProgress;
             yield return null;
         }
         if (www.error != null)
@@ -914,11 +913,7 @@ public class WhirldIn : System.Object
             System.IO.BinaryReader br;
             if (true) //Terrain RAW file is compressed
             {
-                /*GZipStream gz = new GZipStream(new MemoryStream(www.bytes), CompressionMode.Decompress);
-                byte[] buf = new byte[www.bytes.Length];
-                gz.Read(buf, 0, buf.Length);*/
-
-				byte[] buf = GZipStream.UncompressBuffer(www.bytes);
+				byte[] buf = GZipStream.UncompressBuffer(www.downloadHandler.data);
 
                 br = new System.IO.BinaryReader(new System.IO.MemoryStream(
                     buf));
@@ -943,12 +938,13 @@ public class WhirldIn : System.Object
                 {
                     String[] splatTxt = tTxts[i].Split("="[0]);
                     String[] splatTxtSize = splatTxt[1].Split("x"[0]);
-                    www = new WWW(GetURL(splatTxt[0]));
-                    while (!www.isDone)
+                    www = UnityWebRequest.Get(GetURL(splatTxt[0]));
+                    yield return www.SendWebRequest();
+                    /*while (!www.isDone)
                     { 
                         //threads[thread] = "Initializing";
                         //yield return new WaitForSeconds(0.1f);
-                    }
+                    }*/
                     if (www.error != null)
                     {
                         info +=
@@ -967,7 +963,7 @@ public class WhirldIn : System.Object
                             4,
                             TextureFormat.DXT1,
                             true);
-                        www.LoadImageIntoTexture(splatPrototypes[i].texture);
+                        splatPrototypes[i].texture.LoadImage(www.downloadHandler.data);
                         splatPrototypes[i].texture.Apply(true);
                         splatPrototypes[i].texture.Compress(true);
                         splatPrototypes[i].tileSize = new Vector2(
@@ -1014,21 +1010,29 @@ public class WhirldIn : System.Object
                 if (tSpmp2 != null)
                 {
                     //whirld.statusTxt = "Downloading Augmentative Terrain Texturemap (" + tName + ")";
-                    www = new WWW(tSpmp2);
-                    while (!www.isDone)
+                    www = UnityWebRequest.Get(tSpmp2);
+                    yield return www.SendWebRequest();
+                    /*while (!www.isDone)
                     { 
                         //whirld.progress = www.progress;
                         //yield return new WaitForSeconds(0.1f);
-                    }
-                    mapColors2 = www.texture.GetPixels();
+                    }*/
+                    Texture2D tmpTxt = new Texture2D(
+                        4,
+                        4,
+                        TextureFormat.DXT1,
+                        true);
+                    tmpTxt.LoadImage(www.downloadHandler.data);
+                    mapColors2 = tmpTxt.GetPixels();
                 }
                 //whirld.statusTxt = "Downloading Terrain Texturemap (" + tName + ")";
-                www = new WWW(tSpmp);
-                while (!www.isDone)
+                www = UnityWebRequest.Get(tSpmp);
+                yield return www.SendWebRequest();
+                /*while (!www.isDone)
                 {
                     //whirld.progress = www.progress;
                     //yield return new WaitForSeconds(0.1f);
-                }
+                }*/
                 //whirld.statusTxt = "Mapping Terrain Textures...";
                 //yield return null;
                 if (www.error != null)
@@ -1044,15 +1048,21 @@ public class WhirldIn : System.Object
                 }
                 else
                 {
-                    trnDat.alphamapResolution = www.texture.width;
+                    Texture2D tmpTxt = new Texture2D(
+                        4,
+                        4,
+                        TextureFormat.DXT1,
+                        true);
+                    tmpTxt.LoadImage(www.downloadHandler.data);
+                    trnDat.alphamapResolution = tmpTxt.width;
                     float[, ,] splatmapData = trnDat.GetAlphamaps(
                         0,
                         0,
-                        www.texture.width,
-                        www.texture.width);
-                    Color[] mapColors = www.texture.GetPixels();
-                    int ht = www.texture.height;
-                    int wd = www.texture.width;
+                        tmpTxt.width,
+                        tmpTxt.width);
+                    Color[] mapColors = tmpTxt.GetPixels();
+                    int ht = tmpTxt.height;
+                    int wd = tmpTxt.width;
                     for (int y = 0; y < ht; y++)
                     {
                         for (int x = 0; x < wd; x++)
@@ -1103,10 +1113,11 @@ public class WhirldIn : System.Object
 
         //Download Skybox Image
         url = GetURL(url);
-        WWW www = new WWW(url);
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        www.SendWebRequest();
         while (!www.isDone)
         {
-            threads[thread] = www.progress;
+            threads[thread] = www.downloadProgress;
             yield return null;
         }
 
@@ -1131,7 +1142,7 @@ public class WhirldIn : System.Object
             4,
             TextureFormat.DXT1,
             true);
-        www.LoadImageIntoTexture(txt);
+        txt.LoadImage(www.downloadHandler.data);
         txt.wrapMode = TextureWrapMode.Clamp;
         txt.Apply(true);
         txt.Compress(true);

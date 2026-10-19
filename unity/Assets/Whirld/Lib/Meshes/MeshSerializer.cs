@@ -375,8 +375,8 @@ public class MeshSerializer : MonoBehaviour
         fs.Close();
 	}
 
-    // Reads mesh from the given WWW (that is finished downloading already)
-	public static Mesh ReadMeshFromWWW(WWW download)
+    // OUTDATED, use UnityWebRequest! Reads mesh from the given WWW (that is finished downloading already)
+	/*public static Mesh ReadMeshFromWWW(WWW download)
 	{
 		if (download.error != null)
 		{
@@ -393,5 +393,5 @@ public class MeshSerializer : MonoBehaviour
 		byte[] bytes = download.bytes;
 
 		return ReadMesh(bytes);
-	}
+	}*/
 }

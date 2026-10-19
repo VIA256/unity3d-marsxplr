@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
 [Serializable]
 public class Lobby : MonoBehaviour
@@ -110,11 +111,11 @@ public class Lobby : MonoBehaviour
             userName = GameData.userName;
             if (userRemembered) userNameTemp = userName;
         }
-        else if (userPassword != "")    //They are trying to play authenticated - don't let them in without validating their password
+        /*else if (userPassword != "")    //They are trying to play authenticated - don't let them in without validating their password
         {
             userNameTemp = PlayerPrefs.GetString("userName", "");
             StartCoroutine(authenticateUser()); //Attempt Auto Login
-        }
+        }*/
         else
         {                               //They are a guest, just let them use whatever username they have.
             userNameTemp = PlayerPrefs.GetString("userName", "");
@@ -123,11 +124,11 @@ public class Lobby : MonoBehaviour
 
         List<String> msgs = new List<String>();
         List<GameWorldDesc> wlds = new List<GameWorldDesc>();
-        WWW www = new WWW("http://gitea.moe/VIA256/new-marsxplr-web-elements/raw/branch/main/upd4");
-        yield return www;
+        UnityWebRequest www = UnityWebRequest.Get("https://gitea.moe/VIA256/new-marsxplr-web-elements/raw/branch/main/upd4");
+        yield return www.SendWebRequest();
         if (www.error == null)
         {
-            String[] data = www.text.Split("\n"[0]);
+            String[] data = www.downloadHandler.text.Split("\n"[0]);
             foreach (String dat in data)
             {
                 if (dat == "") continue;
@@ -638,7 +639,7 @@ public class Lobby : MonoBehaviour
 			if (userNameTemp != "")
 			{
                 //Registered User
-				if (userIsRegistered)
+				/*if (userIsRegistered)
 				{
 					if (userPassword != "")
 					{
@@ -682,7 +683,7 @@ public class Lobby : MonoBehaviour
                             );
 						}
 					}
-				}
+				}*/if(false){}
                 //Guest User
 				else
 				{
@@ -1305,7 +1306,7 @@ public class Lobby : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
-    public IEnumerator authenticateUser()
+    /*OBSOLETE UPGRADE TO UnityWebRequest! public IEnumerator authenticateUser()
     {
         userAuthenticating = "true";
         WWW www = new WWW(
@@ -1377,7 +1378,7 @@ public class Lobby : MonoBehaviour
                 userPassword = "";
             }
         }
-    }
+    }*/
 
 	/*public int sortHostArray(HostData a, HostData b)
 	{
