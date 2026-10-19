@@ -39,7 +39,7 @@ public class Rocket : MonoBehaviour
             Vector3 pos;
             Vector3 vel;
             Vector3 accel;
-            if (targetVehicle.GetComponent<NetworkView>().isMine) //Local vehicle, high precision
+            if (true)//targetVehicle.GetComponent<NetworkView>().isMine) //Local vehicle, high precision
             {
                 Vector3 refvel = targetVehicle.gameObject.GetComponent<Rigidbody>().velocity;
                 float reftme = Time.time;
@@ -136,18 +136,18 @@ public class Rocket : MonoBehaviour
             }
 
             //Non-authoratative game instances DO NOT detect vehicle laser hits. Hits are detected on authoratative instance, and then broadcast to other clients with lH RPC
-            if (
+            /*if (
                 ((targetVehicle && !targetVehicle.GetComponent<NetworkView>().isMine) ||
                     (!targetVehicle && !launchVehicle.GetComponent<NetworkView>().isMine)) &&
                 collision.rigidbody)
             {
                 continue;
-            }
+            }*/
 
             //We are the instance if this laser on the firer's computer, & we tagged another vehicle
             if (
-                ((targetVehicle && targetVehicle.GetComponent<NetworkView>().isMine) ||
-                    (!targetVehicle && launchVehicle.GetComponent<NetworkView>().isMine)) &&
+                ((targetVehicle/* && targetVehicle.GetComponent<NetworkView>().isMine*/) ||
+                    (!targetVehicle/* && launchVehicle.GetComponent<NetworkView>().isMine*/)) &&
                 collision.rigidbody)
             {
                 Vehicle veh = (Vehicle)collision.transform.root.gameObject.GetComponent(typeof(Vehicle));
@@ -236,7 +236,7 @@ public class Rocket : MonoBehaviour
 		GetComponent<Rigidbody>().velocity = Vector3.zero;
 		go.BroadcastMessage(
             "OnLaserHit",
-            launchVehicle.GetComponent<NetworkView>().isMine,
+            true,//launchVehicle.GetComponent<NetworkView>().isMine,
             SendMessageOptions.DontRequireReceiver);
 		Collider[] colliders = Physics.OverlapSphere(pos, 10f);
         foreach (Collider hit in colliders)
