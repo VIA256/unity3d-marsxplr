@@ -15,7 +15,7 @@ public class VehicleLocal : MonoBehaviour
 
 	public void Start()
 	{
-		vehicle.GetComponent<NetworkView>().observed = this;
+		//vehicle.GetComponent<NetworkView>().observed = this;
 		vehicle.netCode = "";
 		vehicle.isResponding = true;
 	}
@@ -117,7 +117,7 @@ public class VehicleLocal : MonoBehaviour
 		}
 	}
 
-	public void OnSerializeNetworkView(BitStream stream)
+	/*public void OnSerializeNetworkView(BitStream stream)
 	{
 		if (GetComponent<NetworkView>().stateSynchronization == NetworkStateSynchronization.Off)
 		{
@@ -131,5 +131,5 @@ public class VehicleLocal : MonoBehaviour
 		stream.Serialize(ref r);
 		m = 0;
 		stream.Serialize(ref m);
-	}
+	}*/
 }
