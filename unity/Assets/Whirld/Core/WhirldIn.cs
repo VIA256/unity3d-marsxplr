@@ -687,7 +687,7 @@ public class WhirldIn : System.Object
                                 "Downloading Material Library (" +
                                 Mathf.RoundToInt(www.downloadProgress * 100) +
                                 "%)";
-                            yield return null;
+                            //must be blocked and not yielded!
                         }
                         if (www.error != null)
                         {
@@ -701,7 +701,6 @@ public class WhirldIn : System.Object
                         else
                         {
                             threads[thread] = "Initializing " + vS[0] + "";
-                            //yield return null;
                             String[] meshlib = www.downloadHandler.text.Split("\n"[0]);
                             Material curMat = null;
                             int offset = -1;

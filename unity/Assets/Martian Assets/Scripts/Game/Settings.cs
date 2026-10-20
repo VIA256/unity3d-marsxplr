@@ -1983,7 +1983,7 @@ public class Settings : MonoBehaviour
             0.0003f,
             Camera.main.farClipPlane / 6000f);
 		
-        if (World.terrains != null)
+        if (World.terrains != null && World.terrains.Length > 0 && World.terrains[0] != null)
 		{
 			foreach (Terrain trn in World.terrains)
 			{
