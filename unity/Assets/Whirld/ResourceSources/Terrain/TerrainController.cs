@@ -37,21 +37,27 @@ public class TerrainController : MonoBehaviour
         }
         whirldObject.Activate();    //Just in case it hasn't yet activated...
 
-        //Init SplatMap Array
-        SplatPrototype[] splatsOld = trnDat.splatPrototypes;
-        SplatPrototype[] splatsNew = new SplatPrototype[trnDat.splatPrototypes.Length + 1];
+        //Init Layer Array
+        TerrainLayer[] layersOld = trnDat.terrainLayers;
+        TerrainLayer[] layersNew = new TerrainLayer[trnDat.terrainLayers.Length + 1];
 
-        //Copy Data to New SplatMap Array
-        for (int i = 0; i < trnDat.splatPrototypes.Length; i++)
+        //Copy Data to New TerrainLayer Array
+        for (int i = 0; i < trnDat.terrainLayers.Length; i++)
         {
-            splatsNew[i] = splatsOld[i];
+            layersNew[i] = layersOld[i];
         }
 
         //Add SeaFloorTexture Splat Channel to TerrainData Object
-        splatsNew[splatsNew.Length - 1] = new SplatPrototype();
+        /*splatsNew[splatsNew.Length - 1] = new SplatPrototype();
         splatsNew[splatsNew.Length - 1].texture = (Texture2D)whirldObject.parameters["SeaFloorTexture"];
         splatsNew[splatsNew.Length - 1].tileSize = new Vector2(15.0f, 15.0f);
-        trnDat.splatPrototypes = splatsNew;
+        trnDat.splatPrototypes = splatsNew;*/
+
+        //Add SeaFloorTexture Layer to TerrainData Object
+        layersNew[layersNew.Length - 1] = new TerrainLayer();
+        layersNew[layersNew.Length - 1].diffuseTexture = (Texture2D)whirldObject.parameters["SeaFloorTexture"];
+        layersNew[layersNew.Length - 1].tileSize = new Vector2(15.0f, 15.0f);
+        trnDat.terrainLayers = layersNew;
 
         //Prepare to Regenerate SeaFloor AlphaMap Channel
         dat = new TerrainControllerData();

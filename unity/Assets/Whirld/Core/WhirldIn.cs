@@ -929,10 +929,12 @@ public class WhirldIn : System.Object
             trnDat.size = new Vector3(tWidth, tHeight, tLength);
 
             //Textures
-            SplatPrototype[] splatPrototypes = null;
+            //SplatPrototype[] splatPrototypes = null;
+            TerrainLayer[] terrainLayers = null;
             if (tTxts != null)
             {
-                splatPrototypes = new SplatPrototype[tTxts.Length];
+                //splatPrototypes = new SplatPrototype[tTxts.Length];
+                terrainLayers = new TerrainLayer[tTxts.Length];
                 for (int i = 0; i < tTxts.Length; i++)
                 {
                     String[] splatTxt = tTxts[i].Split("="[0]);
@@ -956,22 +958,22 @@ public class WhirldIn : System.Object
                     else
                     { 
                         //yield return null;
-                        splatPrototypes[i] = new SplatPrototype();
-                        splatPrototypes[i].texture = new Texture2D(
+                        terrainLayers[i] = new TerrainLayer();
+                        terrainLayers[i].diffuseTexture = new Texture2D(
                             4,
                             4,
                             TextureFormat.DXT1,
                             true);
-                        splatPrototypes[i].texture.LoadImage(www.downloadHandler.data);
-                        splatPrototypes[i].texture.Apply(true);
-                        splatPrototypes[i].texture.Compress(true);
-                        splatPrototypes[i].tileSize = new Vector2(
+                        terrainLayers[i].diffuseTexture.LoadImage(www.downloadHandler.data);
+                        terrainLayers[i].diffuseTexture.Apply(true);
+                        terrainLayers[i].diffuseTexture.Compress(true);
+                        terrainLayers[i].tileSize = new Vector2(
                             int.Parse(splatTxtSize[0]),
                             int.Parse(splatTxtSize[1]));
                     }
                 }
             }
-            trnDat.splatPrototypes = splatPrototypes;
+            trnDat.terrainLayers = terrainLayers;
 
             //Lightmap
 			/* DRAGONHERE: dont know how to set lightmaps (TerrainData.lightmap is not a real member)
@@ -1088,7 +1090,8 @@ public class WhirldIn : System.Object
             ((TerrainCollider)trnObj.GetComponent(typeof(TerrainCollider))).terrainData = trnDat;
 			
 			//set the shader so that its not all shiny
-			((Terrain)trnObj.GetComponent(typeof(Terrain))).materialType = Terrain.MaterialType.BuiltInLegacyDiffuse;
+			//((Terrain)trnObj.GetComponent(typeof(Terrain))).materialType = Terrain.MaterialType.BuiltInLegacyDiffuse;
+            trnObj.GetComponent<Terrain>().materialTemplate = new Material(Shader.Find("Legacy Shaders/Diffuse"));
 
             objects.Add(tName, trnObj);
             //Delete this temporary terrain object AFTER world is fully loaded
