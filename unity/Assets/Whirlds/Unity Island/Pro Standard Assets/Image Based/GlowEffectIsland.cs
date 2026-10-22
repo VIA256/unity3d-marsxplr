@@ -102,9 +102,6 @@ public class GlowEffectIsland : MonoBehaviour
 	
 	public bool IsSupported()
 	{
-		// Disable if we don't support image effects
-		if (!SystemInfo.supportsImageEffects)
-			return false;
 		if( downsampleShader == null )
 		{
 			Debug.LogWarning ("No downsample shader assigned! Disabling glow.");

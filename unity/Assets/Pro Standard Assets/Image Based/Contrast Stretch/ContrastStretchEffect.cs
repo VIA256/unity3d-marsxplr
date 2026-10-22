@@ -84,15 +84,6 @@ public class ContrastStretchEffect : MonoBehaviour
 		}
 	}
 	
-	void Start()
-	{
-		// Disable if we don't support image effects
-		if (!SystemInfo.supportsImageEffects) {
-			enabled = false;
-			return;
-		}
-	}
-	
 	void OnEnable()
 	{		
 		for( int i = 0; i < 2; ++i )

@@ -42,9 +42,6 @@ public class BlurEffectIsland : MonoBehaviour
 	
 	public bool IsSupported()
 	{
-		// Disable if we don't support image effects
-		if (!SystemInfo.supportsImageEffects)
-			return false;
 		// Disable if the shader can't run on the users graphics card
 		if (!material.shader.isSupported)
 			return false;
