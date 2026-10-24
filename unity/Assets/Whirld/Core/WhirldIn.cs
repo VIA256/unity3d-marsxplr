@@ -277,7 +277,7 @@ public class WhirldIn : System.Object
         ReadObject(world.transform);
 
         //Add TerrainControllers to Terrain objects
-        foreach (Terrain trn in GameObject.FindObjectsOfType(typeof(Terrain)))
+        foreach (Terrain trn in GameObject.FindObjectsByType(typeof(Terrain), FindObjectsSortMode.None))
         {
             ((TerrainController)trn.gameObject.AddComponent(typeof(TerrainController))).trnDat = trn.terrainData;
         }
@@ -286,7 +286,7 @@ public class WhirldIn : System.Object
         GameObject.Destroy(whirldBuffer);
 
         //Send Scene Generation Notice to each object
-        foreach (GameObject go in GameObject.FindObjectsOfType(typeof(GameObject)))
+        foreach (GameObject go in GameObject.FindObjectsByType(typeof(GameObject), FindObjectsSortMode.None))
         {
             go.SendMessage(
                 "OnSceneGenerated",

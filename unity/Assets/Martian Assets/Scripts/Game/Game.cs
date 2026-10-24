@@ -223,7 +223,7 @@ public class Game : MonoBehaviour
                 .transform;
         }
 
-        World.terrains = (Terrain[])FindObjectsOfType(typeof(Terrain));
+        World.terrains = (Terrain[])FindObjectsByType<Terrain>(FindObjectsSortMode.None);
         
         if (
             whirldIn.worldParams["env"] != null &&
@@ -263,7 +263,7 @@ public class Game : MonoBehaviour
         }
 
         bool thereisalight = false;
-        foreach (Light light in (Light[])FindObjectsOfType(typeof(Light)))
+        foreach (Light light in (Light[])FindObjectsByType<Light>(FindObjectsSortMode.None))
         {
             if (light.gameObject.name != "VehicleLight")
             {

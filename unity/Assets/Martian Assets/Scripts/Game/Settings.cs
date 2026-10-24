@@ -2212,19 +2212,19 @@ public class Settings : MonoBehaviour
 
 	public void updateObjects()
 	{
-        foreach (ParticleSystem pS in FindObjectsOfType(typeof(ParticleSystem)))
+        foreach (ParticleSystem pS in FindObjectsByType(typeof(ParticleSystem), FindObjectsSortMode.None))
         {
 			if(renderLevel >= 3) { if(!pS.isPlaying) pS.Play(); }
 			else if(pS.isPlaying) pS.Stop();
         }
 
-        foreach (Light light in FindObjectsOfType(typeof(Light)))
+        foreach (Light light in FindObjectsByType(typeof(Light), FindObjectsSortMode.None))
         {
             if (light.name != "VehicleLight") continue;
             light.enabled = false;
         }
 
-        foreach (GameObject go in FindObjectsOfType(typeof(GameObject)))
+        foreach (GameObject go in FindObjectsByType(typeof(GameObject), FindObjectsSortMode.None))
         {
             go.SendMessage("OnPrefsUpdated", SendMessageOptions.DontRequireReceiver);
         }
