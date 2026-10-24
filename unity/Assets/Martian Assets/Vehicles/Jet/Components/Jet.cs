@@ -194,11 +194,11 @@ public class Jet : MonoBehaviour
                 Mathf.Clamp(vehicle.input.x + vehicle.input.w, -1f, 1f) * mass * hoverSteerFactor,
                 vehicle.input.x * -1f * mass * hoverSteerFactor));
 			
-            vehicle.myRigidbody.drag =
+            vehicle.myRigidbody.linearDamping =
                 Game.Settings.jetHDrag *
-                vehicle.myRigidbody.velocity.magnitude *
+                vehicle.myRigidbody.linearVelocity.magnitude *
                 (float)(vehicle.brakes ? 7 : 1);
-			vehicle.myRigidbody.angularDrag =
+			vehicle.myRigidbody.angularDamping =
                 hoverAngDrag *
                 (float)(vehicle.brakes ? 5 : 1);
             mainThruster[lod.level].localEulerAngles = Vector3.zero;
@@ -227,7 +227,7 @@ public class Jet : MonoBehaviour
                     0.017102f,
                     vehicle.myRigidbody.transform.position.y / 10000f);
 			}
-			speed = vehicle.myRigidbody.velocity.magnitude;
+			speed = vehicle.myRigidbody.linearVelocity.magnitude;
             pitch = (transform.eulerAngles.x > 180 ?
                 transform.eulerAngles.x - 360 :
                 transform.eulerAngles.x);
@@ -237,7 +237,7 @@ public class Jet : MonoBehaviour
 			locvel = vehicle
                 .myRigidbody
                 .transform
-                .InverseTransformDirection(vehicle.myRigidbody.velocity);
+                .InverseTransformDirection(vehicle.myRigidbody.linearVelocity);
 			angleOfAttack = locvel.normalized.y;
 			if (speed < (float)Game.Settings.jetStall)
 			{
@@ -299,7 +299,7 @@ public class Jet : MonoBehaviour
                 ) *
                 atmosDensity *
                 ((locvel.z > 0f) ? 1 : -1));
-			vehicle.myRigidbody.angularDrag = flightAngDrag;
+			vehicle.myRigidbody.angularDamping = flightAngDrag;
 			
             //Lift
             if (stallFactor < 1f)
@@ -323,13 +323,13 @@ public class Jet : MonoBehaviour
             //Drag
 			if (stallFactor >= 0.5f)
 			{
-				vehicle.myRigidbody.drag =
+				vehicle.myRigidbody.linearDamping =
                     speed *
                     Mathf.Lerp(
                         Game.Settings.jetDrag,
                         Game.Settings.jetDrag * 5f,
                         Vector3.Angle(
-                            vehicle.myRigidbody.velocity,
+                            vehicle.myRigidbody.linearVelocity,
                             vehicle.myRigidbody.transform.forward
                         ) / 90f
                     ) *
@@ -337,7 +337,7 @@ public class Jet : MonoBehaviour
 			}
 			else
 			{
-				vehicle.myRigidbody.drag = 0f;
+				vehicle.myRigidbody.linearDamping = 0f;
 				vehicle.myRigidbody.AddRelativeForce(
                     new Vector3(
                         locvel.x * (Game.Settings.jetDrag * -1f) * 3f,

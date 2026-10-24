@@ -48,7 +48,7 @@ public class VehicleLocal : MonoBehaviour
 
 	public void FixedUpdate()
 	{
-		vehicle.velocity = vehicle.myRigidbody.velocity;
+		vehicle.velocity = vehicle.myRigidbody.linearVelocity;
 
         //Terrain Penetration
 		RaycastHit hit = default(RaycastHit);

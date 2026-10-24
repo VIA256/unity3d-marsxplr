@@ -44,7 +44,7 @@ public class TankTrack : MonoBehaviour
 			joint.anchor = Vector3.zero;
 		}
 		GetComponent<Rigidbody>().isKinematic = false;
-		GetComponent<Rigidbody>().velocity = Vector3.zero;
+		GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
 	}
 
 	public void OnCollisionStay(Collision collision)

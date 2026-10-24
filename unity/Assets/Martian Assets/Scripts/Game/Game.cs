@@ -403,7 +403,7 @@ public class Game : MonoBehaviour
 			Player.transform.position = World.baseTF.position;
 			Player.transform.rotation = World.baseTF.rotation;
 			Player.GetComponent<Rigidbody>().isKinematic = false;
-			Player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+			Player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
 			Settings.resetTime = -10f;
 			Settings.updatePrefs(); //Rebuild a new ramosphere
 		}

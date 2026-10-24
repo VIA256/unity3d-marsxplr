@@ -11,23 +11,23 @@ public class TankMe : MonoBehaviour
 	{
         if (vehicle.myRigidbody.isKinematic) return; //We are materializing, don't try to manipulate physics
 		
-        if (vehicle.brakes && vehicle.myRigidbody.velocity.magnitude < 3f)
+        if (vehicle.brakes && vehicle.myRigidbody.linearVelocity.magnitude < 3f)
 		{
-			vehicle.myRigidbody.velocity = Vector3.zero;
+			vehicle.myRigidbody.linearVelocity = Vector3.zero;
 			vehicle.myRigidbody.angularVelocity = Vector3.zero;
 			if (vehicle.input.y != 0f)
 			{
-				vehicle.myRigidbody.drag = 5f;
+				vehicle.myRigidbody.linearDamping = 5f;
 			}
 			else
 			{
-				vehicle.myRigidbody.drag = 10000f;
+				vehicle.myRigidbody.linearDamping = 10000f;
 			}
 		}
 		else
 		{
-			vehicle.myRigidbody.angularDrag = 2f;
-			vehicle.myRigidbody.drag = 0.01f;
+			vehicle.myRigidbody.angularDamping = 2f;
+			vehicle.myRigidbody.linearDamping = 0.01f;
 		}
 
 		if (bellyup && Vector3.Angle(transform.up, Vector3.up) < 35f)
@@ -44,7 +44,7 @@ public class TankMe : MonoBehaviour
             if (contact.otherCollider.gameObject.layer != 0) continue;
             if (
                 bellyup == false &&
-                vehicle.myRigidbody.velocity.sqrMagnitude < 20 &&
+                vehicle.myRigidbody.linearVelocity.sqrMagnitude < 20 &&
                 vehicle.myRigidbody.angularVelocity.sqrMagnitude < 5 &&
                 Vector3.Angle(transform.up, contact.normal) > 130)
             {

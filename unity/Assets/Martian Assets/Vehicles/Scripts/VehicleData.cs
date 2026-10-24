@@ -23,8 +23,8 @@ public class VehicleData : MonoBehaviour
 		veh.ridePos = ridePos;
 		veh.shortName = shortName;
 		veh.myRigidbody.mass = mass;
-		veh.myRigidbody.drag = drag;
-		veh.myRigidbody.angularDrag = angularDrag;
+		veh.myRigidbody.linearDamping = drag;
+		veh.myRigidbody.angularDamping = angularDrag;
 		if (materialMain.Length > 0)
 		{
             List<Material> mats = new List<Material>();

@@ -326,7 +326,7 @@ public class Buggy : MonoBehaviour
 						Mathf.Min(
 							1f,
 							((Game.Settings.buggyNewPhysics ?
-								vehicle.myRigidbody.velocity.magnitude :
+								vehicle.myRigidbody.linearVelocity.magnitude :
 								Mathf.Abs(motorSpeed)) / Game.Settings.buggySpeed
 							)
 						)
@@ -380,7 +380,7 @@ public class Buggy : MonoBehaviour
 					0.8f
 				);
 				int stallSpeed = 16;
-				Vector3 locVel = transform.InverseTransformDirection(vehicle.myRigidbody.velocity);
+				Vector3 locVel = transform.InverseTransformDirection(vehicle.myRigidbody.linearVelocity);
 				float roll = ((!(transform.eulerAngles.z > 180f)) ?
 					transform.eulerAngles.z :
 					(transform.eulerAngles.z - 360f)
@@ -391,7 +391,7 @@ public class Buggy : MonoBehaviour
 				);
 				if (locVel.sqrMagnitude > (float)stallSpeed)
                 {
-					vehicle.myRigidbody.drag = vehicle.myRigidbody.velocity.magnitude / Game.Settings.buggyFlightDrag * 0.3f;
+					vehicle.myRigidbody.linearDamping = vehicle.myRigidbody.linearVelocity.magnitude / Game.Settings.buggyFlightDrag * 0.3f;
 					
 					//Airbrakes
 					if (vehicle.brakes)
@@ -418,12 +418,12 @@ public class Buggy : MonoBehaviour
                     {
 						brakePower = 0f;
 						float angDelta = Vector3.Angle(
-							vehicle.myRigidbody.velocity,
+							vehicle.myRigidbody.linearVelocity,
 							transform.TransformDirection(Vector3.forward)
 						);
 						if (angDelta > 10f && Game.Settings.buggyFlightSlip)
                         {
-							vehicle.myRigidbody.velocity = vehicle.myRigidbody.transform.TransformDirection(
+							vehicle.myRigidbody.linearVelocity = vehicle.myRigidbody.transform.TransformDirection(
 								locVel.x * 0.95f,
 								locVel.y * 0.95f,
 								locVel.z + ((Mathf.Abs(locVel.x) + Mathf.Abs(locVel.y)) * 0.1f * (angDelta / 360))
@@ -431,7 +431,7 @@ public class Buggy : MonoBehaviour
 						}
 						else
                         {
-							vehicle.myRigidbody.velocity = vehicle.myRigidbody.transform.TransformDirection(
+							vehicle.myRigidbody.linearVelocity = vehicle.myRigidbody.transform.TransformDirection(
 								0,
 								0,
 								locVel.magnitude + (Time.deltaTime * 50 * (Game.Settings.buggyFlightLooPower ?
@@ -485,13 +485,13 @@ public class Buggy : MonoBehaviour
                     {
 						vehicle.myRigidbody.AddForce(Vector3.up * (10 - hit.distance) * 40);
 					}
-					vehicle.myRigidbody.angularDrag = 5f;
+					vehicle.myRigidbody.angularDamping = 5f;
 				}
 				else
                 {
 					//Stalling
-					vehicle.myRigidbody.angularDrag = 1f;
-					vehicle.myRigidbody.drag = vehicle.myRigidbody.velocity.magnitude / Game.Settings.buggyFlightDrag * 9f;
+					vehicle.myRigidbody.angularDamping = 1f;
+					vehicle.myRigidbody.linearDamping = vehicle.myRigidbody.linearVelocity.magnitude / Game.Settings.buggyFlightDrag * 9f;
 					vehicle.myRigidbody.AddRelativeTorque(new Vector3(
 						vehicle.input.y + 0.5f * 100f,
 						0f,
@@ -499,40 +499,40 @@ public class Buggy : MonoBehaviour
 					));
 				}
 			}
-			else if (vehicle.brakes && vehicle.myRigidbody.velocity.magnitude < 1.5f)
+			else if (vehicle.brakes && vehicle.myRigidbody.linearVelocity.magnitude < 1.5f)
             {
 				if (vehicle.input.y != 0f)
                 {
-					vehicle.myRigidbody.drag = 2f;
+					vehicle.myRigidbody.linearDamping = 2f;
 				}
 				else
                 {
-					vehicle.myRigidbody.drag = 50f;
+					vehicle.myRigidbody.linearDamping = 50f;
 				}
-				vehicle.myRigidbody.angularDrag = 1f;
+				vehicle.myRigidbody.angularDamping = 1f;
 			}
-			else if (vehicle.brakes && vehicle.myRigidbody.velocity.magnitude < 10f)
+			else if (vehicle.brakes && vehicle.myRigidbody.linearVelocity.magnitude < 10f)
             {
 				if (vehicle.input.y != 0f)
                 {
-					vehicle.myRigidbody.drag = 2f;
+					vehicle.myRigidbody.linearDamping = 2f;
 				}
 				else
                 {
-					vehicle.myRigidbody.drag = 10f;
+					vehicle.myRigidbody.linearDamping = 10f;
 				}
 			}
 			else
             {
-				vehicle.myRigidbody.angularDrag = 0.2f;
-				vehicle.myRigidbody.drag = 0.01f;
+				vehicle.myRigidbody.angularDamping = 0.2f;
+				vehicle.myRigidbody.linearDamping = 0.01f;
 			}
 
 			//Steering
 			float steeringAngle = Mathf.Lerp(
 				40f,
 				30f,
-				vehicle.myRigidbody.velocity.magnitude / Game.Settings.buggySpeed
+				vehicle.myRigidbody.linearVelocity.magnitude / Game.Settings.buggySpeed
 			);
 			wheels[0].localRotation = (wheels[1].localRotation = Quaternion.LookRotation(new Vector3(
 				vehicle.input.x * (steeringAngle / 90f),
@@ -542,7 +542,7 @@ public class Buggy : MonoBehaviour
 			steeringAngle = Mathf.Lerp(
 				20f,
 				0f,
-				vehicle.myRigidbody.velocity.magnitude / Game.Settings.buggySpeed
+				vehicle.myRigidbody.linearVelocity.magnitude / Game.Settings.buggySpeed
 			);
 			wheels[2].localRotation = (wheels[3].localRotation = Quaternion.LookRotation(new Vector3(
 				vehicle.input.x * -1f * (steeringAngle / 90f),
@@ -759,7 +759,7 @@ public class Buggy : MonoBehaviour
 					transform.eulerAngles.x - 360 :
 					transform.eulerAngles.x
 				);
-				vehicle.myRigidbody.angularDrag = 2f;
+				vehicle.myRigidbody.angularDamping = 2f;
 
 				//Flowing Lava
 				float waterAngle = default(float);
@@ -830,8 +830,8 @@ public class Buggy : MonoBehaviour
 				)
 			)
             {
-				vehicle.myRigidbody.AddForce(vehicle.myRigidbody.velocity * -8f + Vector3.up * (wingOpen ? 400 : 200));
-				vehicle.myRigidbody.angularDrag = 2f;
+				vehicle.myRigidbody.AddForce(vehicle.myRigidbody.linearVelocity * -8f + Vector3.up * (wingOpen ? 400 : 200));
+				vehicle.myRigidbody.angularDamping = 2f;
 			}
 
 			//Collision Friction
@@ -846,11 +846,11 @@ public class Buggy : MonoBehaviour
 				)
 			)
             {
-				buggyCollider.material.frictionCombine = PhysicMaterialCombine.Minimum;
+				buggyCollider.material.frictionCombine = PhysicsMaterialCombine.Minimum;
 			}
 			else
             {
-				buggyCollider.material.frictionCombine = PhysicMaterialCombine.Maximum;
+				buggyCollider.material.frictionCombine = PhysicsMaterialCombine.Maximum;
 			}
 		}
 	}

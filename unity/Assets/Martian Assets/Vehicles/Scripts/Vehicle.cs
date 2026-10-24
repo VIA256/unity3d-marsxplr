@@ -327,9 +327,9 @@ public class Vehicle : MonoBehaviour
                     (float)Screen.height - 30f,
                     150f,
                     20f),
-                (targetRigidbody.velocity.magnitude < 0.05f ?
+                (targetRigidbody.linearVelocity.magnitude < 0.05f ?
                     "Static" :
-                    Mathf.RoundToInt(targetRigidbody.velocity.magnitude * 2.23f) +
+                    Mathf.RoundToInt(targetRigidbody.linearVelocity.magnitude * 2.23f) +
                         " MPH") +
                     "     " +
                     Mathf.RoundToInt(targetRigidbody.transform.position.y) +

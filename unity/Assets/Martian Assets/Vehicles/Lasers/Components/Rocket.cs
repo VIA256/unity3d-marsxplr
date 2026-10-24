@@ -41,11 +41,11 @@ public class Rocket : MonoBehaviour
             Vector3 accel;
             if (true)//targetVehicle.GetComponent<NetworkView>().isMine) //Local vehicle, high precision
             {
-                Vector3 refvel = targetVehicle.gameObject.GetComponent<Rigidbody>().velocity;
+                Vector3 refvel = targetVehicle.gameObject.GetComponent<Rigidbody>().linearVelocity;
                 float reftme = Time.time;
                 yield return new WaitForSeconds(Time.fixedDeltaTime * 0.5f); //Allow target to move so we can analyze it's acceleration
                 pos = targetVehicle.transform.position;
-                vel = targetVehicle.gameObject.GetComponent<Rigidbody>().velocity;
+                vel = targetVehicle.gameObject.GetComponent<Rigidbody>().linearVelocity;
                 accel = (vel - refvel) / (Time.time - reftme); ////Accelleration over 1 second
             }
             else //Remote vehicle, just make it look good
@@ -89,7 +89,7 @@ public class Rocket : MonoBehaviour
         }
 
         //Begin Run
-        GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().transform.TransformDirection(
+        GetComponent<Rigidbody>().linearVelocity = GetComponent<Rigidbody>().transform.TransformDirection(
             0f,
             0f,
             velocity);
@@ -112,12 +112,12 @@ public class Rocket : MonoBehaviour
 		}
 		if (Game.Settings.laserGrav != 0f)
 		{
-			Vector3 rigvel = GetComponent<Rigidbody>().velocity;
+			Vector3 rigvel = GetComponent<Rigidbody>().linearVelocity;
 			rigvel.y -= Game.Settings.laserGrav *
                 (float)speedX *
                 Time.deltaTime *
                 20f;
-			GetComponent<Rigidbody>().velocity = rigvel;
+			GetComponent<Rigidbody>().linearVelocity = rigvel;
 		}
         Vector3 vector = transform.position - strtPos;
 		RaycastHit[] hits = Physics.RaycastAll(
@@ -213,13 +213,13 @@ public class Rocket : MonoBehaviour
             else
             {
                 GetComponent<Rigidbody>().position = collision.point;
-                GetComponent<Rigidbody>().velocity = Game.Settings.laserRico *
+                GetComponent<Rigidbody>().linearVelocity = Game.Settings.laserRico *
                     Vector3.Lerp(
                         Vector3.Scale(
-                            GetComponent<Rigidbody>().velocity,
+                            GetComponent<Rigidbody>().linearVelocity,
                             collision.normal),
                         Vector3.Reflect(
-                            GetComponent<Rigidbody>().velocity,
+                            GetComponent<Rigidbody>().linearVelocity,
                             collision.normal),
                         Game.Settings.laserRico);
             }
@@ -233,7 +233,7 @@ public class Rocket : MonoBehaviour
 		stage = 1;
 
 		GetComponent<Rigidbody>().position = pos;
-		GetComponent<Rigidbody>().velocity = Vector3.zero;
+		GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
 		go.BroadcastMessage(
             "OnLaserHit",
             true,//launchVehicle.GetComponent<NetworkView>().isMine,

@@ -112,7 +112,7 @@ public class VehicleMe : MonoBehaviour
 			{
                 snipe = (Game.Settings.firepower[vehicle.vehId] > 2 ||
                     (Game.Settings.firepower[vehicle.vehId] > 1 &&
-                        (laserLock.GetComponent<Rigidbody>().velocity.sqrMagnitude > 500 ||
+                        (laserLock.GetComponent<Rigidbody>().linearVelocity.sqrMagnitude > 500 ||
                             Vector3.Distance(
                                 transform.position,
                                 laserLock.transform.position) > 500)));
@@ -185,7 +185,7 @@ public class VehicleMe : MonoBehaviour
         //Bounds Checking
 		if (vehicle.myRigidbody.position.y < -300f)
 		{
-			vehicle.myRigidbody.velocity = vehicle.myRigidbody.velocity.normalized;
+			vehicle.myRigidbody.linearVelocity = vehicle.myRigidbody.linearVelocity.normalized;
 			vehicle.myRigidbody.isKinematic = true;
 			vehicle.transform.position = World.baseTF.position;
 			vehicle.myRigidbody.isKinematic = false;
@@ -194,9 +194,9 @@ public class VehicleMe : MonoBehaviour
 				Game.Messaging.broadcast(name + " fell off the planet");
 			}
 		}
-		if (vehicle.myRigidbody.velocity.magnitude > 500f)
+		if (vehicle.myRigidbody.linearVelocity.magnitude > 500f)
 		{
-			vehicle.myRigidbody.velocity = vehicle.myRigidbody.velocity * 0.5f;
+			vehicle.myRigidbody.linearVelocity = vehicle.myRigidbody.linearVelocity * 0.5f;
 		}
 	}
 

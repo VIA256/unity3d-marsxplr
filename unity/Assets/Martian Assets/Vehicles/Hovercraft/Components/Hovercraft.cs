@@ -39,13 +39,13 @@ public class Hovercraft : MonoBehaviour
 		vehicle.myRigidbody = mrb;
 		
 		Vector3 locvel = vehicle.myRigidbody.transform.InverseTransformDirection(
-			vehicle.myRigidbody.velocity
+			vehicle.myRigidbody.linearVelocity
 		);
 		
 		if (!vehicle.brakes)
         {
-			vehicle.myRigidbody.drag = 0f;
-			vehicle.myRigidbody.angularDrag = 4f;
+			vehicle.myRigidbody.linearDamping = 0f;
+			vehicle.myRigidbody.angularDamping = 4f;
 			vehicle.myRigidbody.AddRelativeForce(new Vector3(
 				locvel.x * -10f,
 				0f,
@@ -57,15 +57,15 @@ public class Hovercraft : MonoBehaviour
 		}
 		else
         {
-			if (vehicle.myRigidbody.velocity.magnitude > 5f)
+			if (vehicle.myRigidbody.linearVelocity.magnitude > 5f)
             {
-				vehicle.myRigidbody.drag = 1.5f;
+				vehicle.myRigidbody.linearDamping = 1.5f;
 			}
 			else
             {
-				vehicle.myRigidbody.drag = 100f;
+				vehicle.myRigidbody.linearDamping = 100f;
 			}
-			vehicle.myRigidbody.angularDrag = 20f;
+			vehicle.myRigidbody.angularDamping = 20f;
 		}
 		
 		RaycastHit hit = default(RaycastHit);
@@ -142,7 +142,7 @@ public class Hovercraft : MonoBehaviour
 		}
 		else
         {
-			vehicle.myRigidbody.angularDrag = 0.5f;
+			vehicle.myRigidbody.angularDamping = 0.5f;
 		}
 
 		//Steering

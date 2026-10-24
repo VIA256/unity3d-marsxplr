@@ -82,7 +82,7 @@ public class CameraVehicle : MonoBehaviour
 		if (Game.Settings.useHypersound == 1)
         {
 			Game.Settings.gameMusic.pitch = Mathf.Clamp(
-				-0.5f + camTarget.GetComponent<Rigidbody>().velocity.magnitude / 15f,
+				-0.5f + camTarget.GetComponent<Rigidbody>().linearVelocity.magnitude / 15f,
 				0.8f,
 				1.5f
 			);
@@ -344,14 +344,14 @@ public class CameraVehicle : MonoBehaviour
             {
 				if (
 					(bool)camTarget.transform.gameObject.GetComponent<Rigidbody>() &&
-					camTarget.transform.gameObject.GetComponent<Rigidbody>().velocity.sqrMagnitude > 0.1f &&
-					camTarget.transform.gameObject.GetComponent<Rigidbody>().velocity.normalized.y < 0.8f &&
-					camTarget.transform.gameObject.GetComponent<Rigidbody>().velocity.normalized.y > -0.8f
+					camTarget.transform.gameObject.GetComponent<Rigidbody>().linearVelocity.sqrMagnitude > 0.1f &&
+					camTarget.transform.gameObject.GetComponent<Rigidbody>().linearVelocity.normalized.y < 0.8f &&
+					camTarget.transform.gameObject.GetComponent<Rigidbody>().linearVelocity.normalized.y > -0.8f
 				)
                 {
 					lastDir = Vector3.Lerp(
 						lastDir,
-						camTarget.transform.gameObject.GetComponent<Rigidbody>().velocity.normalized,
+						camTarget.transform.gameObject.GetComponent<Rigidbody>().linearVelocity.normalized,
 						0.1f
 					);
 				}
@@ -409,13 +409,13 @@ public class CameraVehicle : MonoBehaviour
 			//Arcade
 			else if (
 				Game.Settings.camChase == 2 &&
-				camTarget.transform.GetComponent<Rigidbody>().velocity.magnitude > 0f
+				camTarget.transform.GetComponent<Rigidbody>().linearVelocity.magnitude > 0f
 			)
             {
 				float heightDamping = 3f;
 				float rotationDamping = 3f;
 				float wantedRotationAngle = Quaternion.LookRotation(
-					camTarget.transform.GetComponent<Rigidbody>().velocity
+					camTarget.transform.GetComponent<Rigidbody>().linearVelocity
 				).eulerAngles.y;
 				wantedRotationAngle += Mathf.Lerp(
 					30f,

@@ -13,7 +13,7 @@ public class Settings : MonoBehaviour
 	public bool simplified = true;
 	public AudioSource gameMusic;
 	public AudioClip[] musicTracks;
-	public PhysicMaterial zorbPhysics;
+	public PhysicsMaterial zorbPhysics;
 	[HideInInspector]
 	public int renderLevel = 0;
 	[HideInInspector]

@@ -212,7 +212,7 @@ public class VehicleBot : MonoBehaviour
         //Bounds Checking
 		if (vehicle.myRigidbody.position.y < -300f)
 		{
-			vehicle.myRigidbody.velocity = vehicle.myRigidbody.velocity.normalized;
+			vehicle.myRigidbody.linearVelocity = vehicle.myRigidbody.linearVelocity.normalized;
 			vehicle.myRigidbody.isKinematic = true;
 			vehicle.transform.position = World.baseTF.position;
 			vehicle.myRigidbody.isKinematic = false;
