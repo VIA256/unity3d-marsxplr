@@ -63,6 +63,7 @@ Material:
     - _ReflectiveColor_ST: {r: 1, g: 1, b: 0, a: 0}
     - _RefrColor: {r: 0.57208765, g: 0.78254026, b: 0.78431374, a: 1}
     - _RefractionTex_ST: {r: 1, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
 --- !u!1002 &2100001
 EditorExtensionImpl:
   serializedVersion: 6

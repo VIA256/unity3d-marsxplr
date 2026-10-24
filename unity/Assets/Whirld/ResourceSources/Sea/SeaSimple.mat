@@ -90,6 +90,7 @@ Material:
     - _SpecColor: {r: 1, g: 1, b: 1, a: 0}
     - _TintColor: {r: 0.25394064, g: 0.50945294, b: 0.64921033, a: 0.17}
     - _horizonColor: {r: 0.172, g: 0.463, b: 0.435, a: 0}
+  m_BuildTextureStacks: []
 --- !u!1002 &2100001
 EditorExtensionImpl:
   serializedVersion: 6
