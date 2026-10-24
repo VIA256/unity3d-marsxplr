@@ -1091,7 +1091,7 @@ public class WhirldIn : System.Object
 			
 			//set the shader so that its not all shiny
 			//((Terrain)trnObj.GetComponent(typeof(Terrain))).materialType = Terrain.MaterialType.BuiltInLegacyDiffuse;
-            trnObj.GetComponent<Terrain>().materialTemplate = new Material(Shader.Find("Legacy Shaders/Diffuse"));
+            trnObj.GetComponent<Terrain>().materialTemplate = new Material(Shader.Find("Nature/Terrain/Diffuse"));
 
             objects.Add(tName, trnObj);
             //Delete this temporary terrain object AFTER world is fully loaded
