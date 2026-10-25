@@ -76,10 +76,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_button:
     m_Name: button
     m_Normal:
@@ -143,10 +146,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_toggle:
     m_Name: toggle
     m_Normal:
@@ -210,28 +216,31 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 3
     m_ContentOffset: {x: 0, y: -2}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_label:
     m_Name: label
     m_Normal:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+      m_TextColor: {r: 0.90196085, g: 0.90196085, b: 0.90196085, a: 1}
     m_Hover:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+      m_TextColor: {r: 0.9019608, g: 0.9019608, b: 0.9019608, a: 1}
     m_Active:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+      m_TextColor: {r: 0.9019608, g: 0.9019608, b: 0.9019608, a: 1}
     m_Focused:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+      m_TextColor: {r: 0.9019608, g: 0.9019608, b: 0.9019608, a: 1}
     m_OnNormal:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
@@ -277,10 +286,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 1
+    m_IsSDF: 0
   m_textField:
     m_Name: textfield
     m_Normal:
@@ -344,10 +356,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 3
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_textArea:
     m_Name: textarea
     m_Normal:
@@ -411,10 +426,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_window:
     m_Name: window
     m_Normal:
@@ -478,10 +496,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: -18}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_horizontalSlider:
     m_Name: horizontalslider
     m_Normal:
@@ -545,10 +566,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 2
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 15
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_horizontalSliderThumb:
     m_Name: horizontalsliderthumb
     m_Normal:
@@ -612,10 +636,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 1
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 16
     m_FixedHeight: 16
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 0
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_verticalSlider:
     m_Name: verticalslider
     m_Normal:
@@ -679,10 +706,13 @@ MonoBehaviour:
     m_TextClipping: 0
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 12
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 0
     m_StretchHeight: 1
+    m_IsSDF: 0
   m_verticalSliderThumb:
     m_Name: verticalsliderthumb
     m_Normal:
@@ -746,10 +776,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 12
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 0
     m_StretchHeight: 1
+    m_IsSDF: 0
   m_horizontalScrollbar:
     m_Name: horizontalscrollbar
     m_Normal:
@@ -813,10 +846,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 2
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 15
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_horizontalScrollbarThumb:
     m_Name: horizontalscrollbarthumb
     m_Normal:
@@ -880,10 +916,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 13
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_horizontalScrollbarLeftButton:
     m_Name: horizontalscrollbarleftbutton
     m_Normal:
@@ -947,10 +986,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_horizontalScrollbarRightButton:
     m_Name: horizontalscrollbarrightbutton
     m_Normal:
@@ -1014,10 +1056,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_verticalScrollbar:
     m_Name: verticalscrollbar
     m_Normal:
@@ -1081,10 +1126,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 15
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_verticalScrollbarThumb:
     m_Name: verticalscrollbarthumb
     m_Normal:
@@ -1148,10 +1196,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 2
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 15
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 0
     m_StretchHeight: 1
+    m_IsSDF: 0
   m_verticalScrollbarUpButton:
     m_Name: verticalscrollbarupbutton
     m_Normal:
@@ -1215,10 +1266,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_verticalScrollbarDownButton:
     m_Name: verticalscrollbardownbutton
     m_Normal:
@@ -1282,10 +1336,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_ScrollView:
     m_Name: scrollview
     m_Normal:
@@ -1349,10 +1406,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_CustomStyles:
   - m_Name: chatRemote
     m_Normal:
@@ -1416,10 +1476,13 @@ MonoBehaviour:
     m_TextClipping: 0
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   - m_Name: chatLocal
     m_Normal:
       m_Background: {fileID: 2800000, guid: 0753cdb9c1e544ea7a7edfaa3d1db731, type: 3}
@@ -1482,10 +1545,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   - m_Name: close_button
     m_Normal:
       m_Background: {fileID: 2800000, guid: 68a1f2090d7ef4df5aa42f1312f6117b, type: 3}
@@ -1548,10 +1614,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 0
     m_StretchHeight: 0
+    m_IsSDF: 0
   - m_Name: player_nametag
     m_Normal:
       m_Background: {fileID: 2800000, guid: 7cc09535c4e394f809f6c3bdfc348822, type: 3}
@@ -1614,10 +1683,13 @@ MonoBehaviour:
     m_TextClipping: 0
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 0
     m_StretchHeight: 0
+    m_IsSDF: 0
   - m_Name: player_nametag_it
     m_Normal:
       m_Background: {fileID: 2800000, guid: 62b985833e5944f70b28c0c4cfdf0a14, type: 3}
@@ -1680,10 +1752,13 @@ MonoBehaviour:
     m_TextClipping: 0
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 0
     m_StretchHeight: 0
+    m_IsSDF: 0
   - m_Name: windowChromeless
     m_Normal:
       m_Background: {fileID: 2800000, guid: 938e8382ba66f4183860c832723bf8bc, type: 3}
@@ -1746,10 +1821,13 @@ MonoBehaviour:
     m_TextClipping: 0
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 0
     m_StretchHeight: 0
+    m_IsSDF: 0
   - m_Name: hudText
     m_Normal:
       m_Background: {fileID: 0}
@@ -1812,10 +1890,13 @@ MonoBehaviour:
     m_TextClipping: 0
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   - m_Name: boldWindow
     m_Normal:
       m_Background: {fileID: 2800000, guid: b78b2686a02814f5d945d5ecf0affadd, type: 3}
@@ -1878,10 +1959,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: -21}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 0
     m_StretchHeight: 0
+    m_IsSDF: 0
   - m_Name: sliderText
     m_Normal:
       m_Background: {fileID: 0}
@@ -1944,10 +2028,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 0
     m_StretchHeight: 0
+    m_IsSDF: 0
   - m_Name: serverDetailsBox
     m_Normal:
       m_Background: {fileID: 2800000, guid: 2f0ea5e08922b410f8f568f70376fc49, type: 3}
@@ -2010,10 +2097,13 @@ MonoBehaviour:
     m_TextClipping: 0
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 400
     m_FixedHeight: 120
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 0
     m_StretchHeight: 0
+    m_IsSDF: 0
   - m_Name: chatServer
     m_Normal:
       m_Background: {fileID: 2800000, guid: c0c843051941f49c3b0b3172ebc07bfc, type: 3}
@@ -2076,10 +2166,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   - m_Name: windowAlert
     m_Normal:
       m_Background: {fileID: 2800000, guid: 791bdaacd4b5c4357863ff84ff5b4a2b, type: 3}
@@ -2142,10 +2235,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 0
     m_StretchHeight: 0
+    m_IsSDF: 0
   - m_Name: lobbyAd
     m_Normal:
       m_Background: {fileID: 2800000, guid: 454a8f0ec27c5402abf7aa91286d3684, type: 3}
@@ -2208,10 +2304,13 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
+    m_ContentSpacing: 1
     m_FixedWidth: 0
     m_FixedHeight: 0
+    m_ImageIsTopAligned: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   m_Settings:
     m_DoubleClickSelectsWord: 1
     m_TripleClickSelectsLine: 1

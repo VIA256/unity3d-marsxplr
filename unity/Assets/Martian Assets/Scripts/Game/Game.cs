@@ -223,7 +223,7 @@ public class Game : MonoBehaviour
                 .transform;
         }
 
-        World.terrains = (Terrain[])FindObjectsByType<Terrain>(FindObjectsSortMode.None);
+        World.terrains = (Terrain[])FindObjectsByType<Terrain>();
         
         if (
             whirldIn.worldParams["env"] != null &&
@@ -250,7 +250,7 @@ public class Game : MonoBehaviour
             }*/
             if (
                 !GameObject.Find("Floor") &&
-                !FindObjectOfType(typeof(Terrain)) &&
+                !FindAnyObjectByType(typeof(Terrain)) &&
                 !World.sea &&
                 whirldIn.worldParams["nofloor"] == null &&
                 (String)whirldIn.worldParams["floor"] != "0")
@@ -263,7 +263,7 @@ public class Game : MonoBehaviour
         }
 
         bool thereisalight = false;
-        foreach (Light light in (Light[])FindObjectsByType<Light>(FindObjectsSortMode.None))
+        foreach (Light light in (Light[])FindObjectsByType<Light>())
         {
             if (light.gameObject.name != "VehicleLight")
             {

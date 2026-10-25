@@ -252,7 +252,7 @@ public class Water : MonoBehaviour
 				if( m_ReflectionTexture )
 					DestroyImmediate( m_ReflectionTexture );
 				m_ReflectionTexture = new RenderTexture( m_TextureSize, m_TextureSize, 16 );
-				m_ReflectionTexture.name = "__WaterReflection" + GetInstanceID();
+				m_ReflectionTexture.name = "__WaterReflection" + GetEntityId();
 				m_ReflectionTexture.isPowerOfTwo = true;
 				m_ReflectionTexture.hideFlags = HideFlags.DontSave;
 				m_OldReflectionTextureSize = m_TextureSize;
@@ -262,7 +262,7 @@ public class Water : MonoBehaviour
 			reflectionCamera = m_ReflectionCameras[currentCamera] as Camera;
 			if( !reflectionCamera ) // catch both not-in-dictionary and in-dictionary-but-deleted-GO
 			{
-				GameObject go = new GameObject( "Water Refl Camera id" + GetInstanceID() + " for " + currentCamera.GetInstanceID(), typeof(Camera), typeof(Skybox) );
+				GameObject go = new GameObject( "Water Refl Camera id" + GetEntityId() + " for " + currentCamera.GetEntityId(), typeof(Camera), typeof(Skybox) );
 				reflectionCamera = go.GetComponent<Camera>();
 				reflectionCamera.enabled = false;
 				reflectionCamera.transform.position = transform.position;
@@ -281,7 +281,7 @@ public class Water : MonoBehaviour
 				if( m_RefractionTexture )
 					DestroyImmediate( m_RefractionTexture );
 				m_RefractionTexture = new RenderTexture( m_TextureSize, m_TextureSize, 16 );
-				m_RefractionTexture.name = "__WaterRefraction" + GetInstanceID();
+				m_RefractionTexture.name = "__WaterRefraction" + GetEntityId();
 				m_RefractionTexture.isPowerOfTwo = true;
 				m_RefractionTexture.hideFlags = HideFlags.DontSave;
 				m_OldRefractionTextureSize = m_TextureSize;
@@ -291,7 +291,7 @@ public class Water : MonoBehaviour
 			refractionCamera = m_RefractionCameras[currentCamera] as Camera;
 			if( !refractionCamera ) // catch both not-in-dictionary and in-dictionary-but-deleted-GO
 			{
-				GameObject go = new GameObject( "Water Refr Camera id" + GetInstanceID() + " for " + currentCamera.GetInstanceID(), typeof(Camera), typeof(Skybox) );
+				GameObject go = new GameObject( "Water Refr Camera id" + GetEntityId() + " for " + currentCamera.GetEntityId(), typeof(Camera), typeof(Skybox) );
 				refractionCamera = go.GetComponent<Camera>();
 				refractionCamera.enabled = false;
 				refractionCamera.transform.position = transform.position;
