@@ -1,4 +1,8 @@
-﻿/*
+﻿using UnityEngine;
+
+public class FPSWalker : MonoBehaviour { }
+
+/*
 
 
 
