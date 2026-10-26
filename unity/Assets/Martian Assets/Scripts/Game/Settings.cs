@@ -1990,28 +1990,28 @@ public class Settings : MonoBehaviour
                 //Details: Rocks, trees, etc
 				trn.treeCrossFadeLength = 30f;
 				if (renderLevel > 4)
-				{   //Fantastic, Beautiful
+				{   //Fantastic (6), Beautiful (5)
 					trn.detailObjectDistance = 300f;
 					trn.treeDistance = 600f;
 					trn.treeMaximumFullLODCount = 100;
 					trn.treeBillboardDistance = 150f;
 				}
 				else if (renderLevel > 3)
-				{   //Good
+				{   //Good (4)
 					trn.detailObjectDistance = 200f;
 					trn.treeDistance = 500f;
 					trn.treeMaximumFullLODCount = 50;
 					trn.treeBillboardDistance = 100f;
 				}
 				else if (renderLevel > 2)
-				{   //Simple
+				{   //Simple (3)
 					trn.detailObjectDistance = 150f;
 					trn.treeDistance = 300f;
 					trn.treeMaximumFullLODCount = 10;
 					trn.treeBillboardDistance = 75f;
 				}
 				else
-				{   //Fast, Fastest
+				{   //Fast (2), Fastest (1)
 					trn.detailObjectDistance = 0f;
 					trn.treeDistance = 0f;
 					trn.treeMaximumFullLODCount = 0;
