@@ -1092,6 +1092,7 @@ public class Lobby : MonoBehaviour
                                 "\".\n(Press \"<< Change Name\" above to edit this code)" :
                             "You are running Mars Explorer version " +
                                 GameData.gameVersion +
+                                (GameData.releaseCandidate == "" ? "" : "-rc+" + GameData.releaseCandidate) +
                                 ",\nand will only see games hosted by others using this version."));
 						GUILayout.Label((!autoHostListRefresh) ?
                             "\n(Press the \"Refresh List\" button in the Networking Settings panel to check for new games)" :
@@ -1109,7 +1110,10 @@ public class Lobby : MonoBehaviour
 				}
 
 			}*/if(false){}
-            GUILayout.Label("\n\nThis version of MarsXPLR has no multiplayer");
+            GUILayout.Label("\n\nThis version of MarsXPLR has no multiplayer.\n\n" +
+                "You are running Mars Explorer version " +
+                GameData.gameVersion +
+                (GameData.releaseCandidate == "" ? "" : "-rc+" + GameData.releaseCandidate));
 			/*else
 			{
                 GUILayout.Label("\n\n" +
