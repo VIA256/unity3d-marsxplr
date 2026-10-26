@@ -124,7 +124,7 @@ public class Lobby : MonoBehaviour
 
         List<String> msgs = new List<String>();
         List<GameWorldDesc> wlds = new List<GameWorldDesc>();
-        UnityWebRequest www = UnityWebRequest.Get("https://gitea.moe/VIA256/new-marsxplr-web-elements/raw/branch/main/upd4");
+        UnityWebRequest www = UnityWebRequest.Get("https://raw.githubusercontent.com/VIA256/upd4/refs/heads/main/upd4");
         yield return www.SendWebRequest();
         if (www.error == null)
         {
