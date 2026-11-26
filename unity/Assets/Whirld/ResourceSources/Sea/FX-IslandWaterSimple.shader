@@ -73,10 +73,10 @@ struct appdata {
 struct v2f {
 	float4 pos : SV_POSITION;
 	#if defined (HAS_REFLECTION)
-	float3 ref;
+	float3 ref : TEXCOORD3;
 	#endif
-	float2 bumpuv[2];
-	float4 viewDirZ;
+	float2 bumpuv[2] : TEXCOORD0;
+	float4 viewDirZ : TEXCOORD2;
 }; 
 
 v2f vert(appdata v)
@@ -137,7 +137,7 @@ half4 frag( v2f i ) : COLOR
 	
 	#ifdef HAS_REFLECTION
 	bump.xy *= i.viewDirZ.w;
-	float3 uv1 = i.ref; uv1.xy += bump * _ReflDistort;
+	float4 uv1 = float4(i.ref, 1); uv1.xy += bump * _ReflDistort;
 	half4 refl = tex2Dproj( _ReflectionTex, uv1 );
 	half fresnel = tex2D( _Fresnel, float2(fresnelFac,fresnelFac) ).a;
 	// Cg 1.5 has a bug when compiling for ps_2_0 where it does not respect
