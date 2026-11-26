@@ -44,7 +44,7 @@ sampler2D _CameraDepthNormalsTexture;
 sampler2D _RandomTexture;
 float4 _Params; // x=radius, y=minz, z=attenuation power, w=SSAO power
 
-half frag_ao (v2f_ao i, int sampleCount, float3[] samples)
+half frag_ao (v2f_ao i, int sampleCount, float3 samples[26]) //hardcoded the max sample count as used AAAAA FUCK
 {
 	// read random normal from noise texture
     half3 randN = tex2D (_RandomTexture, i.uvr).xyz * 2.0 - 1.0;    
@@ -111,7 +111,7 @@ CGPROGRAM
 half4 frag (v2f_ao i) : COLOR
 {
 	#define SAMPLE_COUNT 8
-	const float3 RAND_SAMPLES[SAMPLE_COUNT] = {
+	const float3 RAND_SAMPLES[26] = {
 		float3(0.01305719,0.5872321,-0.119337),
 		float3(0.3230782,0.02207272,-0.4188725),
 		float3(-0.310725,-0.191367,0.05613686),
@@ -120,6 +120,26 @@ half4 frag (v2f_ao i) : COLOR
 		float3(-0.2484578,0.2555322,0.3489439),
 		float3(0.1871898,-0.702764,-0.2317479),
 		float3(0.8849149,0.2842076,0.368524),
+		
+		//unused allocated space
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
 	};
     return frag_ao (i, SAMPLE_COUNT, RAND_SAMPLES);
 }
@@ -141,7 +161,7 @@ CGPROGRAM
 half4 frag (v2f_ao i) : COLOR
 {
 	#define SAMPLE_COUNT 14
-	const float3 RAND_SAMPLES[SAMPLE_COUNT] = {
+	const float3 RAND_SAMPLES[26] = {
 		float3(0.4010039,0.8899381,-0.01751772),
 		float3(0.1617837,0.1338552,-0.3530486),
 		float3(-0.2305296,-0.1900085,0.5025396),
@@ -156,6 +176,20 @@ half4 frag (v2f_ao i) : COLOR
 		float3(0.7026125,0.1648249,0.02250625),
 		float3(0.03704464,-0.939131,0.1358765),
 		float3(-0.6984446,-0.6003422,-0.04016943),
+		
+		//unused allocated space
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
+		float3(0,0,0),
 	};
     return frag_ao (i, SAMPLE_COUNT, RAND_SAMPLES);
 }
